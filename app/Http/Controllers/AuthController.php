@@ -13,6 +13,61 @@ class AuthController extends Controller {
         if (empty($email) or empty($password)) {
             return response()->json(['status' => 'error', 'message' => 'You must fill all fields']);
         }
+        
+        try 
+        {
+            $client = new Client([]);
+            $response =  $client->post(config('service.passport.login_endpoint'), [
+                "form_params" => [
+                    "client_secret" => config('service.passport.client_secret'),
+                    "grant_type" => "password",
+                    "client_id" => config('service.passport.client_id'),
+                    "username" => $request->email,
+                    "password" => $request->password
+                ]
+            ]);
+
+            if($response) {
+                $result  = json_decode((string) $response->getBody(), true);
+                
+                $responseArray['token']         = $result['access_token'];
+                $responseArray['refresh_token'] = $result['refresh_token'];
+
+                $userRole = User::where('email','=',$email)->first();
+                $responseArray['user_id']   = $userRole->id;
+
+                return response()->json(['status' => 'success', 'message' => 'Token generated','data' => $responseArray,'status_code'=>200]);
+            } else {
+                return response()->json([
+                        "status" => false,
+                        "message" => "Unauthorized"
+                    ]);
+                
+            }
+            
+        } catch (BadResponseException $e) {
+
+            $statusCode=$e->getResponse()->getStatusCode();
+            $message=$e->getResponse()->getBody()->getContents();
+            return array('status'=>'error','message'=>json_decode($message,true),'status_code'=>$statusCode);
+            
+            // return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+            return response()->json([
+                "status" => false,
+                "message" => "Unauthorized"
+            ]);
+        }
+    }
+
+
+    public function login_mobileapp(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        // Check if field is not empty
+        if (empty($email) or empty($password)) {
+            return response()->json(['status' => 'error', 'message' => 'You must fill all fields']);
+        }
         $client = new Client();
         try 
         {
@@ -27,15 +82,62 @@ class AuthController extends Controller {
                 ]
             ]);
 
-            $result  = json_decode((string) $response->getBody(), true);
-            
-            $responseArray['token']         = $result['access_token'];
-            $responseArray['refresh_token'] = $result['refresh_token'];
+            if($response) {
 
-            $userRole = User::where('email','=',$email)->first();
-            $responseArray['user_id']   = $userRole->id;
+                $userinfo=User::where(['email'=>$request->email,'visible_password'=>$request->password])->first();
+                
+                if($userinfo['is_approved']=='yes')
+                {
+                    
+                    if($userinfo['is_block']=='no')
+                    {
+                    
+                        $userinfoNew=User::where(['email'=>$request->email,'visible_password'=>$request->password])->update(['app_token'=>$request->app_token]);
+                        
+                        return response()->json([
+                        "status" => true,
+                        "token" => $token,
+                        "data" => $userinfo
+                        ]);
+                        
+                    }
+                    else
+                    {
+                        return response()->json([
+                        "status" => false,
+                        "message" => "Your account has Blocked."
+                    ]);
+                    }
+                }
+                else
+                {
+                    return response()->json([
+                        "status" => false,
+                        "message" => "Still Your account not Approved by Admin. Please try later."
+                    ]);
+                }
 
-            return response()->json(['status' => 'success', 'message' => 'Token generated','data' => $responseArray,'status_code'=>200]);
+                
+
+                $result  = json_decode((string) $response->getBody(), true);
+                
+                $responseArray['token']         = $result['access_token'];
+                $responseArray['refresh_token'] = $result['refresh_token'];
+
+                $userRole = User::where('email','=',$email)->first();
+                $responseArray['user_id']   = $userRole->id;
+
+                return response()->json(['status' => 'success', 'message' => 'Token generated','data' => $responseArray,'status_code'=>200]);
+
+            }
+            else
+            {
+                 return response()->json([
+                        "status" => false,
+                        "message" => "Unauthorized"
+                    ]);
+                
+            }
        
         } catch (BadResponseException $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
@@ -46,6 +148,13 @@ class AuthController extends Controller {
 
     public function register(Request $request)
     {
+
+        $this->validate($request, [
+            "name" => "required|string",
+            "email" => "required|email|unique:users",
+            "password" => "required|string|min:6|max:10"
+        ]);
+        
         $name = $request->name;
         $email = $request->email;
         $password = $request->password;
