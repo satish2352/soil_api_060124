@@ -36,7 +36,15 @@ class AuthController extends Controller {
                 $userRole = User::where('email','=',$email)->first();
                 $responseArray['user_id']   = $userRole->id;
 
-                return response()->json(['status' => 'success', 'message' => 'Token generated','data' => $responseArray,'status_code'=>200]);
+                $userinfo=User::where(['email'=>$request->email,'visible_password'=>$request->password])->first();
+                
+                // response()->json(['status' => 'success', 'message' => 'Token generated','data' => $responseArray,'status_code'=>200]);
+
+                return response()->json([
+                    "status" => true,
+                    "token" => $result['access_token'],
+                    "data" => $userinfo
+                    ]);
             } else {
                 return response()->json([
                         "status" => false,
@@ -119,15 +127,15 @@ class AuthController extends Controller {
 
                 
 
-                $result  = json_decode((string) $response->getBody(), true);
+                // $result  = json_decode((string) $response->getBody(), true);
                 
-                $responseArray['token']         = $result['access_token'];
-                $responseArray['refresh_token'] = $result['refresh_token'];
+                // $responseArray['token']         = $result['access_token'];
+                // $responseArray['refresh_token'] = $result['refresh_token'];
 
-                $userRole = User::where('email','=',$email)->first();
-                $responseArray['user_id']   = $userRole->id;
+                // $userRole = User::where('email','=',$email)->first();
+                // $responseArray['user_id']   = $userRole->id;
 
-                return response()->json(['status' => 'success', 'message' => 'Token generated','data' => $responseArray,'status_code'=>200]);
+                // return response()->json(['status' => 'success', 'message' => 'Token generated','data' => $responseArray,'status_code'=>200]);
 
             }
             else
@@ -180,8 +188,11 @@ class AuthController extends Controller {
             $user->email = $email;
             $user->password = app('hash')->make($password);
             if ($user->save()) {
-                return response()->json(['status' => 'success', 'message' => 'User created']);
-                //return $this->login($request);
+                    return $this->login($request);
+                // return response()->json([
+                //     "status" => true,
+                //     "user" => $user
+                // ]);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
