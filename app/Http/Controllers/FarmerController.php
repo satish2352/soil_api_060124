@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
-use App\Model\UsersInfo;
+use App\Models\UsersInfo;
 use App\User;
 use App\Http\Controllers\CommonController As CommonController;
 use DB;

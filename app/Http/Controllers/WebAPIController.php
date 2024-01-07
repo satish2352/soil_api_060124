@@ -5,49 +5,49 @@ use Exception;
 use JWTAuth;
 use App\Task;
 use Illuminate\Http\Request;
-use App\Model\UsersInfo;
+use App\Models\UsersInfo;
 use App\User;
-use App\Model\FarmerMeeting;
-use App\Model\DistributorMeeting;
-use App\Model\TargetVideos;
-use App\Model\TargetVideosToDistributor;
-use App\Model\FarmerVistByDistributor;
-use App\Model\WebCompanyProfile;
-use App\Model\WebAboutUs;
-use App\Model\WebCoverPhoto;
-use App\Model\WebGallaryPhoto;
-use App\Model\WebVisionMission;
-use App\Model\WebVideos;
-use App\Model\WebBlog;
-use App\Model\Career;
-use App\Model\Marquee;
-use App\Model\Enquiry;
-use App\Model\WebTestiminials;
-use App\Model\FrontUsers;
-use App\Model\WebAudio;
-use App\Model\Product;
-use App\Model\FrontProduct;
-use App\Model\ProductReview;
-use App\Model\BlogReply;
-use App\Model\WebAgency;
-use App\Model\ProductDetails;
-use App\Model\Notification;
-use App\Model\SCTResult;
-use App\Model\Subscriber;
-use App\Model\Dist_Promotion_Demotion;
-use App\Model\WebClientLogo;
-use App\Model\Counter;
-use App\Model\WebInternship;
-use App\Model\WebJobPosting;
+use App\Models\FarmerMeeting;
+use App\Models\DistributorMeeting;
+use App\Models\TargetVideos;
+use App\Models\TargetVideosToDistributor;
+use App\Models\FarmerVistByDistributor;
+use App\Models\WebCompanyProfile;
+use App\Models\WebAboutUs;
+use App\Models\WebCoverPhoto;
+use App\Models\WebGallaryPhoto;
+use App\Models\WebVisionMission;
+use App\Models\WebVideos;
+use App\Models\WebBlog;
+use App\Models\Career;
+use App\Models\Marquee;
+use App\Models\Enquiry;
+use App\Models\WebTestiminials;
+use App\Models\FrontUsers;
+use App\Models\WebAudio;
+use App\Models\Product;
+use App\Models\FrontProduct;
+use App\Models\ProductReview;
+use App\Models\BlogReply;
+use App\Models\WebAgency;
+use App\Models\ProductDetails;
+use App\Models\Notification;
+use App\Models\SCTResult;
+use App\Models\Subscriber;
+use App\Models\Dist_Promotion_Demotion;
+use App\Models\WebClientLogo;
+use App\Models\Counter;
+use App\Models\WebInternship;
+use App\Models\WebJobPosting;
 use File;
 use Carbon\Carbon;
-use App\Model\SaleSummary;
-use App\Model\OrderSummary;
-use App\Model\OrderDetail;
-use App\Model\Downloads;
-use App\Model\Address;
-use App\Model\Principles;
-use App\Model\Crops;
+use App\Models\SaleSummary;
+use App\Models\OrderSummary;
+use App\Models\OrderDetail;
+use App\Models\Downloads;
+use App\Models\Address;
+use App\Models\Principles;
+use App\Models\Crops;
 use DB;
 
 use App\Http\Controllers\CommonController As CommonController;
@@ -4103,7 +4103,7 @@ class WebAPIController extends Controller
             $dateto=$request->dateto;
             $totalamount=0;
 
-            $result=\App\Model\OrderSummary::query()
+            $result=\App\Models\OrderSummary::query()
               ->where('tbl_order_summary.account_approved','yes')
               ->where('tbl_order_summary.is_deleted','no')
               
@@ -4175,7 +4175,7 @@ class WebAPIController extends Controller
             $dateto=$request->dateto;
             $totalamount=0;
 
-            $result=\App\Model\SaleSummary::query()
+            $result=\App\Models\SaleSummary::query()
               ->where('tbl_sale_summary.is_deleted','no')
               
                ->when($request->get('datefrom'), function($query) use ($request) {
@@ -4245,7 +4245,7 @@ class WebAPIController extends Controller
             $dateto=$request->dateto;
             $totalamount=0;
 
-            $result=\App\Model\SaleSummary::query()
+            $result=\App\Models\SaleSummary::query()
               ->where('tbl_sale_summary.is_deleted','no')
               ->where('tbl_sale_summary.order_no',$request->order_no)
               ->where('tbl_sale_summary.created_disctributor_id',$request->created_disctributor_id)
@@ -4319,7 +4319,7 @@ class WebAPIController extends Controller
         {
             $totalamount=0;
             
-            $result=\App\Model\UsersInfo::query()
+            $result=\App\Models\UsersInfo::query()
               
               ->where('is_deleted','no')
               
@@ -4684,7 +4684,7 @@ class WebAPIController extends Controller
             $dateto=$request->dateto;
             $totalamount=0;
 
-            $result=\App\Model\OrderSummary::query()
+            $result=\App\Models\OrderSummary::query()
               ->where('tbl_order_summary.account_approved','yes')
               ->where('tbl_order_summary.is_deleted','no')
               
@@ -4760,7 +4760,7 @@ class WebAPIController extends Controller
             $dateto=$request->dateto;
             $totalamount=0;
 
-            $result=\App\Model\OrderSummary::query()
+            $result=\App\Models\OrderSummary::query()
               ->where('tbl_order_summary.order_no','!=','null')
              
               
@@ -4832,7 +4832,7 @@ class WebAPIController extends Controller
             $dateto=$request->dateto;
             $totalamount=0;
 
-            $result=\App\Model\OrderSummary::query()
+            $result=\App\Models\OrderSummary::query()
               ->where('tbl_order_summary.account_approved','yes')
               ->where('tbl_order_summary.is_deleted','no')
               ->where('tbl_order_summary.order_dispatched','no')
@@ -4910,7 +4910,7 @@ class WebAPIController extends Controller
             $dateto=$request->dateto;
             $totalamount=0;
 
-            $result=\App\Model\OrderSummary::query()
+            $result=\App\Models\OrderSummary::query()
               ->where('tbl_order_summary.account_approved','yes')
               ->where('tbl_order_summary.is_deleted','no')
               ->where('tbl_order_summary.order_dispatched','yes')
@@ -5029,7 +5029,7 @@ class WebAPIController extends Controller
     //         $dateto=$request->dateto;
     //         $totalamount=0;
 
-    //         $result=\App\Model\OrderSummary::query()
+    //         $result=\App\Models\OrderSummary::query()
     //           ->where('tbl_order_summary.account_approved','yes')
     //           ->where('tbl_order_summary.is_deleted','no')
     //           //->where('tbl_order_summary.order_dispatched','yes')

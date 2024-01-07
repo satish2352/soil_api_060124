@@ -22,11 +22,11 @@ class TokenTimeServiceProvider extends PassportServiceProvider
 
     {
 
-        Passport::tokensExpireIn(Carbon::now()->addMinutes(1));
+        Passport::tokensExpireIn(Carbon::now()->addMinutes(360));
 
-        Passport::refreshTokensExpireIn(Carbon::now()->addMinutes(10));
+        Passport::refreshTokensExpireIn(Carbon::now()->addMinutes(361));
 
-        Passport::personalAccessTokensExpireIn(Carbon::now()->addMinutes(1));
+        Passport::personalAccessTokensExpireIn(Carbon::now()->addMinutes(360));
 
  
 

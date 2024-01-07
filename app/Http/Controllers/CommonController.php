@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Model\Area;
+use App\Models\Area;
 use App\User;
-use App\Model\UsersInfo;
-use App\Model\Downloads;
+use App\Models\UsersInfo;
+use App\Models\Downloads;
 use Response;
-use App\Model\LoginDetail;
+use App\Models\LoginDetail;
 
 class CommonController extends Controller
 {

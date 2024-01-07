@@ -5,7 +5,7 @@ use Exception;
 use App\Task;
 use Illuminate\Http\Request;
 use App\User;
-use App\Model\ {
+use App\Models\ {
     Dist_Promotion_Demotion,
     FrontProduct,ProductDetails,
     UsersInfo,
