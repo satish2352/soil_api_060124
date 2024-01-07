@@ -58,7 +58,6 @@ class FrontController extends Controller
     {
         $this->commonController=new CommonController();
         
-        //$this->user = JWTAuth::parseToken()->authenticate();
        // $this->commonController->validateToken($this->user);
     }
     

@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use JWTAuth;
 use App\Task;
 use Illuminate\Http\Request;
 use App\Model\UsersInfo;
@@ -18,7 +16,6 @@ class FarmerController extends Controller
     public function __construct()
     {
         $this->commonController=new CommonController();
-        $this->user = JWTAuth::parseToken()->authenticate();
     }
     
      public function processUpload(Request $request, $user, $file_name)

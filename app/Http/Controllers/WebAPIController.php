@@ -83,7 +83,7 @@ class WebAPIController extends Controller
 
         // return response()->json(compact('user'));
                     
-        $this->user = JWTAuth::parseToken()->authenticate();
+       
        // $this->commonController->validateToken($this->user);
     }
     

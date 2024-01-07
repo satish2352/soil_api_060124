@@ -39,7 +39,6 @@ class DistributorControllerNandu extends Controller
     public function __construct()
     {
         $this->commonController=new CommonController();
-        $this->user = JWTAuth::parseToken()->authenticate();
     }
   
        

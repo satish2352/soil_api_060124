@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 use Exception;
-use JWTAuth;
 use App\Task;
 use Illuminate\Http\Request;
 use App\User;
@@ -39,7 +38,6 @@ class DistributorController extends Controller
     public function __construct()
     {
         $this->commonController=new CommonController();
-        $this->user = JWTAuth::parseToken()->authenticate();
         
     }
     
