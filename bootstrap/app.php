@@ -61,7 +61,7 @@ $app->singleton(
 
 $app->configure('auth');
 $app->configure('service');
-
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -84,13 +84,15 @@ $app->configure('service');
 
 
 // Enable auth middleware (shipped with Lumen)
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
 
 $app->routeMiddleware([
 
     'auth' => App\Http\Middleware\Authenticate::class,
 
 ]);
-
 
 
 /*
@@ -103,6 +105,8 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
+
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
