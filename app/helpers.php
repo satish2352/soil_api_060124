@@ -661,19 +661,19 @@ function getUserWithSlug($slug='')
 }
 
 
-function pushNotification($channels = ['owner','admin'], $event = 'newUser',  $options)
-{
+// function pushNotification($channels = ['owner','admin'], $event = 'newUser',  $options)
+// {
 
-     $pusher = \Illuminate\Support\Facades\App::make('pusher');
+//      $pusher = \Illuminate\Support\Facades\App::make('pusher');
 
-         $pusher->trigger( $channels,
-                      $event, 
-                      $options
-                     );
+//          $pusher->trigger( $channels,
+//                       $event, 
+//                       $options
+//                      );
 
          
 
-}
+// }
 
 /**
  * This method is used to return the default validation messages
