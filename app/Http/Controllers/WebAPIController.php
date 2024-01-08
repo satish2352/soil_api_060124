@@ -8647,21 +8647,21 @@ class WebAPIController extends Controller
 
         //   Business area 
 
-        ->leftJoin('tbl_area as stateNew', function($join) {
-            $join->on('front_usersinfo.business_state', '=', 'stateNew.location_id');
+        ->leftJoin('tbl_area as stateNewBusiness', function($join) {
+            $join->on('front_usersinfo.business_state', '=', 'stateNewBusiness.location_id');
           })
           
-          ->leftJoin('tbl_area as districtNew', function($join) {
-            $join->on('front_usersinfo.business_district', '=', 'districtNew.location_id');
+          ->leftJoin('tbl_area as districtNewBusiness', function($join) {
+            $join->on('front_usersinfo.business_district', '=', 'districtNewBusiness.location_id');
           })
           
           
-          ->leftJoin('tbl_area as talukaNew', function($join) {
-            $join->on('front_usersinfo.taluka', '=', 'talukaNew.location_id');
+          ->leftJoin('tbl_area as talukaNewBusiness', function($join) {
+            $join->on('front_usersinfo.taluka', '=', 'talukaNewBusiness.location_id');
           })
           
-          ->leftJoin('tbl_area as cityNew', function($join) {
-            $join->on('front_usersinfo.city', '=', 'cityNew.location_id');
+          ->leftJoin('tbl_area as cityNewBusiness', function($join) {
+            $join->on('front_usersinfo.city', '=', 'cityNewBusiness.location_id');
           })
 
 
@@ -8714,10 +8714,16 @@ class WebAPIController extends Controller
           'front_usersinfo.created_by',
           'front_usersinfo.created_on',
           'front_usersinfo.updated_on',
+
           'stateNew.name as state',
           'districtNew.name as district',
           'talukaNew.name as taluka',
-          'cityNew.name as city')
+          'cityNew.name as city',
+
+          'stateNewBusiness.name as state_business',
+          'districtNewBusiness.name as district_business',
+          'talukaNewBusiness.name as taluka_business',
+          'cityNewBusiness.name as city_business')
           ->get();
 
 
