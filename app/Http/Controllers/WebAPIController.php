@@ -8814,10 +8814,17 @@ class WebAPIController extends Controller
         }
         else
         {
+            // $response = array();
+            // $response['code'] = 400;
+            // $response['message'] = 'Distributor List Not Found';
+            // $response['result'] = false;
+            // return response()->json($response);
+
             $response = array();
-            $response['code'] = 400;
-            $response['message'] = 'Distributor List Not Found';
-            $response['result'] = false;
+            $response['data'] = array();
+            $response['code'] = 200;
+            $response['message'] = 'Distributor List Get Successfully';
+            $response['result'] = true;
             return response()->json($response);
         }
 
