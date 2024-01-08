@@ -4095,6 +4095,77 @@ class WebAPIController extends Controller
     }
     
     
+    // public function websalesreport(Request $request)
+    // {
+    //     try
+    //     {
+    //         $datefrom=$request->datefrom;
+    //         $dateto=$request->dateto;
+    //         $totalamount=0;
+
+    //         $result=\App\Models\OrderSummary::query()
+    //           ->where('tbl_order_summary.account_approved','yes')
+    //           ->where('tbl_order_summary.is_deleted','no')
+              
+    //            ->when($request->get('datefrom'), function($query) use ($request) {
+    //                //$query->whereBetween('order_date', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+    //                $query->whereBetween('order_date', [$request->datefrom,$request->dateto]);
+    //             }) 
+                
+    //            ->get();
+                                   
+            
+    //         foreach($result as $key=>$resultnew)
+    //         {
+    //             try
+    //             {
+    //                 $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
+    //                 $resultnew->fname=$details->fname;
+    //                 $resultnew->mname=$details->mname;
+    //                 $resultnew->lname=$details->lname;
+                    
+    //                 $totalamount=$totalamount+$resultnew->created_disctributor_amount;
+                    
+    //             } catch(Exception $e) {
+    //                 return response()->json([
+    //                         "data" => '',
+    //                         "result" => false,
+    //                         "error" => true,
+    //                         "message" =>$e->getMessage()." ".$e->getCode()
+    //                     ]);
+                   
+    //              }
+    //         }
+            
+    //         // $result['totalamount']=$totalamount;
+
+    //         if ($result)
+    //         {
+    //              return response()->json([
+    //                 "data" => $result,
+    //                 "totalorder" => count($result),
+    //                 "totalamount" => $totalamount,
+    //                 "datefrom" => $request->datefrom,
+    //                 "dateto" => $request->dateto,
+    //                 "result" => true,
+    //                 "message" => 'Information get Successfully'
+    //             ]);
+    //         }
+    //         else
+    //         {
+    //              return response()->json([
+    //                 "data" => '',
+    //                 "result" => false,
+    //                 "message" => 'Information not found'
+    //             ]);
+                
+    //         }
+    //     }
+    //     catch(Exception $e) {
+    //       return  'Message: ' .$e->getMessage();
+    //     }
+    // }
+
     public function websalesreport(Request $request)
     {
         try
@@ -4104,14 +4175,54 @@ class WebAPIController extends Controller
             $totalamount=0;
 
             $result=\App\Models\OrderSummary::query()
-              ->where('tbl_order_summary.account_approved','yes')
-              ->where('tbl_order_summary.is_deleted','no')
-              
-               ->when($request->get('datefrom'), function($query) use ($request) {
-                   //$query->whereBetween('order_date', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
-                   $query->whereBetween('order_date', [$request->datefrom,$request->dateto]);
-                }) 
+
+            ->leftJoin('tbl_area as districtNew', function($join) {
+                $join->on('tbl_order_summary.created_disctributor_id', '=', 'districtNew.location_id');
+            })
+          
+            ->leftJoin('usersinfo as dist_name', function($join) {
+                $join->on('tbl_order_summary.created_disctributor_id', '=', 'dist_name.user_id');
+            })
+            ->when($request->get('dist_id'), function($query) use ($request) {
+                $query->where('tbl_order_summary.created_disctributor_id', $request->dist_id);
+             }) 
+
+            ->where('tbl_order_summary.account_approved','yes')
+            ->where('tbl_order_summary.is_deleted','no')
+            
+            ->when($request->get('datefrom'), function($query) use ($request) {
+                $query->whereBetween('tbl_order_summary.order_date', [$request->datefrom,$request->dateto]);
+            }) 
+            
+            ->select( 
+                'tbl_order_summary.id',
+                'tbl_order_summary.order_no',
+                'tbl_order_summary.order_date',
+                'tbl_order_summary.order_created_by',
+                'tbl_order_summary.created_disctributor_id',
+                'tbl_order_summary.created_disctributor_amount',
+                'tbl_order_summary.dispatched_to_created_disctributor_by_warehouse',
+                'tbl_order_summary.forwarded_bsc_id',
+                'tbl_order_summary.forwarded_bsc_amount',
+                'tbl_order_summary.dispatched_to_forwarded_bsc_by_warehouse',
+                'tbl_order_summary.forwarded_dsc_id',
+                'tbl_order_summary.forwarded_dsc_amount',
+                'tbl_order_summary.dispatched_to_forwarded_dsc_amount_by_warehouse',
+                'tbl_order_summary.account_approved',
+                'tbl_order_summary.forward_to_warehouse',
+                'tbl_order_summary.entry_by',
+                'tbl_order_summary.order_dispatched',
+                'tbl_order_summary.order_dispatched_date',
+                'tbl_order_summary.is_deleted',
+                'tbl_order_summary.created_at',
+                'tbl_order_summary.updated_at',
                 
+                'districtNew.name as district',
+                
+                'dist_name.fname as fname',
+                'dist_name.mname as mname',
+                'dist_name.lname as lname',
+                )
                ->get();
                                    
             
@@ -4119,10 +4230,10 @@ class WebAPIController extends Controller
             {
                 try
                 {
-                    $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
-                    $resultnew->fname=$details->fname;
-                    $resultnew->mname=$details->mname;
-                    $resultnew->lname=$details->lname;
+                    // $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
+                    // $resultnew->fname=$details->fname;
+                    // $resultnew->mname=$details->mname;
+                    // $resultnew->lname=$details->lname;
                     
                     $totalamount=$totalamount+$resultnew->created_disctributor_amount;
                     
@@ -4176,24 +4287,69 @@ class WebAPIController extends Controller
             $totalamount=0;
 
             $result=\App\Models\SaleSummary::query()
+                ->leftJoin('tbl_area as districtNew', function($join) {
+                    $join->on('tbl_sale_summary.created_disctributor_id', '=', 'districtNew.location_id');
+                })
+              
+                ->leftJoin('usersinfo as dist_name', function($join) {
+                    $join->on('tbl_sale_summary.created_disctributor_id', '=', 'dist_name.user_id');
+                })
+                  
+
               ->where('tbl_sale_summary.is_deleted','no')
               
                ->when($request->get('datefrom'), function($query) use ($request) {
                    //$query->whereBetween('order_date', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
-                   $query->whereBetween('order_date', [$request->datefrom,$request->dateto]);
+                   $query->whereBetween('tbl_sale_summary.order_date', [$request->datefrom,$request->dateto]);
                 }) 
+
+                ->when($request->get('dist_id'), function($query) use ($request) {
+                    $query->where('tbl_sale_summary.created_disctributor_id', $request->dist_id);
+                 }) 
+                ->select( 
+                'tbl_sale_summary.id',
+                'tbl_sale_summary.order_no',
+                'tbl_sale_summary.order_date',
+                'tbl_sale_summary.order_created_by',
+                'tbl_sale_summary.created_disctributor_id',
+                'tbl_sale_summary.created_disctributor_amount',
+                'tbl_sale_summary.dispatched_to_created_disctributor_by_warehouse',
+                'tbl_sale_summary.forwarded_bsc_id',
+                'tbl_sale_summary.forwarded_bsc_amount',
+                'tbl_sale_summary.dispatched_to_forwarded_bsc_by_warehouse',
+                'tbl_sale_summary.forwarded_dsc_id',
+                'tbl_sale_summary.forwarded_dsc_amount',
+                'tbl_sale_summary.dispatched_to_forwarded_dsc_amount_by_warehouse',
+                'tbl_sale_summary.account_approved',
+                'tbl_sale_summary.forward_to_warehouse',
+                'tbl_sale_summary.entry_by',
+                'tbl_sale_summary.order_dispatched',
+                'tbl_sale_summary.order_dispatched_date',
+                'tbl_sale_summary.is_deleted',
+                'tbl_sale_summary.created_at',
+                'tbl_sale_summary.updated_at',
                 
+                'districtNew.name as district',
+                
+                'dist_name.fname as fname',
+                'dist_name.mname as mname',
+                'dist_name.lname as lname',
+                )
                ->get();
+
+
+
+
                                    
             
             foreach($result as $key=>$resultnew)
             {
                 try
                 {
-                    $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
-                    $resultnew->fname=$details->fname;
-                    $resultnew->mname=$details->mname;
-                    $resultnew->lname=$details->lname;
+                    // $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
+                    // $resultnew->fname=$details->fname;
+                    // $resultnew->mname=$details->mname;
+                    // $resultnew->lname=$details->lname;
                     
                     $totalamount=$totalamount+$resultnew->created_disctributor_amount;
                     
@@ -8461,54 +8617,154 @@ class WebAPIController extends Controller
     
     public function frontdistributorlist(Request $request)
     {
-        $result = FrontUsers::whereIn('user_type',['fsc','bsc','dsc'])->where('front_usersinfo.is_deleted', '=', 'no')->orderBy('id', 'DESC')->get();
+        $result = FrontUsers:: 
+        // leftJoin('usersinfo as dist_name', function($join) {
+        //     $join->on('front_usersinfo.created_by', '=', 'dist_name.user_id');
+        //   })
+          
+          
+        //   ->leftJoin('usersinfo AS farm_name', function($join) {
+        //     $join->on('front_usersinfo.farmer_id', '=', 'farm_name.user_id');
+        //   })
+          
+          leftJoin('tbl_area as stateNew', function($join) {
+            $join->on('front_usersinfo.state', '=', 'stateNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as districtNew', function($join) {
+            $join->on('front_usersinfo.district', '=', 'districtNew.location_id');
+          })
+          
+          
+          ->leftJoin('tbl_area as talukaNew', function($join) {
+            $join->on('front_usersinfo.business_tuluka', '=', 'talukaNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as cityNew', function($join) {
+            $join->on('front_usersinfo.business_village', '=', 'cityNew.location_id');
+          })
+
+
+        //   Business area 
+
+        ->leftJoin('tbl_area as stateNew', function($join) {
+            $join->on('front_usersinfo.business_state', '=', 'stateNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as districtNew', function($join) {
+            $join->on('front_usersinfo.business_district', '=', 'districtNew.location_id');
+          })
+          
+          
+          ->leftJoin('tbl_area as talukaNew', function($join) {
+            $join->on('front_usersinfo.taluka', '=', 'talukaNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as cityNew', function($join) {
+            $join->on('front_usersinfo.city', '=', 'cityNew.location_id');
+          })
+
+
+          
+          ->whereIn('front_usersinfo.user_type',['fsc','bsc','dsc'])
+          ->where('front_usersinfo.is_deleted', '=', 'no')
+          ->orderBy('front_usersinfo.id', 'DESC')
+          ->select('front_usersinfo.id',
+          'front_usersinfo.fname',
+          'front_usersinfo.mname',
+          'front_usersinfo.lname',
+          'front_usersinfo.email',
+          'front_usersinfo.phone',
+          'front_usersinfo.alternate_mobile',
+          'front_usersinfo.state',
+          'front_usersinfo.district',
+          'front_usersinfo.taluka',
+          'front_usersinfo.city',
+          'front_usersinfo.password',
+          'front_usersinfo.visible_password',
+          'front_usersinfo.user_type',
+          'front_usersinfo.is_deleted',
+          'front_usersinfo.active',
+          'front_usersinfo.remember_token',
+          'front_usersinfo.is_verified',
+          'front_usersinfo.aadhar_card_image_front',
+          'front_usersinfo.aadhar_card_image_back',
+          'front_usersinfo.pan_card',
+          'front_usersinfo.light_bill',
+          'front_usersinfo.shop_act_image',
+          'front_usersinfo.product_purchase_bill',
+          'front_usersinfo.business_address',
+          'front_usersinfo.business_state',
+          'front_usersinfo.business_district',
+          'front_usersinfo.business_tuluka',
+          'front_usersinfo.business_village',
+          'front_usersinfo.where_open_shop',
+          'front_usersinfo.used_sct',
+          'front_usersinfo.why_want_take_distributorship',
+          'front_usersinfo.distributorship_exerience',
+          'front_usersinfo.experience_farm_garder',
+          'front_usersinfo.goal',
+          'front_usersinfo.geolocation',
+          'front_usersinfo.added_by',
+          'front_usersinfo.devicetoken',
+          'front_usersinfo.devicetype',
+          'front_usersinfo.devicename',
+          'front_usersinfo.deviceid',
+          'front_usersinfo.logintime',
+          'front_usersinfo.created_by',
+          'front_usersinfo.created_on',
+          'front_usersinfo.updated_on',
+          'stateNew.name as state',
+          'districtNew.name as district',
+          'talukaNew.name as taluka',
+          'cityNew.name as city')
+          ->get();
+
+
         foreach($result as $key=>$value)
         {
-            $stateName=$this->commonController->getAreaNameById($value->state);
-            $value->state=$stateName->name;
+            // $stateName=$this->commonController->getAreaNameById($value->state);
+            // $value->state=$stateName->name;
             
-            $districtName=$this->commonController->getAreaNameById($value->district);
-            $value->district=$districtName->name;
+            // $districtName=$this->commonController->getAreaNameById($value->district);
+            // $value->district=$districtName->name;
             
-            $talukaName=$this->commonController->getAreaNameById($value->taluka);
-            $value->taluka=$talukaName->name;
+            // $talukaName=$this->commonController->getAreaNameById($value->taluka);
+            // $value->taluka=$talukaName->name;
             
-            $cityName=$this->commonController->getAreaNameById($value->city);
-            $value->city=$cityName->name;
+            // $cityName=$this->commonController->getAreaNameById($value->city);
+            // $value->city=$cityName->name;
             
             
-            $bstateName=$this->commonController->getAreaNameById($value->business_state);
-            if($bstateName) {
-                $value->business_state=$bstateName->name;
-            } else {
-                $value->business_state='';
-            }
+            // $bstateName=$this->commonController->getAreaNameById($value->business_state);
+            // if($bstateName) {
+            //     $value->business_state=$bstateName->name;
+            // } else {
+            //     $value->business_state='';
+            // }
 
             
-            $bdistrictName=$this->commonController->getAreaNameById($value->business_district);
-             if($bdistrictName) {
-                $value->business_district=$bdistrictName->name;
-            } else {
-                $value->business_district='';
-            }
-            // $value->business_district=$bdistrictName->name;
+            // $bdistrictName=$this->commonController->getAreaNameById($value->business_district);
+            //  if($bdistrictName) {
+            //     $value->business_district=$bdistrictName->name;
+            // } else {
+            //     $value->business_district='';
+            // }
             
-            $btalukaName=$this->commonController->getAreaNameById($value->business_tuluka);
-             if($btalukaName) {
-                $value->business_tuluka=$btalukaName->name;
-            } else {
-                $value->business_tuluka='';
-            }
-            // $value->business_tuluka=$btalukaName->name;
+            // $btalukaName=$this->commonController->getAreaNameById($value->business_tuluka);
+            //  if($btalukaName) {
+            //     $value->business_tuluka=$btalukaName->name;
+            // } else {
+            //     $value->business_tuluka='';
+            // }
             
-            $bcityName=$this->commonController->getAreaNameById($value->business_village);
-             if($bcityName) {
-                $value->business_village=$bcityName->name;
-            } else {
-                $value->business_village='';
-            }
+            // $bcityName=$this->commonController->getAreaNameById($value->business_village);
+            //  if($bcityName) {
+            //     $value->business_village=$bcityName->name;
+            // } else {
+            //     $value->business_village='';
+            // }
             
-            // $value->business_village=$bcityName->name;
             
             
             $value->aadhar_card_image_front=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_front;
