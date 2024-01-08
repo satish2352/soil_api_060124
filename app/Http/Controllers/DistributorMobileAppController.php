@@ -507,9 +507,46 @@ class DistributorMobileAppController extends Controller
     {
         try
         {
-            $result = OrderSummary::where('order_no',$request->order_no)
+            $result = OrderSummary::
+            leftJoin('tbl_order_detail', function($join) {
+                $join->on('tbl_order_summary.order_no', '=', 'tbl_order_detail.order_no');
+            })
+          
+            ->leftJoin('tbl_product', function($join) {
+                $join->on('tbl_order_detail.prod_id', '=', 'tbl_product.id');
+            })
+          
+
+            ->where('tbl_order_summary.order_no',$request->order_no)
             ->where('tbl_order_summary.created_disctributor_id',$request->created_disctributor_id)
-            ->where('tbl_order_summary.is_deleted','no')->get();
+            ->where('tbl_order_summary.is_deleted','no')
+            ->select(
+                'tbl_order_summary.id',
+                'tbl_order_summary.order_no',
+                'tbl_order_summary.order_date',
+                'tbl_order_summary.order_created_by',
+                'tbl_order_summary.created_disctributor_id',
+                'tbl_order_summary.created_disctributor_amount',
+                'tbl_order_summary.dispatched_to_created_disctributor_by_warehouse',
+                'tbl_order_summary.forwarded_bsc_id',
+                'tbl_order_summary.forwarded_bsc_amount',
+                'tbl_order_summary.dispatched_to_forwarded_bsc_by_warehouse',
+                'tbl_order_summary.forwarded_dsc_id',
+                'tbl_order_summary.forwarded_dsc_amount',
+                'tbl_order_summary.dispatched_to_forwarded_dsc_amount_by_warehouse',
+                'tbl_order_summary.account_approved',
+                'tbl_order_summary.forward_to_warehouse',
+                'tbl_order_summary.entry_by',
+                'tbl_order_summary.order_dispatched',
+                'tbl_order_summary.order_dispatched_date',
+                'tbl_order_summary.is_deleted',
+                'tbl_order_summary.created_at',
+                'tbl_order_summary.updated_at',
+                'tbl_product_details.quantity',
+                'tbl_product_details.quantity_unit',
+                
+            )
+            ->get();
         
             foreach($result as $key=>$value)
             {
