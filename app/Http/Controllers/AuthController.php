@@ -90,7 +90,6 @@ class AuthController extends Controller {
                 ]
             ]);
             $result  = json_decode((string) $response->getBody(), true);
-dd($result['access_token']);
             if($result) {
 
                 $userinfo=User::where(['email'=>$request->email,'visible_password'=>$request->password])->first();
