@@ -8740,10 +8740,11 @@ class WebAPIController extends Controller
           'talukaNew.name as taluka',
           'cityNew.name as city',
 
-          'stateNewBusiness.name as state_business',
-          'districtNewBusiness.name as district_business',
-          'talukaNewBusiness.name as taluka_business',
-          'cityNewBusiness.name as city_business')
+        //   'stateNewBusiness.name as state_business',
+        //   'districtNewBusiness.name as district_business',
+        //   'talukaNewBusiness.name as taluka_business',
+        //   'cityNewBusiness.name as city_business'
+          )
           ->get();
 
 
