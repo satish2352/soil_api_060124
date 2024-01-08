@@ -8647,22 +8647,42 @@ class WebAPIController extends Controller
 
         //   Business area 
 
-        ->leftJoin('tbl_area as stateNewBusiness', function($join) {
-            $join->on('front_usersinfo.business_state', '=', 'stateNewBusiness.location_id');
+        
+
+        ->when($request->get('state'), function($query) use ($request) {
+                   
+            $query->where('front_usersinfo.state',$request->state);
           })
           
-          ->leftJoin('tbl_area as districtNewBusiness', function($join) {
-            $join->on('front_usersinfo.business_district', '=', 'districtNewBusiness.location_id');
+          ->when($request->get('district'), function($query) use ($request) {
+            $query->where('front_usersinfo.district',$request->district);
           })
           
-          
-          ->leftJoin('tbl_area as talukaNewBusiness', function($join) {
-            $join->on('front_usersinfo.taluka', '=', 'talukaNewBusiness.location_id');
+          ->when($request->get('taluka'), function($query) use ($request) {
+            $query->where('front_usersinfo.business_tuluka',$request->taluka);
           })
           
-          ->leftJoin('tbl_area as cityNewBusiness', function($join) {
-            $join->on('front_usersinfo.city', '=', 'cityNewBusiness.location_id');
+          ->when($request->get('city'), function($query) use ($request) {
+            $query->where('front_usersinfo.business_village',$request->city);
           })
+          
+
+        // ->leftJoin('tbl_area as stateNewBusiness', function($join) {
+        //     $join->on('front_usersinfo.business_state', '=', 'stateNewBusiness.location_id');
+        //   })
+          
+        //   ->leftJoin('tbl_area as districtNewBusiness', function($join) {
+        //     $join->on('front_usersinfo.business_district', '=', 'districtNewBusiness.location_id');
+        //   })
+          
+          
+        //   ->leftJoin('tbl_area as talukaNewBusiness', function($join) {
+        //     $join->on('front_usersinfo.taluka', '=', 'talukaNewBusiness.location_id');
+        //   })
+          
+        //   ->leftJoin('tbl_area as cityNewBusiness', function($join) {
+        //     $join->on('front_usersinfo.city', '=', 'cityNewBusiness.location_id');
+        //   })
 
 
           
