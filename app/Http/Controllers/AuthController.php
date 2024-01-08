@@ -89,8 +89,9 @@ class AuthController extends Controller {
                     "password" => $request->password
                 ]
             ]);
-
-            if($response) {
+            $result  = json_decode((string) $response->getBody(), true);
+dd($result['access_token']);
+            if($result) {
 
                 $userinfo=User::where(['email'=>$request->email,'visible_password'=>$request->password])->first();
                 
@@ -104,7 +105,7 @@ class AuthController extends Controller {
                         
                         return response()->json([
                         "status" => true,
-                        "token" => $response['access_token'],
+                        "token" => $result['access_token'],
                         "data" => $userinfo
                         ]);
                         
