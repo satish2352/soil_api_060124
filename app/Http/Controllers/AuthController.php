@@ -60,10 +60,10 @@ class AuthController extends Controller {
             return array('status'=>'error','message'=>json_decode($message,true),'status_code'=>$statusCode);
             
             // return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-            return response()->json([
-                "status" => false,
-                "message" => "Unauthorized"
-            ]);
+            // return response()->json([
+            //     "status" => false,
+            //     "message" => "Unauthorized"
+            // ]);
         }
     }
 
@@ -104,7 +104,7 @@ class AuthController extends Controller {
                         
                         return response()->json([
                         "status" => true,
-                        "token" => $token,
+                        "token" => $response['access_token'],,
                         "data" => $userinfo
                         ]);
                         
