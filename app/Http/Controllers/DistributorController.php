@@ -179,7 +179,7 @@ class DistributorController extends Controller
                         "data" => '',
                         "result" => false,
                         // "message" =>$e->getMessage()." ".$e->getCode()
-                        "message" => "Some data missing or duplicate"
+                        "message" => "Some data missing or duplicate updated msg"
                     ]);
                
         }
