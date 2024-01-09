@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use Illuminate\Http\Request;
 use App\Models\UsersInfo;
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\CommonController As CommonController;
 use DB;
 use File;

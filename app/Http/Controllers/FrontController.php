@@ -6,7 +6,7 @@ use Exception;
 use App\Task;
 use Illuminate\Http\Request;
 use App\Models\UsersInfo;
-use App\User;
+use App\Models\User;
 use App\Models\FarmerMeeting;
 use App\Models\DistributorMeeting;
 use App\Models\TargetVideos;
