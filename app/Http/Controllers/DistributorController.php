@@ -979,11 +979,12 @@ class DistributorController extends Controller
         
         }
         catch(Exception $e) {
+            \info::log($e->getMessage()." ".$e->getCode());
                 return response()->json([
                         "data" => '',
                         "result" => false,
-                        // "message" =>$e->getMessage()." ".$e->getCode()
-                        "message" => "Some data missing or duplicate"
+                        "message" =>$e->getMessage()." ".$e->getCode()
+                        //"message" => "Some data missing or duplicate"
                     ]);
                
         }
