@@ -148,7 +148,7 @@ class DistributorController extends Controller
             UsersInfoForStructures::insert([
                 'user_id'=>$users->id,
                 'added_by'=>($request->created_by) ? $request->created_by: '0',
-                'post'=>'fsc'
+                'user_type'=>'fsc'
             ]);  
 
             if($request->created_by){
@@ -315,7 +315,7 @@ class DistributorController extends Controller
             UsersInfoForStructures::insert([
                 'user_id'=>$users->id,
                 'added_by'=>($request->created_by) ? $request->created_by: '0',
-                'post'=>'fsc'
+                'user_type'=>'fsc'
             ]);  
   
             if($request->created_by){
