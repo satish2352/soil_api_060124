@@ -9054,7 +9054,7 @@ class WebAPIController extends Controller
             $user = new User();
             $user->name = $result[0]['fname']." ".$result[0]['mname']." ".$result[0]['lname']." ";
             $user->email = $result[0]['email'];
-            $user->password = bcrypt($result[0]['password']);
+            $user->password = app('hash')->make($result[0]['password']);
             $user->visible_password =$result[0]['password'];
             $user->user_type ='fsc';
             $user->is_approved =  'no';

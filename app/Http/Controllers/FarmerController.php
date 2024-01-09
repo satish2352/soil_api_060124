@@ -49,7 +49,7 @@ class FarmerController extends Controller
             $user = new User();
             $user->name = $requestdata->fname." ".$requestdata->mname." ".$requestdata->lname." ";
             $user->email = $requestdata->email;
-            $user->password = bcrypt($requestdata->password);
+            $user->password = app('hash')->make($requestdata->password);
             $user->visible_password =$requestdata->password;
             $user->user_type ='farmer';
             $user->save();

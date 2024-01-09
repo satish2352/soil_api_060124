@@ -71,7 +71,7 @@ class DistributorController extends Controller
     //     $user = new User();
     //     $user->name = $request->fname." ".$request->mname." ".$request->lname." ";
     //     $user->email = $request->email;
-    //     $user->password = bcrypt($request->password);
+    //     $user->password = app('hash')->make($request->password);
     //     $user->user_type ='7';
     //     $user->save();
 
@@ -107,7 +107,7 @@ class DistributorController extends Controller
             $user = new User();
             $user->name = ucwords($request->fname)." ".ucwords($request->mname)." ".ucwords($request->lname)." ";
             $user->email = $request->email;
-            $user->password = bcrypt($request->password);
+            $user->password = app('hash')->make($request->password);
             $user->visible_password =$request->password;
             $user->user_type ='fsc';
             $user->save();
@@ -197,7 +197,7 @@ class DistributorController extends Controller
             //$user->name = $request->fname." ".$request->mname." ".$request->lname." ";
             $user->name = ucwords($request->fname)." ".ucwords($request->mname)." ".ucwords($request->lname)." ";
             $user->email = $request->email;
-            $user->password = bcrypt($request->password);
+            $user->password = app('hash')->make($request->password);
             $user->visible_password =$request->password;
             $user->user_type =$request->user_type;
             $user->save();
@@ -275,7 +275,7 @@ class DistributorController extends Controller
             $user = new User();
             $user->name = ucwords($request->fname)." ".ucwords($request->mname)." ".ucwords($request->lname)." ";
             $user->email = $request->email;
-            $user->password = bcrypt($request->password);
+            $user->password = app('hash')->make($request->password);
             $user->visible_password =$request->password;
             $user->user_type ='fsc';
             $user->is_approved =  'no';
@@ -909,7 +909,7 @@ class DistributorController extends Controller
         $user = new User();
         $user->name = $request->fname;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        $user->password = app('hash')->make($request->password);
         $user->visible_password =$request->password;
         $user->user_type ='farmer';
         $user->save();
