@@ -175,7 +175,6 @@ class DistributorController extends Controller
             }
         }
         catch(Exception $e) {
-           \info::log($e->getMessage()." ".$e->getCode());
                 return response()->json([
                         "data" => '',
                         "result" => false,
@@ -980,7 +979,6 @@ class DistributorController extends Controller
         
         }
         catch(Exception $e) {
-            \info::log($e->getMessage()." ".$e->getCode());
                 return response()->json([
                         "data" => '',
                         "result" => false,
