@@ -175,7 +175,7 @@ class DistributorController extends Controller
             }
         }
         catch(Exception $e) {
-           \info::info($e->getMessage()." ".$e->getCode());
+           \info::log($e->getMessage()." ".$e->getCode());
                 return response()->json([
                         "data" => '',
                         "result" => false,
