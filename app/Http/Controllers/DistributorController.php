@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Task;
 use Illuminate\Http\Request;
-use App\User;
 use App\Models\ {
     Dist_Promotion_Demotion,
     FrontProduct,ProductDetails,
@@ -26,7 +25,8 @@ use App\Models\ {
     Complaint,
     Notification,
     Address,
-    UsersInfoForStructures
+    UsersInfoForStructures,
+    User
 };
 use DB;
 use Validator;
