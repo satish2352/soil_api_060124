@@ -25,7 +25,8 @@ use App\Models\ {
     Messages,
     Complaint,
     Notification,
-    Address
+    Address,
+    UsersInfoForStructures
 };
 use DB;
 use Validator;
@@ -143,11 +144,17 @@ class DistributorController extends Controller
             $users->added_by =  ($request->created_by) ? $request->created_by: 'superadmin'; // 0- from Superadmin 1- Distributor
             //$users->added_by =  '130'; // 0- from Superadmin 1- Distributor
             $users->save();
-                
+
+            UsersInfoForStructures::insert([
+                'user_id'=>$users->id,
+                'added_by'=>($request->created_by) ? $request->created_by: '0',
+                'post'=>'fsc'
+            ]);  
+
             if($request->created_by){
-                $this->checkLevelofDistributor($request->created_by);
+                $this->checkLevelofDistributor($request->created_by,$users->id);
             }
-            
+           
              
             if ($users)
             {
@@ -303,9 +310,15 @@ class DistributorController extends Controller
             $users->active = 'yes'; // 0 Means Active, 1 Means Inactive
             $users->added_by =  ($request->created_by) ? $request->created_by: 'superadmin'; // 0- from Superadmin 1- Distributor
             $users->save();
-                
+
+            UsersInfoForStructures::insert([
+                'user_id'=>$users->id,
+                'added_by'=>($request->created_by) ? $request->created_by: '0',
+                'post'=>'fsc'
+            ]);  
+  
             if($request->created_by){
-                $this->checkLevelofDistributor($request->created_by);
+                $this->checkLevelofDistributor($request->created_by,$users->id);
             }
             
              
@@ -605,10 +618,88 @@ class DistributorController extends Controller
     
     public function distributorlist(Request $request)
     {
-        $result = UsersInfo::whereIn('usersinfo.user_type',['fsc','bsc','dsc'])->where('usersinfo.is_deleted', '=', 'no')->join('users','users.id','=','usersinfo.user_id')->orderBy('users.id', 'DESC')->get();
+        $result = UsersInfo::leftJoin('tbl_area as stateNew', function($join) {
+            $join->on('usersinfo.state', '=', 'stateNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as districtNew', function($join) {
+            $join->on('usersinfo.district', '=', 'districtNew.location_id');
+          })
+          
+          
+          ->leftJoin('tbl_area as talukaNew', function($join) {
+            $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as cityNew', function($join) {
+            $join->on('usersinfo.city', '=', 'cityNew.location_id');
+          })
+          ->join('users','users.id','=','usersinfo.user_id')
+          ->whereIn('usersinfo.user_type',['fsc','bsc','dsc'])
+          ->where('usersinfo.is_deleted', '=', 'no')
+         ->select(   'stateNew.name as state',
+         'districtNew.name as district',
+         'talukaNew.name as taluka',
+         'cityNew.name as city',
+         'usersinfo.id as id',
+        'usersinfo.user_id',
+        'usersinfo.name',
+        'usersinfo.fname',
+        'usersinfo.mname',
+        'usersinfo.lname',
+        'usersinfo.email',
+        'usersinfo.phone',
+        'usersinfo.aadharcard',
+        'usersinfo.state',
+        'usersinfo.district',
+        'usersinfo.taluka',
+        'usersinfo.city',
+        'usersinfo.address',
+        'usersinfo.pincode',
+        'usersinfo.crop',
+        'usersinfo.acre',
+        'usersinfo.password',
+        'usersinfo.visible_password',
+        'usersinfo.photo',
+        'usersinfo.is_sms_send',
+        'usersinfo.notification',
+        'usersinfo.user_type',
+        'usersinfo.shop_name',
+        'usersinfo.total_area',
+        'usersinfo.other_bussiness',
+        'usersinfo.is_deleted',
+        'usersinfo.active',
+        'usersinfo.remember_token',
+        'usersinfo.otp',
+        'usersinfo.is_verified',
+        'usersinfo.occupation',
+        'usersinfo.education',
+        'usersinfo.exp_in_agricultural',
+        'usersinfo.other_distributorship',
+        'usersinfo.reference_from',
+        'usersinfo.shop_location',
+        'usersinfo.aadhar_card_image_front',
+        'usersinfo.aadhar_card_image_back',
+        'usersinfo.pan_card',
+        'usersinfo.light_bill',
+        'usersinfo.shop_act_image',
+        'usersinfo.product_purchase_bill',
+        'usersinfo.geolocation',
+        'usersinfo.added_by',
+        'usersinfo.devicetoken',
+        'usersinfo.devicetype',
+        'usersinfo.devicename',
+        'usersinfo.deviceid',
+        'usersinfo.logintime',
+        'usersinfo.created_by',
+        'usersinfo.created_on'
+         )
+          ->orderBy('users.id', 'DESC')
+          ->get();
         foreach($result as $key=>$value)
         {
-            $promo_demo = Dist_Promotion_Demotion::where('user_id',$value->user_id)->where('is_updated','n')->first();
+            // $promo_demo = Dist_Promotion_Demotion::where('user_id',$value->user_id)->where('is_updated','n')->first();
+            $promo_demo = Dist_Promotion_Demotion::where('user_id',$value->user_id)->last();
             
             if(!empty($promo_demo))
             {
@@ -619,19 +710,19 @@ class DistributorController extends Controller
                 $value->new_user_type='';
             }
 
-            $stateName=$this->commonController->getAreaNameById($value->state);
-            $value->state=$stateName->name;
+            // $stateName=$this->commonController->getAreaNameById($value->state);
+            // $value->state=$stateName->name;
             
-            $districtName=$this->commonController->getAreaNameById($value->district);
-            $value->district=$districtName->name;
+            // $districtName=$this->commonController->getAreaNameById($value->district);
+            // $value->district=$districtName->name;
             
-            $talukaName=$this->commonController->getAreaNameById($value->taluka);
-            $value->taluka=$talukaName->name;
+            // $talukaName=$this->commonController->getAreaNameById($value->taluka);
+            // $value->taluka=$talukaName->name;
             
-            $cityName=$this->commonController->getAreaNameById($value->city);
+            // $cityName=$this->commonController->getAreaNameById($value->city);
             
             // $value->city=isset($cityName->name)?$cityName:'-';
-            $value->city=isset($cityName->name)?$cityName->name:'-';
+            //$value->city=isset($cityName->name)?$cityName->name:'-';
             // $value->city=$cityName->name?$cityName:'-';
         }
         // dd($result);
@@ -3374,41 +3465,48 @@ class DistributorController extends Controller
     }
     
     
-     public function checkLevelofDistributor($distributorId)
+     public function checkLevelofDistributor($distributorId,$newCreatedDistributor)
     {
         
         $details = User::where('id',$distributorId)->where('is_deleted','no')->first();
-        
+      
         if($details->user_type=='fsc')
         {
-            $fsclist = UsersInfo::where('added_by',$distributorId)->where('user_type','fsc')->where('is_deleted','no')->get(); 
+            $fsclist = UsersInfoForStructures::where('added_by',$distributorId)->where('user_type','fsc')->where('is_deleted','no')->get(); 
             
-            if(count($fsclist)>=4)
+            if(count($fsclist)>=5)
             {
                 $data=[
                         'user_type'=>'bsc',
                     ];
-                //dd($data);
-                //$dataNew=User::where('id',$distributorId)->update($data);
                 $dataNew=Dist_Promotion_Demotion::insert(array('user_id'=>$distributorId,'user_type'=>'bsc'));
+                UsersInfoForStructures::where(['user_id'=>$distributorId])->update([
+                    'user_type'=>'bsc'
+                ]);
+
+                
                 
             }
             
         }
         elseif($details->user_type=='bsc')
         {
-            $fsclist = UsersInfo::where('added_by',$distributorId)->where('user_type','bsc')->where('is_deleted','no')->get();   
-            if(count($fsclist)>=4)
+            $fsclist = UsersInfoForStructures::where('added_by',$distributorId)->where('user_type','bsc')->where('is_deleted','no')->get();   
+            if(count($fsclist)>=5)
             {
                 $data=[
                         'user_type'=>'dsc',
                     ];
-                // $dataNew=User::where('id',$distributorId)->update($data);
-                // $dataNew=UsersInfo::where('user_id',$distributorId)->update($data);
+                
                 $dataNew=Dist_Promotion_Demotion::insert(array('user_id'=>$distributorId,'user_type'=>'dsc'));
+                UsersInfoForStructures::where(['user_id'=>$distributorId])->update([
+                    'user_type'=>'dsc'
+                ]);
             }
             
         }
+
+
         
     }
     

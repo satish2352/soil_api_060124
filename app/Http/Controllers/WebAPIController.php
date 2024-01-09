@@ -47,7 +47,10 @@ use App\Models\OrderDetail;
 use App\Models\Downloads;
 use App\Models\Address;
 use App\Models\Principles;
-use App\Models\Crops;
+use App\Models\{
+    Crops,
+    UsersInfoForStructures
+};
 use DB;
 
 use App\Http\Controllers\CommonController As CommonController;
@@ -6621,6 +6624,18 @@ class WebAPIController extends Controller
             $dist_promotion = UsersInfo::where('user_id',$request->user_id)->update(['user_type'=>$request->user_type]);
             $dist_promotion = Dist_Promotion_Demotion::where('user_id',$request->user_id)->update(['is_updated'=>'y']);
           
+            $sersInfoForStructuresInfo = UsersInfoForStructures::where('user_id',$request->user_id)->first();
+            if($sersInfoForStructuresInfo) {
+                if($sersInfoForStructuresInfo->user_type=='bsc') {
+                    if(count(UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->added_by,'user_type'=>'bsc'])->get()->toArray())>=5) {
+                        User::where('id',$sersInfoForStructuresInfo->user_id)->update(['user_type'=>'dsc']);
+                        UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->user_id])->update([
+                            'user_type'=>'dsc'
+                        ]);
+                    }
+                }
+            }
+
             if ($dist_promotion)
             {
                  return response()->json([
