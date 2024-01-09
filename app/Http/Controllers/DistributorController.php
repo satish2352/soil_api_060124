@@ -700,7 +700,7 @@ class DistributorController extends Controller
         foreach($result as $key=>$value)
         {
             // $promo_demo = Dist_Promotion_Demotion::where('user_id',$value->user_id)->where('is_updated','n')->first();
-            $promo_demo = Dist_Promotion_Demotion::where('user_id',$value->user_id)->order_by('updated_on', 'desc')->first();
+            $promo_demo = Dist_Promotion_Demotion::where('user_id',$value->user_id)->orderBy('updated_on', 'desc')->first();
             
             if(!empty($promo_demo))
             {
