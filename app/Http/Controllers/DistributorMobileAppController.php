@@ -238,15 +238,21 @@ class DistributorMobileAppController extends Controller
                 } else {
                 $forwarded_bsc_id = '';
                 }
+                if($forwarded_bsc_id) {
 
-                if($forwarded_bsc_id->user_type =='bsc') {
-                    $forwarded_dsc_id = UsersInfoForStructures::where([
-                        'user_id'=>$request->created_disctributor_id,
-                    ])->select('added_by')->first() ; 
-                    $forwarded_dsc_id = $forwarded_dsc_id->added_by;
+                    if($forwarded_bsc_id->user_type =='bsc') {
+                        $forwarded_dsc_id = UsersInfoForStructures::where([
+                            'user_id'=>$request->created_disctributor_id,
+                        ])->select('added_by')->first() ; 
+                        $forwarded_dsc_id = $forwarded_dsc_id->added_by;
+                    } else {
+                        $forwarded_dsc_id = '';
+                    }
+
                 } else {
                     $forwarded_dsc_id = '';
                 }
+               
             } elseif($request->order_created_by =='fsc')  {
                 $forwarded_dsc_id = UsersInfoForStructures::where([
                                         'user_id'=>$request->created_disctributor_id,
