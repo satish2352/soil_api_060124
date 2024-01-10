@@ -969,7 +969,6 @@ class DistributorMobileAppController extends Controller
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
           ->leftJoin('users','users.id','=','usersinfo.user_id')
-          ->whereIn('usersinfo.user_type',['fsc','bsc','dsc'])
           ->where('usersinfo.is_deleted', '=', 'no')
          ->select(   'stateNew.name as state',
          'districtNew.name as district',
