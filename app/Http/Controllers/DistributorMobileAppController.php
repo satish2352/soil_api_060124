@@ -227,7 +227,8 @@ class DistributorMobileAppController extends Controller
     {
         try
         {  
-            
+            $forwarded_bsc_id = 0;
+            $forwarded_dsc_id = 0;
             if($request->order_created_by =='fsc') {
 
                 $forwarded_bsc_id_data = UsersInfoForStructures::where([
