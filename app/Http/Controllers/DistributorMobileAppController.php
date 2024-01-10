@@ -238,9 +238,9 @@ class DistributorMobileAppController extends Controller
                 if($forwarded_bsc_id_data) {
                     $forwarded_bsc_id = $forwarded_bsc_id_data->added_by;
                 } else {
-                $forwarded_bsc_id = '';
+                $forwarded_bsc_id = 0;
                 }
-                if($forwarded_bsc_id_data !='') {
+                if($forwarded_bsc_id_data != 0) {
 
                     if($forwarded_bsc_id_data->user_type =='bsc') {
                         $forwarded_dsc_id = UsersInfoForStructures::where([
@@ -249,11 +249,11 @@ class DistributorMobileAppController extends Controller
                         ])->select('added_by','user_type')->first() ; 
                         $forwarded_dsc_id = $forwarded_dsc_id->added_by;
                     } else {
-                        $forwarded_dsc_id = '';
+                        $forwarded_dsc_id = 0;
                     }
 
                 } else {
-                    $forwarded_dsc_id = '';
+                    $forwarded_dsc_id = 0;
                 }
                
             } elseif($request->order_created_by =='bsc')  {
@@ -265,7 +265,7 @@ class DistributorMobileAppController extends Controller
                     $forwarded_dsc_id = $forwarded_dsc_id->added_by;
 
                 } else {
-                    $forwarded_dsc_id = '';
+                    $forwarded_dsc_id = 0;
 
                 }
             }
