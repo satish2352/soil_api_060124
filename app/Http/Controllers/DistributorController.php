@@ -2197,7 +2197,7 @@ class DistributorController extends Controller
                 })
                 
                 ->when($request->get('created_by'), function($query) use ($request) {
-                  $query->where('usersinfo.created_by',$request->added_by);
+                  $query->where('usersinfo.created_by',$request->dist_id);
                 })
                 
                 ->get();
