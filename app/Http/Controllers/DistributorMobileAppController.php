@@ -364,7 +364,11 @@ class DistributorMobileAppController extends Controller
             }
         }
         catch(Exception $e) {
-          return  'Message: ' .$e->getMessage();
+          return response()->json([
+            "data" => '',
+            "result" => false,
+            "message" => 'Message: ' .$e->getMessage();
+        ]);
         }
 
     }
