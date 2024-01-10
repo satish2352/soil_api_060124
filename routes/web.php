@@ -583,5 +583,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('edit_profile_data_mobileapp', 'DistributorMobileAppController@edit_profile_data_mobileapp');
             $router->post('update_profile_data_mobileapp', 'DistributorMobileAppController@update_profile_data_mobileapp');
             
+
+            $router->post('distributor_added_by_me', 'DistributorMobileAppController@distributor_added_by_me');
         });
 });
