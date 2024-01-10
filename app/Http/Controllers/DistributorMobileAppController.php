@@ -230,17 +230,17 @@ class DistributorMobileAppController extends Controller
             
             if($request->order_created_by =='fsc') {
 
-                $forwarded_bsc_id = UsersInfoForStructures::where([
+                $forwarded_bsc_id_data = UsersInfoForStructures::where([
                                         'user_id'=>$request->created_disctributor_id,
                                     ])->select('added_by','user_type')->first() ; 
-                if($forwarded_bsc_id) {
-                    $forwarded_bsc_id = $forwarded_bsc_id->added_by;
+                if($forwarded_bsc_id_data) {
+                    $forwarded_bsc_id = $forwarded_bsc_id_data->added_by;
                 } else {
                 $forwarded_bsc_id = '';
                 }
-                if($forwarded_bsc_id !='') {
-dd($forwarded_bsc_id);
-                    if($forwarded_bsc_id->user_type =='bsc') {
+                if($forwarded_bsc_id_data !='') {
+
+                    if($forwarded_bsc_id_data->user_type =='bsc') {
                         $forwarded_dsc_id = UsersInfoForStructures::where([
                             'user_id'=>$request->created_disctributor_id,
                         ])->select('added_by','user_type')->first() ; 
