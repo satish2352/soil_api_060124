@@ -568,6 +568,19 @@ class DistributorController extends Controller
     {
 
         $userinfo = UsersInfo::where('user_id',$request->id)->first();
+        if($userinfo)
+        {
+
+
+            $userinfo->aadhar_card_image_front=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->aadhar_card_image_front;
+            $userinfo->aadhar_card_image_back=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->aadhar_card_image_back;
+            $userinfo->pan_card=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->pan_card;
+            $userinfo->light_bill=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->light_bill;
+            $userinfo->shop_act_image=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->shop_act_image;
+            $userinfo->product_purchase_bill=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->product_purchase_bill;
+            
+
+        }
         
         if ($userinfo)
         {
