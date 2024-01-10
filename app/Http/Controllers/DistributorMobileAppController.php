@@ -367,7 +367,7 @@ class DistributorMobileAppController extends Controller
           return response()->json([
             "data" => '',
             "result" => false,
-            "message" => 'Message: ' .$e->getMessage();
+            "message" => 'Message: ' .$e->getMessage()
         ]);
         }
 
