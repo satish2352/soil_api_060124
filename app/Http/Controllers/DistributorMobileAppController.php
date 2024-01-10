@@ -232,6 +232,7 @@ class DistributorMobileAppController extends Controller
 
                 $forwarded_bsc_id_data = UsersInfoForStructures::where([
                                         'user_id'=>$request->created_disctributor_id,
+                                        'user_type'=>'bsc',
                                     ])->select('added_by','user_type')->first() ; 
                 if($forwarded_bsc_id_data) {
                     $forwarded_bsc_id = $forwarded_bsc_id_data->added_by;
@@ -242,6 +243,7 @@ class DistributorMobileAppController extends Controller
 
                     if($forwarded_bsc_id_data->user_type =='bsc') {
                         $forwarded_dsc_id = UsersInfoForStructures::where([
+                            'user_type'=>'dsc',
                             'user_id'=>$request->created_disctributor_id,
                         ])->select('added_by','user_type')->first() ; 
                         $forwarded_dsc_id = $forwarded_dsc_id->added_by;
@@ -253,9 +255,10 @@ class DistributorMobileAppController extends Controller
                     $forwarded_dsc_id = '';
                 }
                
-            } elseif($request->order_created_by =='fsc')  {
+            } elseif($request->order_created_by =='bsc')  {
                 $forwarded_dsc_id = UsersInfoForStructures::where([
                                         'user_id'=>$request->created_disctributor_id,
+                                        'user_type'=>'bsc',
                                     ])->select('added_by','user_type')->first() ; 
                 $forwarded_dsc_id = $forwarded_dsc_id->added_by;
             }
