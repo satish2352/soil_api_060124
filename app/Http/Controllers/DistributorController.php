@@ -3479,7 +3479,7 @@ class DistributorController extends Controller
         {
             $fsclist = UsersInfoForStructures::where('added_by',$distributorId)->where('user_type','fsc')->get(); 
             
-            if(count($fsclist)>=5)
+            if(count($fsclist)>=2)
             {
                 $data=[
                         'user_type'=>'bsc',
@@ -3497,7 +3497,7 @@ class DistributorController extends Controller
         elseif($details->user_type=='bsc')
         {
             $fsclist = UsersInfoForStructures::where('added_by',$distributorId)->where('user_type','bsc')->get();   
-            if(count($fsclist)>=5)
+            if(count($fsclist)>=2)
             {
                 $data=[
                         'user_type'=>'dsc',
