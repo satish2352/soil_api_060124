@@ -260,7 +260,13 @@ class DistributorMobileAppController extends Controller
                                         'user_id'=>$request->created_disctributor_id,
                                         'user_type'=>'dsc',
                                     ])->select('added_by','user_type')->first() ; 
-                $forwarded_dsc_id = $forwarded_dsc_id->added_by;
+                if($forwarded_dsc_id) {
+                    $forwarded_dsc_id = $forwarded_dsc_id->added_by;
+
+                } else {
+                    $forwarded_dsc_id = '';
+
+                }
             }
             
            
