@@ -711,20 +711,14 @@ class DistributorController extends Controller
                 $value->new_user_type='';
             }
 
-            // $stateName=$this->commonController->getAreaNameById($value->state);
-            // $value->state=$stateName->name;
+            $value->aadhar_card_image_front=DISTRIBUTOR_OWN_DOCUMENTS.$value->aadhar_card_image_front;
+            $value->aadhar_card_image_back=DISTRIBUTOR_OWN_DOCUMENTS.$value->aadhar_card_image_back;
+            $value->pan_card=DISTRIBUTOR_OWN_DOCUMENTS.$value->pan_card;
+            $value->light_bill=DISTRIBUTOR_OWN_DOCUMENTS.$value->light_bill;
+            $value->shop_act_image=DISTRIBUTOR_OWN_DOCUMENTS.$value->shop_act_image;
+            $value->product_purchase_bill=DISTRIBUTOR_OWN_DOCUMENTS.$value->product_purchase_bill;
             
-            // $districtName=$this->commonController->getAreaNameById($value->district);
-            // $value->district=$districtName->name;
-            
-            // $talukaName=$this->commonController->getAreaNameById($value->taluka);
-            // $value->taluka=$talukaName->name;
-            
-            // $cityName=$this->commonController->getAreaNameById($value->city);
-            
-            // $value->city=isset($cityName->name)?$cityName:'-';
-            //$value->city=isset($cityName->name)?$cityName->name:'-';
-            // $value->city=$cityName->name?$cityName:'-';
+
         }
         // dd($result);
         if (count($result) > 0)
