@@ -711,12 +711,12 @@ class DistributorController extends Controller
                 $value->new_user_type='';
             }
 
-            $value->aadhar_card_image_front=DISTRIBUTOR_OWN_DOCUMENTS.$value->aadhar_card_image_front;
-            $value->aadhar_card_image_back=DISTRIBUTOR_OWN_DOCUMENTS.$value->aadhar_card_image_back;
-            $value->pan_card=DISTRIBUTOR_OWN_DOCUMENTS.$value->pan_card;
-            $value->light_bill=DISTRIBUTOR_OWN_DOCUMENTS.$value->light_bill;
-            $value->shop_act_image=DISTRIBUTOR_OWN_DOCUMENTS.$value->shop_act_image;
-            $value->product_purchase_bill=DISTRIBUTOR_OWN_DOCUMENTS.$value->product_purchase_bill;
+            $value->aadhar_card_image_front=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_front;
+            $value->aadhar_card_image_back=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_back;
+            $value->pan_card=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->pan_card;
+            $value->light_bill=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->light_bill;
+            $value->shop_act_image=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->shop_act_image;
+            $value->product_purchase_bill=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->product_purchase_bill;
             
 
         }
