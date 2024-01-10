@@ -969,7 +969,6 @@ class DistributorMobileAppController extends Controller
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
           ->leftJoin('users','users.id','=','usersinfo.user_id')
-          ->where('usersinfo.is_deleted', '=', 'no')
          ->select(   'stateNew.name as state',
          'districtNew.name as district',
          'talukaNew.name as taluka',
@@ -1027,7 +1026,6 @@ class DistributorMobileAppController extends Controller
         'usersinfo.created_by',
         'usersinfo.created_on'
          )
-          ->orderBy('users.id', 'DESC')
           ->get();
       
         if (count($result) > 0)
