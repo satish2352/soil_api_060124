@@ -228,6 +228,36 @@ class DistributorMobileAppController extends Controller
         try
         {  
             
+            if($request->order_created_by =='fsc') {
+
+                $forwarded_bsc_id = UsersInfoForStructures::where([
+                                        'user_id'=>$request->created_disctributor_id,
+                                    ])->select('added_by')->first() ; 
+                if($forwarded_bsc_id) {
+                    $forwarded_bsc_id = $forwarded_bsc_id->added_by;
+                } else {
+                $forwarded_bsc_id = '';
+                }
+
+                if($forwarded_bsc_id->user_type =='bsc') {
+                    $forwarded_dsc_id = UsersInfoForStructures::where([
+                        'user_id'=>$request->created_disctributor_id,
+                    ])->select('added_by')->first() ; 
+                    $forwarded_dsc_id = $forwarded_dsc_id->added_by;
+                } else {
+                    $forwarded_dsc_id = '';
+                }
+            } elseif($request->order_created_by =='fsc')  {
+                $forwarded_dsc_id = UsersInfoForStructures::where([
+                                        'user_id'=>$request->created_disctributor_id,
+                                    ])->select('added_by')->first() ; 
+                $forwarded_dsc_id = $forwarded_dsc_id->added_by;
+            }
+            
+           
+
+ 
+
             $date=date("Y-m-d");
             $time= time();
             $tempid=$date.$time;
@@ -239,6 +269,8 @@ class DistributorMobileAppController extends Controller
             $ordrsummary->order_created_by = $requestdata->order_created_by;
             $ordrsummary->entry_by = 'distributor';
             $ordrsummary->order_cerated_for = $requestdata->order_cerated_for;
+            $ordrsummary->forwarded_bsc_id = $forwarded_bsc_id;
+            $ordrsummary->forwarded_dsc_id = $forwarded_dsc_id;
             $ordrsummary->order_cerated_for_id = $requestdata->order_cerated_for_id;
             $ordrsummary->created_disctributor_id = $requestdata->created_disctributor_id;
             $ordrsummary->created_disctributor_amount = $requestdata->created_disctributor_amount;
