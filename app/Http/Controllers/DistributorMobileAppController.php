@@ -948,7 +948,7 @@ class DistributorMobileAppController extends Controller
     {
 
        
-        $result = UsersInfoForStructures::where('added_by',$request->dist_id)
+        $result = UsersInfoForStructures::where('users_info_for_structures.added_by',$request->dist_id)
             ->leftJoin('usersinfo', function($join) {
                 $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
             })
