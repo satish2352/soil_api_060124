@@ -258,9 +258,9 @@ class DistributorMobileAppController extends Controller
 
 
             if($forwarded_dsc_id == '0' && $forwarded_bsc_id == '0') {
-                $is_order_confirm_from_dist = 'no';
-            } else {
                 $is_order_confirm_from_dist = 'yes';
+            } else {
+                $is_order_confirm_from_dist = 'no';
             }
 
  
@@ -631,6 +631,13 @@ class DistributorMobileAppController extends Controller
                 $join->on('tbl_order_detail.prod_id', '=', 'tbl_product.id');
             })
           
+           
+
+            ->leftJoin('usersinfo as newuser_table', function($join) {
+                $join->on('newuser_table.user_id', '=','tbl_order_summary.created_disctributor_id');
+            })
+            
+          
 
             ->where('tbl_order_summary.order_no',$request->order_no)
             ->where('tbl_order_summary.created_disctributor_id',$request->created_disctributor_id)
@@ -657,8 +664,11 @@ class DistributorMobileAppController extends Controller
                 'tbl_order_summary.is_deleted',
                 'tbl_order_summary.created_at',
                 'tbl_order_summary.updated_at',
-                'tbl_product_details.quantity',
-                'tbl_product_details.quantity_unit',
+
+                'newuser_table.fname',
+                'newuser_table.mname',
+                'newuser_table.lname',
+                'newuser_table.phone',
                 
             )
             ->get();
@@ -677,25 +687,13 @@ class DistributorMobileAppController extends Controller
                 //$value->all_product = OrderDetail::where('order_no',$request->order_no)->get();
                 
                 $value->all_product = OrderDetail::where('tbl_order_detail.order_no',$request->order_no)
+                                    ->leftJoin('tbl_product_details', function($join) {
+                                        $join->on('tbl_order_detail.prod_id', '=', 'tbl_product_details.id');
+                                    })
                                     ->where('tbl_order_detail.is_deleted','no')
                                     ->join('tbl_product','tbl_product.id','=','tbl_order_detail.prod_id')
                                     ->get();
-                try
-                {
-                    $details=$this->commonController->getUserNameById($value->created_disctributor_id);                        
-                    $value->fname=$details->fname;
-                    $value->mname=$details->mname;
-                    $value->lname=$details->lname;
-                    
-                } catch(Exception $e) {
-                    return response()->json([
-                            "data" => '',
-                            "result" => false,
-                            "error" => true,
-                            "message" =>$e->getMessage()." ".$e->getCode()
-                        ]);
-                    
-                    }
+              
 
             }
             
