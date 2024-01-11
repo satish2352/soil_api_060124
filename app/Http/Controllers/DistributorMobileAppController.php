@@ -270,7 +270,11 @@ class DistributorMobileAppController extends Controller
                 }
             }
             
-           
+           if($forwarded_dsc_id == 0 && $forwarded_bsc_id = 0) {
+                $is_order_confirm_from_dist = 'no';
+           } else {
+                $is_order_confirm_from_dist = 'no';
+           }
 
  
 
@@ -291,6 +295,7 @@ class DistributorMobileAppController extends Controller
             $ordrsummary->created_disctributor_id = $requestdata->created_disctributor_id;
             $ordrsummary->created_disctributor_amount = $requestdata->created_disctributor_amount;
             $ordrsummary->remark = $requestdata->remark;
+            $ordrsummary->is_order_confirm_from_dist = $is_order_confirm_from_dist;
             $ordrsummary->save();
             //dd($requestdata->order_created_by);
             //$requestdata = $request;
