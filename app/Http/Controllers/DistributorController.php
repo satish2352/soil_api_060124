@@ -3480,7 +3480,7 @@ class DistributorController extends Controller
      public function checkLevelofDistributor($distributorId_who_going_to_add_new_dist,$newCreatedDistributor)
     {
         
-        $details = UsersInfoForStructures::where('id',$distributorId_who_going_to_add_new_dist)->where('is_deleted','no')->first();
+        $details = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->where('is_deleted','no')->first();
       
         \Log::info('line 3485');
         \Log::info($details);
