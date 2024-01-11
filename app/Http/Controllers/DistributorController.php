@@ -146,13 +146,13 @@ class DistributorController extends Controller
             $users->save();
 
             UsersInfoForStructures::insert([
-                'user_id'=>$users->id,
+                'user_id'=>$user->id,
                 'added_by'=>($request->created_by) ? $request->created_by: '0',
                 'user_type'=>'fsc'
             ]);  
 
             if($request->created_by){
-                $this->checkLevelofDistributor($request->created_by,$users->id);
+                $this->checkLevelofDistributor($request->created_by,$user->id);
             }
            
              
