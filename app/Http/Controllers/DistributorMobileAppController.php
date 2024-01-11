@@ -229,37 +229,23 @@ class DistributorMobileAppController extends Controller
         {  
             $forwarded_bsc_id = 0;
             $forwarded_dsc_id = 0;
+            $is_order_confirm_from_dist = 'no';
             if($request->order_created_by =='fsc') {
 
                 $forwarded_bsc_id_data = UsersInfoForStructures::where([
                                         'user_id'=>$request->created_disctributor_id,
-                                        'user_type'=>'bsc',
-                                    ])->select('added_by','user_type')->first() ; 
+                                        'user_type'=>'fsc',
+                                    ])->select('added_by','user_type')->first(); 
                 if($forwarded_bsc_id_data) {
                     $forwarded_bsc_id = $forwarded_bsc_id_data->added_by;
                 } else {
-                $forwarded_bsc_id = 0;
-                }
-                if($forwarded_bsc_id_data != 0) {
-
-                    if($forwarded_bsc_id_data->user_type =='bsc') {
-                        $forwarded_dsc_id = UsersInfoForStructures::where([
-                            'user_type'=>'dsc',
-                            'user_id'=>$request->created_disctributor_id,
-                        ])->select('added_by','user_type')->first() ; 
-                        $forwarded_dsc_id = $forwarded_dsc_id->added_by;
-                    } else {
-                        $forwarded_dsc_id = 0;
-                    }
-
-                } else {
-                    $forwarded_dsc_id = 0;
+                    $forwarded_bsc_id = 0;
                 }
                
             } elseif($request->order_created_by =='bsc')  {
                 $forwarded_dsc_id = UsersInfoForStructures::where([
                                         'user_id'=>$request->created_disctributor_id,
-                                        'user_type'=>'dsc',
+                                        'user_type'=>'bsc',
                                     ])->select('added_by','user_type')->first() ; 
                 if($forwarded_dsc_id) {
                     $forwarded_dsc_id = $forwarded_dsc_id->added_by;
@@ -269,12 +255,13 @@ class DistributorMobileAppController extends Controller
 
                 }
             }
-            
-           if($forwarded_dsc_id == 0 && $forwarded_bsc_id = 0) {
+
+
+            if($forwarded_dsc_id == '0' && $forwarded_bsc_id == '0') {
                 $is_order_confirm_from_dist = 'no';
-           } else {
-                $is_order_confirm_from_dist = 'no';
-           }
+            } else {
+                $is_order_confirm_from_dist = 'yes';
+            }
 
  
 
@@ -538,6 +525,74 @@ class DistributorMobileAppController extends Controller
                         ]);
                    
                  }
+            }
+
+            if ($result)
+            {
+                 return response()->json([
+                    "data" => $result,
+                    "result" => true,
+                    "message" => 'Information get Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Information not found'
+                ]);
+                
+            }
+        }
+        catch(Exception $e) {
+          return  'Message: ' .$e->getMessage();
+        }
+    }
+
+    
+    public function orderlist_from_other_dist_mobileapp(Request $request)
+    {
+        try
+        {
+             $result = OrderSummary::leftJoin('usersinfo', function($join) {
+                                $join->on('usersinfo.user_id', '=', 'tbl_order_summary.forwarded_bsc_id');
+                            })
+                            ->where('tbl_order_summary.is_order_confirm_from_dist','no')
+                            ->leftJoin('usersinfo as newuser_table', function($join) {
+                                $join->on('newuser_table.user_id', '=', 'tbl_order_summary.forwarded_dsc_id');
+                            })
+                            ->where('tbl_order_summary.is_deleted','no')
+                            ->Where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
+                            ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id)
+                            
+                            ->select(
+                                'usersinfo.fname as fname_new',
+                                'usersinfo.mname as mname_new',
+                                'usersinfo.lname as lname_new',
+                                'usersinfo.phone as phone_new',
+
+                                'newuser_table.fname',
+                                'newuser_table.mname',
+                                'newuser_table.lname',
+                                'newuser_table.phone',
+                                'tbl_order_summary.*'
+                            )
+                            ->orderBy('id','DESC')
+                            ->get();
+            
+            foreach($result as $key=>$resultnew)
+            {
+                if($resultnew->account_approved=='no' && $resultnew->forward_to_warehouse=='no'){
+                    $resultnew->status = 'Pending';
+                }elseif($resultnew->account_approved=='yes' && $resultnew->forward_to_warehouse=='no'){
+                    $resultnew->status = 'Verified';
+                }elseif( $resultnew->order_dispatched=='yes'){
+                    $resultnew->status = 'Order Dispatched From Warehouse';
+                }elseif($resultnew->account_approved=='yes' && $resultnew->forward_to_warehouse=='yes'){
+                    $resultnew->status = 'Forwaded to warehouse';
+                }
+              
             }
 
             if ($result)

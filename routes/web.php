@@ -177,6 +177,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('orderget_mobileapp', 'DistributorMobileAppController@orderget_mobileapp');
             $router->post('orderdelete_mobileapp', 'DistributorMobileAppController@orderdelete_mobileapp');
             $router->post('orderlist_mobileapp', 'DistributorMobileAppController@orderlist_mobileapp');
+            $router->post('orderlist_from_other_dist_mobileapp', 'DistributorMobileAppController@orderlist_from_other_dist_mobileapp');
             $router->post('orderview_mobileapp', 'DistributorMobileAppController@orderview_mobileapp');
             $router->post('orderdetail_mobileapp', 'DistributorMobileAppController@orderdetail_mobileapp');
         
