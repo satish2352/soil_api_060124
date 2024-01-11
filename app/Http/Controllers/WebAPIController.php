@@ -6627,15 +6627,21 @@ class WebAPIController extends Controller
             $sersInfoForStructuresInfo = UsersInfoForStructures::where('user_id',$request->user_id)->first();
             if($sersInfoForStructuresInfo) {
                 if($sersInfoForStructuresInfo->user_type=='bsc') {
-                    if(count(UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->added_by,'user_type'=>'bsc'])->get()->toArray())>=5) {
+                    if(count(UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->added_by,'user_type'=>'bsc'])->get()->toArray())>=2) {
                         User::where('id',$sersInfoForStructuresInfo->user_id)->update(['user_type'=>'dsc']);
                         UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->user_id])->update([
                             'user_type'=>'dsc'
                         ]);
                     }
+                } elseif($sersInfoForStructuresInfo->user_type=='fsc') {
+                    if(count(UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->added_by,'user_type'=>'fsc'])->get()->toArray())>=2) {
+                        User::where('id',$sersInfoForStructuresInfo->user_id)->update(['user_type'=>'bsc']);
+                        UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->user_id])->update([
+                            'user_type'=>'bsc'
+                        ]);
+                    }
                 }
-            }
-
+            } 
             if ($dist_promotion)
             {
                  return response()->json([
