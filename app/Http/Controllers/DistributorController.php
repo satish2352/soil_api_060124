@@ -3506,23 +3506,16 @@ class DistributorController extends Controller
         }
         if($details->user_type =='bsc')
         {
-            \Log::info('line 3509');
-            \Log::info($details->user_type);
-            
-            $fsclist = UsersInfoForStructures::where('added_by',$distributorId_who_going_to_add_new_dist)->where('user_type','bsc')->get();   
-            if(count($fsclist)>=2)
-            {
-                $dsc_id_to_update = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->where('user_type','bsc','added_by')->first();   
+           
+            $dsc_id_to_update = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->where('user_type','bsc','added_by')->first();   
 
-                $data=[
-                        'user_type'=>'dsc',
-                    ];
-                \Log::info($dsc_id_to_update->added_by);
-                $dataNew=Dist_Promotion_Demotion::insert(array('user_id'=>$distributorId_who_going_to_add_new_dist,'user_type'=>'dsc'));
-                UsersInfoForStructures::where(['user_id'=>$dsc_id_to_update->added_by])->update([
-                    'user_type'=>'dsc'
-                ]);
-            }
+            $data=[
+                    'user_type'=>'dsc',
+                ];
+            $dataNew=Dist_Promotion_Demotion::insert(array('user_id'=>$distributorId_who_going_to_add_new_dist,'user_type'=>'dsc'));
+            UsersInfoForStructures::where(['user_id'=>$dsc_id_to_update->added_by])->update([
+                'user_type'=>'dsc'
+            ]);
             
         }
 
