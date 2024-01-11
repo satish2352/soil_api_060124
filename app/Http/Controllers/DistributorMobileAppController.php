@@ -1058,11 +1058,11 @@ class DistributorMobileAppController extends Controller
     {
 
        
-        $result = UsersInfoForStructures::where('users_info_for_structures.added_by',$request->dist_id)
-            ->leftJoin('usersinfo', function($join) {
-                $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+        $result = UsersInfoForStructures::
+            leftJoin('usersinfo', function($join) {
+                $join->on('users_info_for_structures.added_by', '=', 'usersinfo.user_id');
             })
-        ->leftJoin('tbl_area as stateNew', function($join) {
+            ->leftJoin('tbl_area as stateNew', function($join) {
                 $join->on('usersinfo.state', '=', 'stateNew.location_id');
             })
           
@@ -1079,6 +1079,7 @@ class DistributorMobileAppController extends Controller
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
           ->leftJoin('users','users.id','=','usersinfo.user_id')
+          ->where('users_info_for_structures.added_by',$request->dist_id)
          ->select(   'stateNew.name as state',
          'districtNew.name as district',
          'talukaNew.name as taluka',
@@ -1092,10 +1093,10 @@ class DistributorMobileAppController extends Controller
         'usersinfo.email',
         'usersinfo.phone',
         'usersinfo.aadharcard',
-        'usersinfo.state',
-        'usersinfo.district',
-        'usersinfo.taluka',
-        'usersinfo.city',
+        // 'usersinfo.state',
+        // 'usersinfo.district',
+        // 'usersinfo.taluka',
+        // 'usersinfo.city',
         'usersinfo.address',
         'usersinfo.pincode',
         'usersinfo.crop',
@@ -1150,6 +1151,7 @@ class DistributorMobileAppController extends Controller
         else
         {
             $response = array();
+            $response['data'] = $result;
             $response['code'] = 400;
             $response['message'] = 'Distributor List Not Found';
             $response['result'] = false;
