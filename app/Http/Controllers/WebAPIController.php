@@ -9758,8 +9758,8 @@ class WebAPIController extends Controller
                     $join->on('usersinfo.city', '=', 'cityNew.location_id');
                     })
                     ->where('users_info_for_structures.added_by',$request->added_by)
-                    ->where('usersinfo.is_deleted','no')
-                    ->where('usersinfo.active','yes')
+                    // ->where('usersinfo.is_deleted','no')
+                    // ->where('usersinfo.active','yes')
                     ->where('users_info_for_structures.user_type','fsc')
                     ->select(
                         'usersinfo.*',
@@ -9804,8 +9804,6 @@ class WebAPIController extends Controller
     // BSC List
     public function bsc_list_structure(Request $request)
     {
-
-
         try
         {
                 $dsclist_record= UsersInfoForStructures::leftJoin('usersinfo', function($join) {
@@ -9829,8 +9827,8 @@ class WebAPIController extends Controller
                     $join->on('usersinfo.city', '=', 'cityNew.location_id');
                     })
                     ->where('users_info_for_structures.added_by',$request->added_by)
-                    ->where('usersinfo.is_deleted','no')
-                    ->where('usersinfo.active','yes')
+                    // ->where('usersinfo.is_deleted','no')
+                    // ->where('usersinfo.active','yes')
                     ->where('users_info_for_structures.user_type','bsc')
                     ->select(
                         'usersinfo.*',
@@ -9878,7 +9876,8 @@ class WebAPIController extends Controller
     {
         try
         {
-             $dsclist_record= UsersInfoForStructures::leftJoin('usersinfo', function($join) {
+             $dsclist_record= UsersInfoForStructures::
+                leftJoin('usersinfo', function($join) {
                     $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
                 })
 
@@ -9898,8 +9897,6 @@ class WebAPIController extends Controller
                   ->leftJoin('tbl_area as cityNew', function($join) {
                     $join->on('usersinfo.city', '=', 'cityNew.location_id');
                   })
-                  ->where('usersinfo.is_deleted','no')
-                    ->where('usersinfo.active','yes')
                     ->where('users_info_for_structures.user_type','dsc')
                     ->select(
                         'usersinfo.*',
