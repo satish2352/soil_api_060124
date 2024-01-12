@@ -579,6 +579,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('principles_update', 'WebAPIController@principles_update');
             $router->post('principles_get', 'WebAPIController@principles_get');
             $router->post('principles_list', 'WebAPIController@principles_list');
+            $router->post('sct_structure_list', 'WebAPIController@sct_structure_list');
             
             //Mobile app Profile
             $router->post('add_profile_data_mobileapp', 'DistributorMobileAppController@add_profile_data_mobileapp');

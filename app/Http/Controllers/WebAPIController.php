@@ -9676,5 +9676,59 @@ class WebAPIController extends Controller
           return  'Message: ' .$e->getMessage();
         }
     }
+
+
+    public function sct_structure_list(Request $request)
+    {
+        try
+        {  
+            $all_dist_dist = UsersInfoForStructures::where('user_type','dsc')->get();
+            if ($all_dist_dist)
+            {
+                 return response()->json([
+                    "data" => $all_dist_dist,
+                    "result" => true,
+                    "message" => 'Information get Successfully'
+                ]);
+            }
+
+           
+            $all_dist_bsc = UsersInfoForStructures::where('user_type','bsc')->get();
+            if ($all_dist_bsc)
+            {
+                 return response()->json([
+                    "data" => $all_dist_bsc,
+                    "result" => true,
+                    "message" => 'Information get Successfully'
+                ]);
+            }
+            $all_dist_fsc = UsersInfoForStructures::where('user_type','fsc')->get();
+            if ($all_dist_fsc)
+            {
+                 return response()->json([
+                    "data" => $all_dist_fsc,
+                    "result" => true,
+                    "message" => 'Information get Successfully'
+                ]);
+            } else
+            {
+                 return response()->json([
+                    "data" => $all_dist_fsc,
+                    "result" => false,
+                    "message" => 'Information not found'
+                ]);
+                
+            }
+        }
+        catch(Exception $e) {
+          return response()->json([
+            "data" => '',
+            "result" => false,
+            "message" => 'Message: ' .$e->getMessage()
+        ]);
+        }
+
+    }
+    
     
 }
