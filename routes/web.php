@@ -180,6 +180,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('orderlist_from_other_dist_mobileapp', 'DistributorMobileAppController@orderlist_from_other_dist_mobileapp');
             $router->post('orderview_mobileapp', 'DistributorMobileAppController@orderview_mobileapp');
             $router->post('orderdetail_mobileapp', 'DistributorMobileAppController@orderdetail_mobileapp');
+            $router->post('order_dist_confirm_mobileapp', 'DistributorMobileAppController@order_dist_confirm_mobileapp');
         
             
             // Target Video

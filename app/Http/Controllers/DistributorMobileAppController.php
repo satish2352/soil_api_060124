@@ -453,6 +453,47 @@ class DistributorMobileAppController extends Controller
           return  'Message: ' .$e->getMessage();
         }
     }
+
+
+    public function order_dist_confirm_mobileapp(Request $request)
+    {
+       try
+        {
+            
+            $result = OrderSummary::where('order_no',$request->order_no);
+            if($request->user_type == 'bsc') {
+                $result = $result->update([
+                    'is_order_confirm_from_bsc' => 'yes',
+                ]);
+            } else  if($request->user_type =='dsc') {
+                $result = $result->update([
+                                'is_order_confirm_from_dsc' => 'yes',
+                                'is_order_final_confirm' => 'yes'
+                            ]);
+            }
+            
+            if ($result)
+            {
+                 return response()->json([
+                    "data" => $result,
+                    "result" => true,
+                    "message" => 'Information updated Successfully'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Information not updated'
+                ]);
+                
+            }
+        }
+        catch(Exception $e) {
+          return  'Message: ' .$e->getMessage();
+        }
+    }
     
     public function orderdelete_mobileapp(Request $request)
     {
@@ -630,15 +671,9 @@ class DistributorMobileAppController extends Controller
             ->leftJoin('tbl_product', function($join) {
                 $join->on('tbl_order_detail.prod_id', '=', 'tbl_product.id');
             })
-          
-           
-
             ->leftJoin('usersinfo as newuser_table', function($join) {
                 $join->on('newuser_table.user_id', '=','tbl_order_summary.created_disctributor_id');
             })
-            
-          
-
             ->where('tbl_order_summary.order_no',$request->order_no)
             ->where('tbl_order_summary.created_disctributor_id',$request->created_disctributor_id)
             ->where('tbl_order_summary.is_deleted','no')
