@@ -541,6 +541,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('fsc_list', 'WebAPIController@fsc_list');
             $router->post('bsc_list', 'WebAPIController@bsc_list');
             $router->post('dsc_list', 'WebAPIController@dsc_list');
+
+            $router->post('fsc_list_structure', 'WebAPIController@fsc_list_structure');
+            $router->post('bsc_list_structure', 'WebAPIController@bsc_list_structure');
+            $router->post('dsc_list_structure', 'WebAPIController@dsc_list_structure');
+
             $router->post('subscriber_count_distributor', 'WebAPIController@subscriber_count_distributor');
             $router->post('webfarmerlist', 'WebAPIController@farmerlist');
             $router->post('bsc_list_by_bsc', 'WebAPIController@bsc_list_by_bsc');
