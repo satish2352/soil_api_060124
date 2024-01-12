@@ -597,10 +597,11 @@ class DistributorMobileAppController extends Controller
         try
         {
              $result = OrderSummary::where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
+             ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id)
                             // where(function ($query1) use ($request) {
                             //     return $query1
                                 
-                            //     ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
+                            //     
                             // })
                             ->leftJoin('usersinfo', function($join) {
                                 $join->on('usersinfo.user_id', '=', 'tbl_order_summary.forwarded_bsc_id');
