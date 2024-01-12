@@ -596,13 +596,13 @@ class DistributorMobileAppController extends Controller
     {
         try
         {
-             $result = OrderSummary::
-             where(function ($query1) use ($request) {
-                return $query1
-                ->where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
-                ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
-            })
-            ->leftJoin('usersinfo', function($join) {
+             $result = OrderSummary::where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
+                            // where(function ($query1) use ($request) {
+                            //     return $query1
+                                
+                            //     ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
+                            // })
+                            ->leftJoin('usersinfo', function($join) {
                                 $join->on('usersinfo.user_id', '=', 'tbl_order_summary.forwarded_bsc_id');
                             })
                             ->where('tbl_order_summary.is_order_confirm_from_dist','no')
