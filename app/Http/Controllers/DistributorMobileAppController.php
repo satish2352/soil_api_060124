@@ -603,10 +603,11 @@ class DistributorMobileAppController extends Controller
                             ->leftJoin('usersinfo as newuser_table', function($join) {
                                 $join->on('newuser_table.user_id', '=', 'tbl_order_summary.forwarded_dsc_id');
                             })
-                            ->where('tbl_order_summary.is_deleted','no')
-                            ->orWhere('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
-                            ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id)
-                            
+                            ->where(function ($query1) use ($request) {
+                                return $query1->where('tbl_order_summary.is_deleted','no')
+                                ->orWhere('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
+                                ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
+                            })
                             ->select(
                                 'usersinfo.fname as fname_new',
                                 'usersinfo.mname as mname_new',
