@@ -608,10 +608,10 @@ class DistributorMobileAppController extends Controller
                             })
 
                             ->orWhere(function ($query1) use ($request) {
-                                return $query1->->leftJoin('usersinfo', function($join) {
+                                return $query1->leftJoin('usersinfo', function($join) {
                                     $join->on('usersinfo.user_id', '=', 'tbl_order_summary.forwarded_bsc_id');
                                 })
-                                ->orWhere('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
+                                ->orWhere('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id);
                             })
                             ->select(
                                 'usersinfo.fname as fname_new',
