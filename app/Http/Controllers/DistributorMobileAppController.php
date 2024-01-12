@@ -675,7 +675,7 @@ class DistributorMobileAppController extends Controller
                 $join->on('newuser_table.user_id', '=','tbl_order_summary.created_disctributor_id');
             })
             ->where('tbl_order_summary.order_no',$request->order_no)
-            ->where('tbl_order_summary.created_disctributor_id',$request->created_disctributor_id)
+            // ->where('tbl_order_summary.created_disctributor_id',$request->created_disctributor_id)
             ->where('tbl_order_summary.is_deleted','no')
             ->select(
                 'tbl_order_summary.id',
