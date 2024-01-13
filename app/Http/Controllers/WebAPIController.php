@@ -6620,23 +6620,20 @@ class WebAPIController extends Controller
     {
         try 
         {
-            $dist_promotion = User::where('id',$request->user_id)->update(['user_type'=>$request->user_type]);
-            $dist_promotion = UsersInfo::where('user_id',$request->user_id)->update(['user_type'=>$request->user_type]);
-            $dist_promotion = Dist_Promotion_Demotion::where('user_id',$request->user_id)->update(['is_updated'=>'y']);
+            $dist_promotion = Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'n']);
           
-            $sersInfoForStructuresInfo = UsersInfoForStructures::where('user_id',$request->user_id)->first();
-            if($sersInfoForStructuresInfo) {
-                if($sersInfoForStructuresInfo->user_type=='bsc') {
-                    if(count(UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->added_by,'user_type'=>'bsc'])->get()->toArray())>=2) {
-                        User::where('id',$sersInfoForStructuresInfo->user_id)->update(['user_type'=>'dsc']);
-                        UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->user_id])->update([
+            if($dist_promotion) {
+                if($dist_promotion->user_type=='bsc') {
+                    if(count(UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote,'user_type'=>'bsc'])->get()->toArray())>=2) {
+                        User::where('id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'dsc']);
+                        UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'dsc'
                         ]);
                     }
-                } elseif($sersInfoForStructuresInfo->user_type=='fsc') {
-                    if(count(UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->added_by,'user_type'=>'fsc'])->get()->toArray())>=2) {
-                        User::where('id',$sersInfoForStructuresInfo->user_id)->update(['user_type'=>'bsc']);
-                        UsersInfoForStructures::where(['user_id'=>$sersInfoForStructuresInfo->user_id])->update([
+                } elseif($dist_promotion->user_type=='fsc') {
+                    if(count(UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote,'user_type'=>'fsc'])->get()->toArray())>=2) {
+                        User::where('id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'bsc']);
+                        UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'bsc'
                         ]);
                     }

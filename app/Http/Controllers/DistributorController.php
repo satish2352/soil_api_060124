@@ -3494,13 +3494,10 @@ class DistributorController extends Controller
                 $data=[
                         'user_type'=>'bsc',
                     ];
-                $dataNew=Dist_Promotion_Demotion::insert(array('user_id'=>$distributorId_who_going_to_add_new_dist,'user_type'=>'bsc'));
-                UsersInfoForStructures::where(['user_id'=>$distributorId_who_going_to_add_new_dist])->update([
-                    'user_type'=>'bsc'
-                ]);
-
-                
-                
+                $dataNew=Dist_Promotion_Demotion::insert(array('user_id_need_to_promote_demote'=>$distributorId_who_going_to_add_new_dist,'user_type'=>'bsc','user_type_old'=>'fsc'));
+                // UsersInfoForStructures::where(['user_id'=>$distributorId_who_going_to_add_new_dist])->update([
+                //     'user_type'=>'bsc'
+                // ]);
             }
             
         }
@@ -3512,10 +3509,10 @@ class DistributorController extends Controller
             $data=[
                     'user_type'=>'dsc',
                 ];
-            $dataNew=Dist_Promotion_Demotion::insert(array('user_id'=>$distributorId_who_going_to_add_new_dist,'user_type'=>'dsc'));
-            UsersInfoForStructures::where(['user_id'=>$dsc_id_to_update->added_by])->update([
-                'user_type'=>'dsc'
-            ]);
+            $dataNew=Dist_Promotion_Demotion::insert(array('user_id_need_to_promote_demote'=>$dsc_id_to_update->added_by,'user_type_new'=>'dsc','user_type_old'=>'bsc'));
+            // UsersInfoForStructures::where(['user_id'=>$dsc_id_to_update->added_by])->update([
+            //     'user_type'=>'dsc'
+            // ]);
             
         }
 
