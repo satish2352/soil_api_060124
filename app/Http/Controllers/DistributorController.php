@@ -3479,45 +3479,57 @@ class DistributorController extends Controller
     
      public function checkLevelofDistributor($distributorId_who_going_to_add_new_dist,$newCreatedDistributor)
     {
+        try {
         
-        $details = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->first();
-      
-        \Log::info('line 3485');
-        \Log::info($details);
+            $details = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->first();
+        
+            \Log::info('line 3485');
+            \Log::info($details);
 
-        if($details->user_type =='fsc')
-        {
-            $fsclist = UsersInfoForStructures::where('added_by',$distributorId_who_going_to_add_new_dist)->where('user_type','fsc')->get(); 
-            
-            if(count($fsclist)>=2)
+            if($details->user_type =='fsc')
             {
-                $data=[
-                        'user_type'=>'bsc',
-                    ];
-                $dataNew=Dist_Promotion_Demotion::insert(array('user_id_need_to_promote_demote'=>$distributorId_who_going_to_add_new_dist,'user_type'=>'bsc','user_type_old'=>'fsc'));
-                // UsersInfoForStructures::where(['user_id'=>$distributorId_who_going_to_add_new_dist])->update([
-                //     'user_type'=>'bsc'
-                // ]);
+                $fsclist = UsersInfoForStructures::where('added_by',$distributorId_who_going_to_add_new_dist)->where('user_type','fsc')->get(); 
+                
+                if(count($fsclist)>=2)
+                {
+                    $data=[
+                            'user_type'=>'bsc',
+                        ];
+                    $dataNew=Dist_Promotion_Demotion::insert(array('user_id_need_to_promote_demote'=>$distributorId_who_going_to_add_new_dist,'user_type'=>'bsc','user_type_old'=>'fsc'));
+                    // UsersInfoForStructures::where(['user_id'=>$distributorId_who_going_to_add_new_dist])->update([
+                    //     'user_type'=>'bsc'
+                    // ]);
+                }
+                
             }
+            if($details->user_type =='bsc')
+            {
             
-        }
-        if($details->user_type =='bsc')
-        {
-           
-            $dsc_id_to_update = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->where('user_type','bsc','added_by')->first();   
+                $dsc_id_to_update = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->where('user_type','bsc','added_by')->first();   
 
-            $data=[
-                    'user_type'=>'dsc',
-                ];
-            $dataNew=Dist_Promotion_Demotion::insert(array('user_id_need_to_promote_demote'=>$dsc_id_to_update->added_by,'user_type_new'=>'dsc','user_type_old'=>'bsc'));
-            // UsersInfoForStructures::where(['user_id'=>$dsc_id_to_update->added_by])->update([
-            //     'user_type'=>'dsc'
-            // ]);
-            
-        }
+                $data=[
+                        'user_type'=>'dsc',
+                    ];
+                $dataNew=Dist_Promotion_Demotion::insert(array('user_id_need_to_promote_demote'=>$dsc_id_to_update->added_by,'user_type_new'=>'dsc','user_type_old'=>'bsc'));
+                // UsersInfoForStructures::where(['user_id'=>$dsc_id_to_update->added_by])->update([
+                //     'user_type'=>'dsc'
+                // ]);
+                
+            }
 
 
+        } catch(Exception $e) {
+            \Log::info('line 3522 in checl level');
+            \Log::info($e);
+
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
         
+        }
     }
     
    /////New API Satish 06.03.2021
