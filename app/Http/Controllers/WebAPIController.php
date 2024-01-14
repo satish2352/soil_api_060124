@@ -5,42 +5,42 @@ use Exception;
 use JWTAuth;
 use App\Task;
 use Illuminate\Http\Request;
-use App\Models\UsersInfo;
-use App\Models\User;
-use App\Models\FarmerMeeting;
-use App\Models\DistributorMeeting;
-use App\Models\TargetVideos;
-use App\Models\TargetVideosToDistributor;
-use App\Models\FarmerVistByDistributor;
-use App\Models\WebCompanyProfile;
-use App\Models\WebAboutUs;
-use App\Models\WebCoverPhoto;
-use App\Models\WebGallaryPhoto;
-use App\Models\WebVisionMission;
-use App\Models\WebVideos;
-use App\Models\WebBlog;
-use App\Models\Career;
-use App\Models\Marquee;
-use App\Models\Enquiry;
-use App\Models\WebTestiminials;
-use App\Models\FrontUsers;
-use App\Models\WebAudio;
-use App\Models\Product;
-use App\Models\FrontProduct;
-use App\Models\ProductReview;
-use App\Models\BlogReply;
-use App\Models\WebAgency;
-use App\Models\ProductDetails;
-use App\Models\Notification;
-use App\Models\SCTResult;
-use App\Models\Subscriber;
-use App\Models\Dist_Promotion_Demotion;
-use App\Models\WebClientLogo;
-use App\Models\Counter;
-use App\Models\WebInternship;
-use App\Models\WebJobPosting;
-use File;
-use Carbon\Carbon;
+use App\Models\ {
+               UsersInfo,
+                User,
+                FarmerMeeting,
+                DistributorMeeting,
+                TargetVideos,
+                TargetVideosToDistributor,
+                FarmerVistByDistributor,
+                WebCompanyProfile,
+                WebAboutUs,
+                WebCoverPhoto,
+                WebGallaryPhoto,
+                WebVisionMission,
+                WebVideos,
+                WebBlog,
+                Career,
+                Marquee,
+                Enquiry,
+                WebTestiminials,
+                FrontUsers,
+                WebAudio,
+                Product,
+                FrontProduct,
+                ProductReview,
+               BlogReply,
+               WebAgency,
+               ProductDetails,
+               Notification,
+               SCTResult,
+               Subscriber,
+               Dist_Promotion_Demotion,
+               WebClientLogo,
+               Counter,
+               WebInternship,
+               WebJobPosting,
+};
 use App\Models\SaleSummary;
 use App\Models\OrderSummary;
 use App\Models\OrderDetail;
@@ -51,6 +51,8 @@ use App\Models\{
     Crops,
     UsersInfoForStructures
 };
+use File;
+use Carbon\Carbon;
 use DB;
 
 use App\Http\Controllers\CommonController As CommonController;
@@ -6621,19 +6623,26 @@ class WebAPIController extends Controller
         try 
         {
             $dist_promotion = Dist_Promotion_Demotion::where(['user_id_need_to_promote_demote' => $request->user_id, 'is_updated'=>'n'])->first();
-          
+            \Log::info("in promotion ");
+            \Log::info($dist_promotion);
+
             if($dist_promotion) {
                 if($dist_promotion->user_type_old=='bsc') {
                     if(count(UsersInfoForStructures::where(['added_by'=>$dist_promotion->user_id_need_to_promote_demote,'user_type'=>'bsc'])->get()->toArray())>=2) {
                         User::where('id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'dsc']);
+                        UserInfo::where('user_id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'dsc']);
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'dsc'
                         ]);
                         Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
                     }
                 } elseif($dist_promotion->user_type_old=='fsc') {
+
+                    \Log::info('$dist_promotion->user_type_old');
+                    \Log::info($dist_promotion->user_type_old);
                     if(count(UsersInfoForStructures::where(['added_by'=>$dist_promotion->user_id_need_to_promote_demote,'user_type'=>'fsc'])->get()->toArray())>=2) {
                         User::where('id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'bsc']);
+                        UserInfo::where('user_id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'bsc']);
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'bsc'
                         ]);

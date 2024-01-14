@@ -677,7 +677,7 @@ class DistributorController extends Controller
         'usersinfo.photo',
         'usersinfo.is_sms_send',
         'usersinfo.notification',
-        'usersinfo.user_type',
+        'users.user_type',
         'usersinfo.shop_name',
         'usersinfo.total_area',
         'usersinfo.other_bussiness',
