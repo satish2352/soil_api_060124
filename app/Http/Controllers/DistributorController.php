@@ -3490,6 +3490,7 @@ class DistributorController extends Controller
             {
                 $fsclist = UsersInfoForStructures::where('added_by',$distributorId_who_going_to_add_new_dist)->where('user_type','fsc')->get(); 
                 \Log('$fsclist count to check fsc to bsc ', $fsclist);
+                \Log($fsclist);
                 if(count($fsclist)>=2)
                 {
                     $data=[
