@@ -721,9 +721,15 @@ class DistributorController extends Controller
                 if($value->is_updated == 'n') {
                     $value->new_user_promote = 'y';
                     $value->new_user_type=$promo_demo->user_type_new;
+                    if($value->new_user_type=='fsc') {
+                        $value->new_user_demote = 'n';
+                    } else {
+                        $value->new_user_demote = 'y';
+                    }
 
                 } else {
                     $value->new_user_promote = 'n';
+                    $value->new_user_demote = 'y';
                     $value->new_user_type='';
                 }
             }
