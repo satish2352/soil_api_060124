@@ -699,7 +699,9 @@ class DistributorMobileAppController extends Controller
                 'tbl_order_summary.is_deleted',
                 'tbl_order_summary.created_at',
                 'tbl_order_summary.updated_at',
-
+                'tbl_order_summary.is_order_confirm_from_bsc',
+                'tbl_order_summary.is_order_confirm_from_dsc',
+                'tbl_order_summary.is_order_confirm_from_dist',
                 'newuser_table.fname',
                 'newuser_table.mname',
                 'newuser_table.lname',
