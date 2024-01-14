@@ -6620,7 +6620,7 @@ class WebAPIController extends Controller
     {
         try 
         {
-            $dist_promotion = Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'n']);
+            $dist_promotion = Dist_Promotion_Demotion::where(['user_id_need_to_promote_demote' => $request->user_id, 'is_updated'=>'n'])->first();
           
             if($dist_promotion) {
                 if($dist_promotion->user_type_old=='bsc') {
@@ -6629,6 +6629,7 @@ class WebAPIController extends Controller
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'dsc'
                         ]);
+                        Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
                     }
                 } elseif($dist_promotion->user_type_old=='fsc') {
                     if(count(UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote,'user_type'=>'fsc'])->get()->toArray())>=2) {
@@ -6636,6 +6637,7 @@ class WebAPIController extends Controller
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'bsc'
                         ]);
+                        Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y'])
                     }
                 }
             } 
