@@ -717,11 +717,20 @@ class DistributorController extends Controller
             
             if(!empty($promo_demo))
             {
-                $value->new_user_type=$promo_demo->user_type;
+                
+                if($value->is_updated == 'n') {
+                    $value->new_user_promote = 'y';
+                    $value->new_user_type=$promo_demo->user_type_new;
+
+                } else {
+                    $value->new_user_promote = 'n';
+                    $value->new_user_type='';
+                }
             }
             else
             {
                 $value->new_user_type='';
+                $value->new_user_promote = '';
             }
 
             $value->aadhar_card_image_front=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_front;
