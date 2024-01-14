@@ -6622,7 +6622,7 @@ class WebAPIController extends Controller
     {
         try 
         {
-            $dist_promotion = Dist_Promotion_Demotion::where(['user_id_need_to_promote_demote' => $request->user_id, 'is_updated'=>'n'])->first();
+            $dist_promotion = Dist_Promotion_Demotion::where(['user_id_need_to_promote_demote' => $request->user_id])->orderBy('id','desc')->first();
             \Log::info("in promotion ");
             \Log::info($dist_promotion);
 
@@ -6634,7 +6634,7 @@ class WebAPIController extends Controller
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'dsc'
                         ]);
-                        Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
+                        // Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
                     }
                 } elseif($dist_promotion->user_type_old=='fsc') {
 
@@ -6646,7 +6646,7 @@ class WebAPIController extends Controller
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'bsc'
                         ]);
-                        Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
+                        // Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
                     }
                 }
             } 
@@ -6695,6 +6695,10 @@ class WebAPIController extends Controller
             $dist_demotion = User::where('id',$request->user_id)->update(['user_type'=>$usr_ty]);
             $dist_demotion = UsersInfo::where('user_id',$request->user_id)->update(['user_type'=>$usr_ty]);
           
+            UsersInfoForStructures::where(['user_id'=>$request->user_id])->update([
+                'user_type'=>$usr_ty
+            ]);
+
             if ($dist_demotion)
             {
                  return response()->json([
