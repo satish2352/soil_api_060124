@@ -6630,7 +6630,7 @@ class WebAPIController extends Controller
                 if($dist_promotion->user_type_old=='bsc') {
                     if(count(UsersInfoForStructures::where(['added_by'=>$dist_promotion->user_id_need_to_promote_demote,'user_type'=>'bsc'])->get()->toArray())>=2) {
                         User::where('id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'dsc']);
-                        UserInfo::where('user_id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'dsc']);
+                        UsersInfo::where('user_id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'dsc']);
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'dsc'
                         ]);
@@ -6642,7 +6642,7 @@ class WebAPIController extends Controller
                     \Log::info($dist_promotion->user_type_old);
                     if(count(UsersInfoForStructures::where(['added_by'=>$dist_promotion->user_id_need_to_promote_demote,'user_type'=>'fsc'])->get()->toArray())>=2) {
                         User::where('id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'bsc']);
-                        UserInfo::where('user_id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'bsc']);
+                        UsersInfo::where('user_id',$dist_promotion->user_id_need_to_promote_demote)->update(['user_type'=>'bsc']);
                         UsersInfoForStructures::where(['user_id'=>$dist_promotion->user_id_need_to_promote_demote])->update([
                             'user_type'=>'bsc'
                         ]);
@@ -8993,8 +8993,8 @@ class WebAPIController extends Controller
 	   public function web_frontdistributorinfo(Request $request)
     {
 
-        // $userinfo = FrontUsers::where('id',$request->id)->get();
-        // foreach($userinfo as $key=>$value)
+        // $UsersInfo = FrontUsers::where('id',$request->id)->get();
+        // foreach($UsersInfo as $key=>$value)
         //     {
         //         $value->aadhar_card_image_front=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_front;
         //         $value->aadhar_card_image_back=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_back;
@@ -9003,10 +9003,10 @@ class WebAPIController extends Controller
         //         $value->shop_act_image=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->shop_act_image;
         //         $value->product_purchase_bill=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->product_purchase_bill;
         //     }
-        // if ($userinfo)
+        // if ($UsersInfo)
         // {
         //      return response()->json([
-        //         "data" => $userinfo,
+        //         "data" => $UsersInfo,
         //         "result" => true,
         //         "message" => 'Distributor info get successfully',
                
