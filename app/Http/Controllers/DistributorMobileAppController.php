@@ -475,7 +475,7 @@ class DistributorMobileAppController extends Controller
             if ($result)
             {
                  return response()->json([
-                    "data" => $result,
+                    "data" => array(),
                     "result" => true,
                     "message" => 'Information updated Successfully'
                 ]);
@@ -483,7 +483,7 @@ class DistributorMobileAppController extends Controller
             else
             {
                 return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not updated'
                 ]);
