@@ -1515,12 +1515,12 @@ class DistributorControllerNandu extends Controller
                 //                     ->get();
 
 
-                $value->all_product = SaleDetail::where('tbl_order_detail.order_no',$request->order_no)
+                $value->all_product = SaleDetail::where('tbl_sale_detail.order_no',$request->order_no)
                                             ->leftJoin('tbl_product_details', function($join) {
-                                                $join->on('tbl_order_detail.prod_id', '=', 'tbl_product_details.id');
+                                                $join->on('tbl_sale_detail.prod_id', '=', 'tbl_product_details.id');
                                             })
-                                            ->where('tbl_order_detail.is_deleted','no')
-                                            ->join('tbl_product','tbl_product.id','=','tbl_order_detail.prod_id')
+                                            ->where('tbl_sale_detail.is_deleted','no')
+                                            ->join('tbl_product','tbl_product.id','=','tbl_sale_detail.prod_id')
                                             ->get();
                
 
