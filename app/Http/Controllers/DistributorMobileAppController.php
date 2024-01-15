@@ -630,8 +630,8 @@ class DistributorMobileAppController extends Controller
                                 $query->where('tbl_order_summary.order_no','like', '%' . $request->order_no . '%' );
                             }) 
              
-                            // ->where('tbl_order_summary.is_order_confirm_from_dist','no')
-                            // ->where('tbl_order_summary.is_deleted','no')
+                            ->where('tbl_order_summary.is_order_confirm_from_dist','no')
+                            ->where('tbl_order_summary.is_deleted','no')
                            
                             
                             ->select(
