@@ -726,10 +726,14 @@ class DistributorController extends Controller
                     } else {
                         $value->new_user_denote = 'y';
                     }
-
                 } else {
                     $value->new_user_promote = 'n';
-                    $value->new_user_denote = 'y';
+                    if($promo_demo->new_user_type=='fsc') {
+                        $value->new_user_denote = 'y';
+                    } else {
+                        $value->new_user_denote = 'n';
+                    }
+
                     $value->new_user_type='';
                 }
             }
