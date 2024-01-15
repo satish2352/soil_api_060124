@@ -722,13 +722,13 @@ class DistributorController extends Controller
                     $value->new_user_promote = 'y';
                     $value->new_user_type=$promo_demo->user_type_new;
                     if($promo_demo->user_type_new=='bsc' || $promo_demo->user_type_new=='dsc') {
-                        $value->new_user_demote = 'y';
-                    } else {
                         $value->new_user_demote = 'n';
+                    } else {
+                        $value->new_user_demote = 'y';
                     }
                 } else {
                     $value->new_user_promote = 'n';
-                    if(($promo_demo->user_type_new=='bsc' || $promo_demo->user_type_new=='dsc') && ($promo_demo->user_type_old=='fsc' || $promo_demo->user_type_old=='bsc' || $promo_demo->user_type_old=='dsc')) {
+                    if(($promo_demo->user_type_new=='bsc' || $promo_demo->user_type_new=='dsc')) {
                         $value->new_user_demote = 'y';
                     } else {
                         $value->new_user_demote = 'n';
