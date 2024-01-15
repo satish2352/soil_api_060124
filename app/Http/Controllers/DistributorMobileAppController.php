@@ -608,13 +608,28 @@ class DistributorMobileAppController extends Controller
     {
         try
         {
-             $result = OrderSummary::leftJoin('usersinfo', function($join) {
+             $result = OrderSummary::
+             
+                            leftJoin('usersinfo', function($join) {
                                 $join->on('usersinfo.user_id', '=', 'tbl_order_summary.forwarded_bsc_id');
                             })
                             ->where('tbl_order_summary.is_order_confirm_from_dist','no')
                             ->leftJoin('usersinfo as newuser_table', function($join) {
                                 $join->on('newuser_table.user_id', '=', 'tbl_order_summary.forwarded_dsc_id');
                             })
+                            
+                            ->when($request->get('created_disctributor_id'), function($query) use ($request) {
+                                $query->where('created_disctributor_id', $request->created_disctributor_id);
+                            }) 
+                            ->when($request->get('datefrom'), function($query) use ($request) {
+                                $query->whereBetween('created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                            }) 
+
+                            ->when($request->get('order_no'), function($query) use ($request) {
+                                $query->where('order_no',  'LIKE %'.$request->order_no.'%');
+                            }) 
+             
+             
                             ->where('tbl_order_summary.is_deleted','no')
                             ->where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
                             ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id)
