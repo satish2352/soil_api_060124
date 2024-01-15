@@ -139,6 +139,7 @@ class DistributorController extends Controller
             // $users->shop_image = $request->shop_image;
             // $users->aadhar_card_image = $request->aadhar_card_image;
             $users->user_type = 'fsc';
+            $users->new_list_to_view = 'y';
             $users->is_deleted = 'no'; // 0 Means Active, 1 Means Delete
             $users->active = 'yes'; // 0 Means Active, 1 Means Inactive
             $users->added_by =  ($request->created_by) ? $request->created_by: 'superadmin'; // 0- from Superadmin 1- Distributor
@@ -773,6 +774,150 @@ class DistributorController extends Controller
 
     }
 
+
+    public function distributorlist_new_arrival(Request $request)
+    {
+        $result = UsersInfo::leftJoin('tbl_area as stateNew', function($join) {
+            $join->on('usersinfo.state', '=', 'stateNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as districtNew', function($join) {
+            $join->on('usersinfo.district', '=', 'districtNew.location_id');
+          })
+          
+          
+          ->leftJoin('tbl_area as talukaNew', function($join) {
+            $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+          })
+          
+          ->leftJoin('tbl_area as cityNew', function($join) {
+            $join->on('usersinfo.city', '=', 'cityNew.location_id');
+          })
+          ->join('users','users.id','=','usersinfo.user_id')
+          ->whereIn('usersinfo.user_type',['fsc','bsc','dsc'])
+          ->where('usersinfo.is_deleted', '=', 'no')
+          ->where('usersinfo.new_list_to_view', '=', 'yes')
+         ->select(   'stateNew.name as state',
+         'districtNew.name as district',
+         'talukaNew.name as taluka',
+         'cityNew.name as city',
+         'usersinfo.id as id',
+        'usersinfo.user_id',
+        'usersinfo.name',
+        'usersinfo.fname',
+        'usersinfo.mname',
+        'usersinfo.lname',
+        'usersinfo.email',
+        'usersinfo.phone',
+        'usersinfo.aadharcard',
+        // 'usersinfo.state',
+        // 'usersinfo.district',
+        // 'usersinfo.taluka',
+        // 'usersinfo.city',
+        'usersinfo.address',
+        'usersinfo.pincode',
+        'usersinfo.crop',
+        'usersinfo.acre',
+        'usersinfo.password',
+        'usersinfo.visible_password',
+        'usersinfo.photo',
+        'usersinfo.is_sms_send',
+        'usersinfo.notification',
+        'users.user_type',
+        'usersinfo.shop_name',
+        'usersinfo.total_area',
+        'usersinfo.other_bussiness',
+        'usersinfo.is_deleted',
+        'usersinfo.active',
+        'usersinfo.remember_token',
+        'usersinfo.otp',
+        'usersinfo.is_verified',
+        'usersinfo.occupation',
+        'usersinfo.education',
+        'usersinfo.exp_in_agricultural',
+        'usersinfo.other_distributorship',
+        'usersinfo.reference_from',
+        'usersinfo.shop_location',
+        'usersinfo.aadhar_card_image_front',
+        'usersinfo.aadhar_card_image_back',
+        'usersinfo.pan_card',
+        'usersinfo.light_bill',
+        'usersinfo.shop_act_image',
+        'usersinfo.product_purchase_bill',
+        'usersinfo.geolocation',
+        'usersinfo.added_by',
+        'usersinfo.devicetoken',
+        'usersinfo.devicetype',
+        'usersinfo.devicename',
+        'usersinfo.deviceid',
+        'usersinfo.logintime',
+        'usersinfo.created_by',
+        'usersinfo.created_on'
+         )
+          ->orderBy('users.id', 'DESC')
+          ->get();
+        foreach($result as $key=>$value)
+        {
+            // $promo_demo = Dist_Promotion_Demotion::where('user_id',$value->user_id)->where('is_updated','n')->first();
+            $promo_demo = Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$value->user_id)->orderBy('id', 'desc')->first();
+            
+            if(!empty($promo_demo))
+            {
+                
+                if($promo_demo->is_updated == 'n') {
+                    $value->new_user_promote = 'y';
+                    $value->new_user_type=$promo_demo->user_type_new;
+                    if($promo_demo->user_type_new=='bsc' || $promo_demo->user_type_new=='dsc') {
+                        $value->new_user_demote = 'n';
+                    } else {
+                        $value->new_user_demote = 'y';
+                    }
+                } else {
+                    $value->new_user_promote = 'n';
+                    if(($promo_demo->user_type_new=='bsc' || $promo_demo->user_type_new=='dsc')) {
+                        $value->new_user_demote = 'y';
+                    } else {
+                        $value->new_user_demote = 'n';
+                    }
+
+                    $value->new_user_type='';
+                }
+            }
+            else
+            {
+                $value->new_user_type='';
+                $value->new_user_promote = '';
+            }
+
+            $value->aadhar_card_image_front=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_front;
+            $value->aadhar_card_image_back=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->aadhar_card_image_back;
+            $value->pan_card=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->pan_card;
+            $value->light_bill=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->light_bill;
+            $value->shop_act_image=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->shop_act_image;
+            $value->product_purchase_bill=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$value->product_purchase_bill;
+            
+
+        }
+        // dd($result);
+        if (count($result) > 0)
+        {
+            $response = array();
+            $response['data'] = $result;
+            $response['code'] = 200;
+            $response['message'] = 'Distributor List Get Successfully';
+            $response['result'] = true;
+            return response()->json($response);
+        }
+        else
+        {
+            $response = array();
+            $response['code'] = 400;
+            $response['message'] = 'Distributor List Not Found';
+            $response['result'] = false;
+            return response()->json($response);
+        }
+
+    }
     public function distributordelete(Request $request)
     {
         

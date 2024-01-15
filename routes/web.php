@@ -97,6 +97,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('distributorregistration_images', 'DistributorController@distributorregistration_images');
             $router->post('distributorregistration_images_update', 'DistributorController@distributorregistration_images_update');
             $router->post('distributorlist', 'DistributorController@distributorlist');
+            $router->post('distributorlist_new_arrival', 'DistributorController@distributorlist_new_arrival');
             $router->post('distributorinfo', 'DistributorController@distributorinfo');
             $router->post('distributordelete', 'DistributorController@distributordelete');
             $router->post('distributorupdatenew', 'DistributorController@distributorupdatenew');
