@@ -627,7 +627,7 @@ class DistributorMobileAppController extends Controller
                             }) 
 
                             ->when($request->order_no, function($query) use ($request) {
-                                $query->where('tbl_order_summary.order_no',  'LIKE %'.$request->order_no.'%');
+                                $query->where('tbl_order_summary.order_no','like', '%' . $request->order_no . '%' );
                             }) 
              
              
