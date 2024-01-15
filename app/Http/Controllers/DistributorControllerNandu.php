@@ -5,30 +5,32 @@ use Exception;
 use JWTAuth;
 use App\Task;
 use Illuminate\Http\Request;
-use App\Models\UsersInfo;
-use App\Models\User;
-use App\Models\FarmerMeeting;
-use App\Models\DistributorMeeting;
-use App\Models\TargetVideos;
-use App\Models\TargetVideosToDistributor;
-use App\Models\FarmerVistByDistributor;
-use App\Models\SCTResult;
-use App\Models\WebAgency;
-use App\Models\Subscriber;
-use App\Models\SubscriberTarget;
-use App\Models\Messages;
-use App\Models\Complaint;
-use App\Models\WebBlog;
-use App\Models\OrderSummary;
-use App\Models\OrderDetail;
-use App\Models\SaleSummary;
-use App\Models\SaleDetail;
-use App\Models\Video;
-use App\Models\Language;
-use App\Models\Allvideo;
-use App\Models\ProductDetails;
-use App\Models\Downloads;
-use App\Models\WebVideos;
+use App\Models\ {
+    UsersInfo,
+    User,
+    FarmerMeeting,
+    DistributorMeeting,
+    TargetVideos,
+    TargetVideosToDistributor,
+    FarmerVistByDistributor,
+    SCTResult,
+    WebAgency,
+    Subscriber,
+    SubscriberTarget,
+    Messages,
+    Complaint,
+    WebBlog,
+    OrderSummary,
+    OrderDetail,
+    SaleSummary,
+    SaleDetail,
+    Video,
+    Language,
+    Allvideo,
+    ProductDetails,
+    Downloads,
+    WebVideos
+};
 use DB;
 use App\Http\Controllers\CommonController As CommonController;
 
@@ -1513,7 +1515,7 @@ class DistributorControllerNandu extends Controller
                 //                     ->get();
 
 
-                $value->all_product = OrderDetail::where('tbl_order_detail.order_no',$request->order_no)
+                $value->all_product = SaleDetail::where('tbl_order_detail.order_no',$request->order_no)
                                             ->leftJoin('tbl_product_details', function($join) {
                                                 $join->on('tbl_order_detail.prod_id', '=', 'tbl_product_details.id');
                                             })
