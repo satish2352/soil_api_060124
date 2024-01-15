@@ -54,10 +54,10 @@ class DistributorControllerNandu extends Controller
                 ->where('user_type','farmer')
                 ->where('is_deleted','no')
                 ->get();
-
+            $user_type = UsersInfo::where('id',$request->added_by)->select('user_type')->first();
             $data = array();
             $data['records'] = sizeof($count);
-            $data['user_type'] = UsersInfo::where('id',$request->added_by)->value('user_type');
+            $data['user_type'] = $user_type->user_type;
         
             if ($data)
             {
