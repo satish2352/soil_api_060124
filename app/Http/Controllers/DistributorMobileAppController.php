@@ -623,11 +623,11 @@ class DistributorMobileAppController extends Controller
                                 ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
                             }) 
                             ->when($request->get('datefrom'), function($query) use ($request) {
-                                $query->whereBetween('created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                                $query->whereBetween('tbl_order_summary.created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
                             }) 
 
                             ->when($request->get('order_no'), function($query) use ($request) {
-                                $query->where('order_no',  'LIKE %'.$request->order_no.'%');
+                                $query->where('tbl_order_summary.order_no',  'LIKE %'.$request->order_no.'%');
                             }) 
              
              
