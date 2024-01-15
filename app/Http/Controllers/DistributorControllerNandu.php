@@ -1485,27 +1485,7 @@ class DistributorControllerNandu extends Controller
             ->where('tbl_sale_summary.created_disctributor_id',$request->created_disctributor_id)
             ->where('tbl_sale_summary.is_deleted','no')
             ->select(
-                'tbl_sale_summary.id',
-                'tbl_sale_summary.order_no',
-                'tbl_sale_summary.order_date',
-                'tbl_sale_summary.order_created_by',
-                'tbl_sale_summary.created_disctributor_id',
-                'tbl_sale_summary.created_disctributor_amount',
-                'tbl_sale_summary.dispatched_to_created_disctributor_by_warehouse',
-                'tbl_sale_summary.forwarded_bsc_id',
-                'tbl_sale_summary.forwarded_bsc_amount',
-                'tbl_sale_summary.dispatched_to_forwarded_bsc_by_warehouse',
-                'tbl_sale_summary.forwarded_dsc_id',
-                'tbl_sale_summary.forwarded_dsc_amount',
-                'tbl_sale_summary.dispatched_to_forwarded_dsc_amount_by_warehouse',
-                'tbl_sale_summary.account_approved',
-                'tbl_sale_summary.forward_to_warehouse',
-                'tbl_sale_summary.entry_by',
-                'tbl_sale_summary.order_dispatched',
-                'tbl_sale_summary.order_dispatched_date',
-                'tbl_sale_summary.is_deleted',
-                'tbl_sale_summary.created_at',
-                'tbl_sale_summary.updated_at',
+                'tbl_sale_summary.*',
               
                 'newuser_table.fname',
                 'newuser_table.mname',
