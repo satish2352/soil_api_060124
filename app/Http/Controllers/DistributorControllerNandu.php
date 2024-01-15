@@ -50,17 +50,19 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $count= UsersInfo::where('added_by',$request->added_by)
-                    ->where('user_type','farmer')
-                    ->where('is_deleted','no')
-                    ->get();
+            $count= UsersInfo::where('added_by',$request->added_by)
+                ->where('user_type','farmer')
+                ->where('is_deleted','no')
+                ->get();
+
+            $data = array();
+            $data['records'] = sizeof($count);
+            $data['user_type'] = UsersInfo::where('added_by',$request->added_by)->value('user_type');
         
-        $count=sizeof($count);
-            
-            if ($count)
+            if ($data)
             {
                  return response()->json([
-                    "data" => $count,
+                    "data" => $data,
                     "result" => true,
                     "message" => 'Farmers Count Get Successfully'
                 ]);
@@ -68,7 +70,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Farmers Count Not Found'
                 ]);
