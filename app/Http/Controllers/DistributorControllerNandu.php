@@ -1469,15 +1469,15 @@ class DistributorControllerNandu extends Controller
         try
         {
             $result = SaleSummary::
-            leftJoin('tbl_sale_detail', function($join) {
-                $join->on('tbl_sale_summary.order_no', '=', 'tbl_sale_detail.order_no');
-            })
+            // leftJoin('tbl_sale_detail', function($join) {
+            //     $join->on('tbl_sale_summary.order_no', '=', 'tbl_sale_detail.order_no');
+            // })
           
-            ->leftJoin('tbl_product', function($join) {
-                $join->on('tbl_sale_detail.prod_id', '=', 'tbl_product.id');
-            })
+            // ->leftJoin('tbl_product', function($join) {
+            //     $join->on('tbl_sale_detail.prod_id', '=', 'tbl_product.id');
+            // })
 
-            ->leftJoin('usersinfo as newuser_table', function($join) {
+            leftJoin('usersinfo as newuser_table', function($join) {
                 $join->on('newuser_table.user_id', '=','tbl_sale_summary.created_disctributor_id');
             })
             
