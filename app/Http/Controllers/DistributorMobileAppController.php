@@ -610,40 +610,40 @@ class DistributorMobileAppController extends Controller
         {
              $result = OrderSummary::
              
-                            leftJoin('usersinfo', function($join) {
-                                $join->on('usersinfo.user_id', '=', 'tbl_order_summary.forwarded_bsc_id');
-                            })
-                            ->where('tbl_order_summary.is_order_confirm_from_dist','no')
-                            ->leftJoin('usersinfo as newuser_table', function($join) {
-                                $join->on('newuser_table.user_id', '=', 'tbl_order_summary.forwarded_dsc_id');
-                            })
+                            // leftJoin('usersinfo', function($join) {
+                            //     $join->on('usersinfo.user_id', '=', 'tbl_order_summary.forwarded_bsc_id');
+                            // })
                             
-                            ->when($request->created_disctributor_id, function($query) use ($request) {
-                                $query->where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
-                                ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
-                            }) 
-                            ->when($request->datefrom, function($query) use ($request) {
-                                $query->whereBetween('tbl_order_summary.created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
-                            }) 
+                            // ->leftJoin('usersinfo as newuser_table', function($join) {
+                            //     $join->on('newuser_table.user_id', '=', 'tbl_order_summary.forwarded_dsc_id');
+                            // })
+                            
+                            // ->when($request->created_disctributor_id, function($query) use ($request) {
+                            //     $query->where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
+                            //     ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
+                            // }) 
+                            // ->when($request->datefrom, function($query) use ($request) {
+                            //     $query->whereBetween('tbl_order_summary.created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                            // }) 
 
-                            ->when($request->order_no, function($query) use ($request) {
+                            when($request->order_no, function($query) use ($request) {
                                 $query->where('tbl_order_summary.order_no','like', '%' . $request->order_no . '%' );
                             }) 
              
-             
-                            ->where('tbl_order_summary.is_deleted','no')
+                            // ->where('tbl_order_summary.is_order_confirm_from_dist','no')
+                            // ->where('tbl_order_summary.is_deleted','no')
                            
                             
                             ->select(
-                                'usersinfo.fname as fname_new',
-                                'usersinfo.mname as mname_new',
-                                'usersinfo.lname as lname_new',
-                                'usersinfo.phone as phone_new',
+                                // 'usersinfo.fname as fname_new',
+                                // 'usersinfo.mname as mname_new',
+                                // 'usersinfo.lname as lname_new',
+                                // 'usersinfo.phone as phone_new',
 
-                                'newuser_table.fname',
-                                'newuser_table.mname',
-                                'newuser_table.lname',
-                                'newuser_table.phone',
+                                // 'newuser_table.fname',
+                                // 'newuser_table.mname',
+                                // 'newuser_table.lname',
+                                // 'newuser_table.phone',
                                 'tbl_order_summary.*'
                             )
                             ->orderBy('id','DESC')
