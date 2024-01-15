@@ -535,7 +535,17 @@ class DistributorMobileAppController extends Controller
         try
         {
              $result = OrderSummary::where('is_deleted','no')
-                        ->where('created_disctributor_id',$request->created_disctributor_id)
+
+                        ->when($request->get('created_disctributor_id'), function($query) use ($request) {
+                            $query->where('created_disctributor_id', $request->created_disctributor_id);
+                        }) 
+                        ->when($request->get('datefrom'), function($query) use ($request) {
+                            $query->whereBetween('created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                        }) 
+
+                        ->when($request->get('order_no'), function($query) use ($request) {
+                            $query->where('order_no',  'LIKE %'.$request->order_no.'%');
+                        }) 
                         ->orderBy('id','DESC')
                         ->get();
             
@@ -590,6 +600,8 @@ class DistributorMobileAppController extends Controller
           return  'Message: ' .$e->getMessage();
         }
     }
+
+    
 
     
     public function orderlist_from_other_dist_mobileapp(Request $request)
@@ -1191,7 +1203,7 @@ class DistributorMobileAppController extends Controller
         else
         {
             $response = array();
-            $response['data'] = $result;
+            $response['data'] = array();
             $response['code'] = 400;
             $response['message'] = 'Distributor List Not Found';
             $response['result'] = false;

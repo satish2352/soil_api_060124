@@ -1468,9 +1468,52 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-            $result = SaleSummary::where('order_no',$request->order_no)
+            $result = SaleSummary::
+            leftJoin('tbl_sale_detail', function($join) {
+                $join->on('tbl_sale_summary.order_no', '=', 'tbl_sale_detail.order_no');
+            })
+          
+            ->leftJoin('tbl_product', function($join) {
+                $join->on('tbl_sale_detail.prod_id', '=', 'tbl_product.id');
+            })
+
+            ->leftJoin('usersinfo as newuser_table', function($join) {
+                $join->on('newuser_table.user_id', '=','tbl_sale_summary.created_disctributor_id');
+            })
+            
+            ->where('tbl_sale_summary.order_no',$request->order_no)
             ->where('tbl_sale_summary.created_disctributor_id',$request->created_disctributor_id)
-            ->where('tbl_sale_summary.is_deleted','no')->get();
+            ->where('tbl_sale_summary.is_deleted','no')
+            ->select(
+                'tbl_sale_summary.id',
+                'tbl_sale_summary.order_no',
+                'tbl_sale_summary.order_date',
+                'tbl_sale_summary.order_created_by',
+                'tbl_sale_summary.created_disctributor_id',
+                'tbl_sale_summary.created_disctributor_amount',
+                'tbl_sale_summary.dispatched_to_created_disctributor_by_warehouse',
+                'tbl_sale_summary.forwarded_bsc_id',
+                'tbl_sale_summary.forwarded_bsc_amount',
+                'tbl_sale_summary.dispatched_to_forwarded_bsc_by_warehouse',
+                'tbl_sale_summary.forwarded_dsc_id',
+                'tbl_sale_summary.forwarded_dsc_amount',
+                'tbl_sale_summary.dispatched_to_forwarded_dsc_amount_by_warehouse',
+                'tbl_sale_summary.account_approved',
+                'tbl_sale_summary.forward_to_warehouse',
+                'tbl_sale_summary.entry_by',
+                'tbl_sale_summary.order_dispatched',
+                'tbl_sale_summary.order_dispatched_date',
+                'tbl_sale_summary.is_deleted',
+                'tbl_sale_summary.created_at',
+                'tbl_sale_summary.updated_at',
+              
+                'newuser_table.fname',
+                'newuser_table.mname',
+                'newuser_table.lname',
+                'newuser_table.phone',
+                
+            )
+            ->get();
         
             foreach($result as $key=>$value)
             {
@@ -1484,26 +1527,20 @@ class DistributorControllerNandu extends Controller
                 }elseif($value->account_approved=='yes' && $value->forward_to_warehouse=='yes'){
                     $value->status = 'Forwaded to warehouse';
                 }
-                $value->all_product = SaleDetail::leftJoin('tbl_product','tbl_product.id','=','tbl_sale_detail.prod_id')
-                                    ->where('tbl_sale_detail.order_no',$request->order_no)
-                                    ->where('tbl_sale_detail.is_deleted','no')
-                                    ->get();
-                try
-                {
-                    $details=$this->commonController->getUserNameById($value->created_disctributor_id);                        
-                    $value->fname=$details->fname;
-                    $value->mname=$details->mname;
-                    $value->lname=$details->lname;
-                    
-                } catch(Exception $e) {
-                    return response()->json([
-                            "data" => '',
-                            "result" => false,
-                            "error" => true,
-                            "message" =>$e->getMessage()." ".$e->getCode()
-                        ]);
-                    
-                    }
+                // $value->all_product = SaleDetail::leftJoin('tbl_product','tbl_product.id','=','tbl_sale_detail.prod_id')
+                //                     ->where('tbl_sale_detail.order_no',$request->order_no)
+                //                     ->where('tbl_sale_detail.is_deleted','no')
+                //                     ->get();
+
+
+                $value->all_product = OrderDetail::where('tbl_order_detail.order_no',$request->order_no)
+                                            ->leftJoin('tbl_product_details', function($join) {
+                                                $join->on('tbl_order_detail.prod_id', '=', 'tbl_product_details.id');
+                                            })
+                                            ->where('tbl_order_detail.is_deleted','no')
+                                            ->join('tbl_product','tbl_product.id','=','tbl_order_detail.prod_id')
+                                            ->get();
+               
 
             }
             
