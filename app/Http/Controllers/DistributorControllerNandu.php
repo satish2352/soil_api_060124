@@ -494,8 +494,8 @@ class DistributorControllerNandu extends Controller
         $messages->subject = $request->subject;
         $messages->message = $request->message;  
         $messages->msg_read = 'n';  
-        $messages->msg_status = 'unread';  
-        $messages->msg_reply = 'n';  
+        $messages->msg_status = 'Sent';  
+        // $messages->msg_repl = 'n';  
         $messages->message_by = $request->distributor_id;
         $messages->save();
         
