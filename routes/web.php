@@ -205,6 +205,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             
             $router->post('messageadd', 'DistributorControllerNandu@messageadd');
             $router->post('messageedit', 'DistributorControllerNandu@messageedit');
+            $router->post('messageview_perticular', 'DistributorControllerNandu@messageview_perticular');
             $router->post('messagedelete', 'DistributorControllerNandu@messagedelete');
             $router->post('messageview', 'DistributorControllerNandu@messageview');
             $router->post('messagesearch', 'DistributorControllerNandu@messagesearch');
