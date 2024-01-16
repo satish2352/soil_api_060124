@@ -543,7 +543,10 @@ class DistributorControllerNandu extends Controller
         $data=[
                 'recipient_name' => $request->recipient_name,
                 'subject' => $request->subject,
-                'message' => $request->message
+                'message' => $request->message,
+                'msg' => $request->msg,
+                'msg_status' => 'Replied',
+                'msg_read' => 'y',
               ];
         $messageupdate = Messages::where('id',$request->messageid)->update($data);
       
@@ -569,6 +572,47 @@ class DistributorControllerNandu extends Controller
     
     
     // Message View
+    public function messageview_perticular(Request $request)
+    {
+        try
+        {
+
+            $data=[
+                'msg_status' => 'In-Progress',
+                'msg_read' => 'y',
+              ];
+            Messages::where('id',$request->messageid)->update($data);
+
+            $messageview= Messages::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->get();
+            
+            if ($messageview)
+            {
+                 return response()->json([
+                    "data" => $messageview,
+                    "result" => true,
+                    "message" => 'Message Record Get Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Message Record Not Found'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
+
     public function messageview(Request $request)
     {
         try
