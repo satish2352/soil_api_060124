@@ -494,7 +494,7 @@ class DistributorControllerNandu extends Controller
         $messages->subject = $request->subject;
         $messages->message = $request->message;  
         $messages->msg_read = 'n';  
-        $messages->msg_status = '0';  
+        $messages->msg_status = 0;  
         // $messages->msg_repl = 'n';  
         $messages->message_by = $request->distributor_id;
         $messages->save();
@@ -545,7 +545,7 @@ class DistributorControllerNandu extends Controller
                 // 'subject' => $request->subject,
                 // 'message' => $request->message,
                 'msg' => $request->msg,
-                'msg_status' => '2',
+                'msg_status' => 2,
                 'msg_read' => 'y',
               ];
         $messageupdate = Messages::where('id',$request->id)->update($data);
@@ -578,7 +578,7 @@ class DistributorControllerNandu extends Controller
         {
 
             $data=[
-                'msg_status' => '1',
+                'msg_status' => 1,
                 'msg_read' => 'y',
               ];
             Messages::where('id',$request->messageid)->update($data);
