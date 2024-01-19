@@ -541,9 +541,9 @@ class DistributorControllerNandu extends Controller
     public function messageedit(Request $request)
     {
         $data=[
-                'recipient_name' => $request->recipient_name,
-                'subject' => $request->subject,
-                'message' => $request->message,
+                // 'recipient_name' => $request->recipient_name,
+                // 'subject' => $request->subject,
+                // 'message' => $request->message,
                 'msg' => $request->msg,
                 'msg_status' => 'Replied',
                 'msg_read' => 'y',
