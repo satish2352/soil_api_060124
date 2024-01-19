@@ -548,7 +548,7 @@ class DistributorControllerNandu extends Controller
                 'msg_status' => 'Replied',
                 'msg_read' => 'y',
               ];
-        $messageupdate = Messages::where('id',$request->messageid)->update($data);
+        $messageupdate = Messages::where('id',$request->id)->update($data);
       
         if ($messageupdate)
         {
