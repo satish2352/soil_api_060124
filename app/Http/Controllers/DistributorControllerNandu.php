@@ -825,6 +825,11 @@ class DistributorControllerNandu extends Controller
         $complaint->subject = $request->subject;
         $complaint->complaint = $request->complaint;
         $complaint->complaint_by = $request->complaint_by;
+
+        $complaint->msg_read = 'n';  
+        $complaint->msg_status = 0;  
+        $complaint->msg = null;  
+
         $complaint->save();
         
         $imagedataPath=COMPLAINT_UPLOADS;
@@ -931,6 +936,47 @@ class DistributorControllerNandu extends Controller
         }
     }
     
+
+    public function complaintview_perticular(Request $request)
+    {
+        try
+        {
+
+            $data=[
+                'msg_status' => 1,
+                'msg_read' => 'y',
+              ];
+              Complaint::where('id',$request->messageid)->update($data);
+
+            $messageview= Complaint::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->get();
+            
+            if ($messageview)
+            {
+                 return response()->json([
+                    "data" => $messageview,
+                    "result" => true,
+                    "message" => 'Message Record Get Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Message Record Not Found'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
     
     
     
@@ -940,12 +986,23 @@ class DistributorControllerNandu extends Controller
     // Complaint Update
     public function complaintedit(Request $request)
     {
+        // $data=[
+        //         'recipient_name' => $request->recipient_name,
+        //         'subject' => $request->subject,
+        //         'complaint' => $request->complaint
+        //       ];
+        // $complaintupdate = Complaint::where('id',$request->complaintid)->update($data);
+
         $data=[
-                'recipient_name' => $request->recipient_name,
-                'subject' => $request->subject,
-                'complaint' => $request->complaint
-              ];
-        $complaintupdate = Complaint::where('id',$request->complaintid)->update($data);
+            // 'recipient_name' => $request->recipient_name,
+            // 'subject' => $request->subject,
+            // 'message' => $request->message,
+            'msg' => $request->msg,
+            'msg_status' => 2,
+            'msg_read' => 'y',
+          ];
+        $complaintupdate = Complaint::where('id',$request->id)->update($data);
+
       
         if ($complaintupdate)
         {

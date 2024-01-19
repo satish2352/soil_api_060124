@@ -215,6 +215,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             
             $router->post('complaintadd', 'DistributorControllerNandu@complaintadd');
             $router->post('complaintedit', 'DistributorControllerNandu@complaintedit');
+            $router->post('complaintview_perticular', 'DistributorControllerNandu@complaintview_perticular');
             $router->post('complaintdelete', 'DistributorControllerNandu@complaintdelete');
             $router->post('complaintview', 'DistributorControllerNandu@complaintview');
             $router->post('complaintsearch', 'DistributorControllerNandu@complaintsearch');
