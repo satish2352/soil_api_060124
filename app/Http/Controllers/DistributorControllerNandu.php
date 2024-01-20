@@ -581,10 +581,43 @@ class DistributorControllerNandu extends Controller
                 'msg_status' => 1,
                 'msg_read' => 'y',
               ];
+            // Messages::where('id',$request->messageid)->update($data);
+
+            // $messageview= Messages::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->get();
+            
+
             Messages::where('id',$request->messageid)->update($data);
 
-            $messageview= Messages::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->get();
+            $messageview= Messages::leftJoin('usersinfo as newuser_table', function($join) {
+                $join->on('newuser_table.user_id', '=','tbl_messages.message_by');
+            })->where(['tbl_messages.is_deleted' => 'no', 'tbl_messages.id'=>$request->messageid])
             
+            ->select('tbl_messages.id',
+            'tbl_messages.date',
+            'tbl_messages.recipient_name',
+            'tbl_messages.subject',
+            'tbl_messages.message',
+            'tbl_messages.document',
+            'tbl_messages.message_by',
+            'tbl_messages.msg_status',
+            'tbl_messages.msg_read',
+            'tbl_messages.msg_reply',
+            'tbl_messages.msg',
+            'tbl_messages.is_deleted',
+            'tbl_messages.created_at',
+            
+             
+            'newuser_table.fname',
+            'newuser_table.mname',
+            'newuser_table.lname',
+            'newuser_table.phone',
+            )
+            ->first();
+            if ($messageview)
+            {
+                $messageview->document=COMPLAINT_VIEW.$messageview->document;
+            }
+
             if ($messageview)
             {
                  return response()->json([
