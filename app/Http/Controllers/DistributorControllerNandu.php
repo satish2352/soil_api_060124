@@ -952,11 +952,11 @@ class DistributorControllerNandu extends Controller
 
             foreach ($messageview as $key => $value) {
               
-                $value->document_one=COMPLAINT_UPLOADS.$value->document_one;
-                $value->document_two=COMPLAINT_UPLOADS.$value->document_two;
-                $value->document_three=COMPLAINT_UPLOADS.$value->document_three;
-                $value->document_four=COMPLAINT_UPLOADS.$value->document_four;
-                $value->document_five=COMPLAINT_UPLOADS.$value->document_five;
+                $value->document_one=COMPLAINT_VIEW.$value->document_one;
+                $value->document_two=COMPLAINT_VIEW.$value->document_two;
+                $value->document_three=COMPLAINT_VIEW.$value->document_three;
+                $value->document_four=COMPLAINT_VIEW.$value->document_four;
+                $value->document_five=COMPLAINT_VIEW.$value->document_five;
             }
             
             if ($messageview)
