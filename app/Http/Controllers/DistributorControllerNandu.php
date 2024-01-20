@@ -689,7 +689,7 @@ class DistributorControllerNandu extends Controller
         {
             $messageview= Messages::where(['is_deleted' =>'no','message_by' =>$request->dist_id])
                             // ->orderBy('id', 'DESC')
-                            ->orderBy('msg_status', 'DESC')
+                            ->orderBy('id', 'DESC')
                             ->get();
             
             if ($messageview)
