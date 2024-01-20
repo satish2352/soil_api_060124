@@ -78,7 +78,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -110,7 +110,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Video Link Count Not Found'
                 ]);
@@ -118,7 +118,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -150,7 +150,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Subscriber List Count Not Found'
                 ]);
@@ -158,7 +158,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -190,7 +190,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Subscriber Target Count Not Found'
                 ]);
@@ -198,7 +198,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -235,7 +235,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Farmers Meeting Record Not Found'
                 ]);
@@ -243,7 +243,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -279,7 +279,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Farmers Meeting Record Not Found'
                 ]);
@@ -287,7 +287,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -316,7 +316,7 @@ class DistributorControllerNandu extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farmer Meeting Not Deleted'
             ]);
@@ -348,7 +348,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Distributor Meeting Record Not Found'
                 ]);
@@ -356,7 +356,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -390,7 +390,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Distributor Meeting Record Not Found'
                 ]);
@@ -398,7 +398,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -427,7 +427,7 @@ class DistributorControllerNandu extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Meeting Not Deleted'
             ]);
@@ -461,7 +461,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'SCT Result Record Not Found'
                 ]);
@@ -469,7 +469,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -527,7 +527,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                "message" => 'Message Not Added'
             ]);
@@ -561,7 +561,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Message Not Updated'
             ]);
@@ -629,7 +629,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Message Record Not Found'
                 ]);
@@ -637,7 +637,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -666,7 +666,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Message Record Not Found'
                 ]);
@@ -674,7 +674,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -703,7 +703,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Message Record Not Found'
                 ]);
@@ -711,7 +711,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -731,6 +731,7 @@ class DistributorControllerNandu extends Controller
         try
         {
              $messagesearch= Messages::where('subject', 'like', '%' . $request->search . '%')
+                    ->where('message_by',$request->dist_id)
                     ->where('is_deleted','no')
                     ->orderBy('id', 'DESC')
                     ->get();
@@ -748,7 +749,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Message Record Not Found'
                 ]);
@@ -756,7 +757,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -793,7 +794,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Message Record Not Found'
                 ]);
@@ -801,7 +802,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -828,7 +829,7 @@ class DistributorControllerNandu extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Message Not Deleted'
             ]);
@@ -864,7 +865,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Visit Record Not Found'
                 ]);
@@ -872,7 +873,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -959,7 +960,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                "message" => 'Complaint Not Added'
             ]);
@@ -988,7 +989,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Complaint Record Not Found'
                 ]);
@@ -996,7 +997,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1023,7 +1024,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Complaint Record Not Found'
                 ]);
@@ -1031,7 +1032,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1101,7 +1102,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Message Record Not Found'
                 ]);
@@ -1109,7 +1110,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1155,7 +1156,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Complaint Not Updated'
             ]);
@@ -1175,6 +1176,7 @@ class DistributorControllerNandu extends Controller
         try
         {
              $complaintsearch= Complaint::where('subject', 'like', '%' . $request->search . '%')
+                    ->where('complaint_by' ,$request->dist_id)
                     ->where('is_deleted','no')
                     ->orderBy('id', 'DESC')
                     ->get();
@@ -1190,7 +1192,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Complaint Record Not Found'
                 ]);
@@ -1198,7 +1200,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1235,7 +1237,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Complaint Record Not Found'
                 ]);
@@ -1243,7 +1245,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1270,7 +1272,7 @@ class DistributorControllerNandu extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Complaint Not Deleted'
             ]);
@@ -1316,7 +1318,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Order Record Not Found'
                 ]);
@@ -1324,7 +1326,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1356,7 +1358,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Videos Record Not Found'
                 ]);
@@ -1364,7 +1366,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1398,7 +1400,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Video Record Not Found'
                 ]);
@@ -1406,7 +1408,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1439,7 +1441,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Blog not found'
                 ]);
@@ -1475,7 +1477,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'SCT Result Record Not Found'
                 ]);
@@ -1483,7 +1485,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1547,7 +1549,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information Not Added'
                 ]);
@@ -1586,7 +1588,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
@@ -1635,7 +1637,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Sale Record Not Found'
                 ]);
@@ -1643,7 +1645,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -1683,7 +1685,7 @@ class DistributorControllerNandu extends Controller
                     
                 } catch(Exception $e) {
                     return response()->json([
-                            "data" => '',
+                            "data" => array(),
                             "result" => false,
                             "error" => true,
                             "message" =>$e->getMessage()." ".$e->getCode()
@@ -1703,7 +1705,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
@@ -1786,7 +1788,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
@@ -1830,7 +1832,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information Not Updated'
                 ]);
@@ -1869,7 +1871,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information Not Deleted'
                 ]);
@@ -1911,7 +1913,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
@@ -1955,7 +1957,7 @@ class DistributorControllerNandu extends Controller
     //         else
     //         {
     //              return response()->json([
-    //                 "data" => '',
+    //                 "data" => array(),
     //                 "result" => false,
     //                 "message" => 'Information not found'
     //             ]);
@@ -2006,7 +2008,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
@@ -2050,7 +2052,7 @@ class DistributorControllerNandu extends Controller
     //         else
     //         {
     //              return response()->json([
-    //                 "data" => '',
+    //                 "data" => array(),
     //                 "result" => false,
     //                 "message" => 'Information not found'
     //             ]);
@@ -2083,7 +2085,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Language Record Not Found'
                 ]);
@@ -2091,7 +2093,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -2118,7 +2120,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Videos Not Found'
             ]);
@@ -2149,7 +2151,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Web Video Not Added'
             ]);
@@ -2178,7 +2180,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Video Not Updated'
             ]);
@@ -2201,7 +2203,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Video Not Found'
             ]);
@@ -2224,7 +2226,7 @@ class DistributorControllerNandu extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Video Not Found'
             ]);
@@ -2256,7 +2258,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Farmer Record Not Found'
                 ]);
@@ -2264,7 +2266,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -2299,7 +2301,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Distributor Record Not Found'
                 ]);
@@ -2307,7 +2309,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -2347,7 +2349,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
@@ -2388,7 +2390,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Visit Record Not Found'
                 ]);
@@ -2396,7 +2398,7 @@ class DistributorControllerNandu extends Controller
             }
         } catch(Exception $e) {
             return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "error" => true,
                     "message" =>$e->getMessage()." ".$e->getCode()
@@ -2450,7 +2452,7 @@ class DistributorControllerNandu extends Controller
                     
                 } catch(Exception $e) {
                     return response()->json([
-                            "data" => '',
+                            "data" => array(),
                             "result" => false,
                             "error" => true,
                             "message" =>$e->getMessage()." ".$e->getCode()
@@ -2471,7 +2473,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
@@ -2515,7 +2517,7 @@ class DistributorControllerNandu extends Controller
                         
                     } catch(Exception $e) {
                         return response()->json([
-                                "data" => '',
+                                "data" => array(),
                                 "result" => false,
                                 "error" => true,
                                 "message" =>$e->getMessage()." ".$e->getCode()
@@ -2538,7 +2540,7 @@ class DistributorControllerNandu extends Controller
             else
             {
                  return response()->json([
-                    "data" => '',
+                    "data" => array(),
                     "result" => false,
                     "message" => 'Information not found'
                 ]);
