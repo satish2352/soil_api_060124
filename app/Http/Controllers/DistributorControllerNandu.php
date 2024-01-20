@@ -950,13 +950,13 @@ class DistributorControllerNandu extends Controller
 
             $messageview= Complaint::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->get();
 
-            if($messageview)
-            {
-                $messageview->document_one=COMPLAINT_UPLOADS.$messageview->document_one;
-                $messageview->document_two=COMPLAINT_UPLOADS.$messageview->document_two;
-                $messageview->document_three=COMPLAINT_UPLOADS.$messageview->document_three;
-                $messageview->document_four=COMPLAINT_UPLOADS.$messageview->document_four;
-                $messageview->document_five=COMPLAINT_UPLOADS.$messageview->document_five;
+            foreach ($messageview as $key => $value) {
+              
+                $value->document_one=COMPLAINT_UPLOADS.$value->document_one;
+                $value->document_two=COMPLAINT_UPLOADS.$value->document_two;
+                $value->document_three=COMPLAINT_UPLOADS.$value->document_three;
+                $value->document_four=COMPLAINT_UPLOADS.$value->document_four;
+                $value->document_five=COMPLAINT_UPLOADS.$value->document_five;
             }
             
             if ($messageview)
