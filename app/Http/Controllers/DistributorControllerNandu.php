@@ -945,10 +945,19 @@ class DistributorControllerNandu extends Controller
             $data=[
                 'msg_status' => 1,
                 'msg_read' => 'y',
-              ];
-              Complaint::where('id',$request->messageid)->update($data);
+            ];
+            Complaint::where('id',$request->messageid)->update($data);
 
             $messageview= Complaint::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->get();
+
+            if($messageview)
+            {
+                $messageview->document_one=COMPLAINT_UPLOADS.$messageview->document_one;
+                $messageview->document_two=COMPLAINT_UPLOADS.$messageview->document_two;
+                $messageview->document_three=COMPLAINT_UPLOADS.$messageview->document_three;
+                $messageview->document_four=COMPLAINT_UPLOADS.$messageview->document_four;
+                $messageview->document_five=COMPLAINT_UPLOADS.$messageview->document_five;
+            }
             
             if ($messageview)
             {
