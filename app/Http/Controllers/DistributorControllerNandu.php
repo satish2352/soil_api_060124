@@ -1047,7 +1047,7 @@ class DistributorControllerNandu extends Controller
             'newuser_table.lname',
             'newuser_table.phone',
             )
-            ->orderBy('id', 'DESC')->first();
+            ->first();
             if ($messageview)
             {
               
