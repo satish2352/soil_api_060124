@@ -1017,12 +1017,37 @@ class DistributorControllerNandu extends Controller
                 'msg_status' => 1,
                 'msg_read' => 'y',
             ];
-            Complaint::leftJoin('usersinfo as newuser_table', function($join) {
-                $join->on('newuser_table.user_id', '=','tbl_sale_summary.created_disctributor_id');
-            })
-            ->where('id',$request->messageid)->update($data);
+            Complaint::where('id',$request->messageid)->update($data);
 
-            $messageview= Complaint::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->first();
+            $messageview= Complaint::leftJoin('usersinfo as newuser_table', function($join) {
+                $join->on('newuser_table.user_id', '=','tbl_complaint.complaint_by');
+            })->where(['is_deleted' => 'no', 'id'=>$request->messageid])
+            
+            ->select('tbl_complaint.id',
+            'tbl_complaint.date',
+            'tbl_complaint.recipient_name',
+            'tbl_complaint.subject',
+            'tbl_complaint.complaint',
+            'tbl_complaint.document_one',
+            'tbl_complaint.document_two',
+            'tbl_complaint.document_three',
+            'tbl_complaint.document_four',
+            'tbl_complaint.document_five',
+            'tbl_complaint.complaint_by',
+            'tbl_complaint.msg_status',
+            'tbl_complaint.msg_read',
+            'tbl_complaint.msg_reply',
+            'tbl_complaint.msg',
+            'tbl_complaint.is_deleted',
+            'tbl_complaint.created_at',
+            
+             
+            'newuser_table.fname',
+            'newuser_table.mname',
+            'newuser_table.lname',
+            'newuser_table.phone',
+            )
+            ->orderBy('id', 'DESC')->first();
             if ($messageview)
             {
               
