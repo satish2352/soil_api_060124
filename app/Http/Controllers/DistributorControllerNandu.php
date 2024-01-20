@@ -948,17 +948,16 @@ class DistributorControllerNandu extends Controller
             ];
             Complaint::where('id',$request->messageid)->update($data);
 
-            $messageview= Complaint::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->get();
-
-            foreach ($messageview as $key => $value) {
+            $messageview= Complaint::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->first();
+            if ($messageview)
+            {
               
-                $value->document_one=COMPLAINT_VIEW.$value->document_one;
-                $value->document_two=COMPLAINT_VIEW.$value->document_two;
-                $value->document_three=COMPLAINT_VIEW.$value->document_three;
-                $value->document_four=COMPLAINT_VIEW.$value->document_four;
-                $value->document_five=COMPLAINT_VIEW.$value->document_five;
+                $messageview->document_one=COMPLAINT_VIEW.$messageview->document_one;
+                $messageview->document_two=COMPLAINT_VIEW.$messageview->document_two;
+                $messageview->document_three=COMPLAINT_VIEW.$messageview->document_three;
+                $messageview->document_four=COMPLAINT_VIEW.$messageview->document_four;
+                $messageview->document_five=COMPLAINT_VIEW.$messageview->document_five;
             }
-            
             if ($messageview)
             {
                  return response()->json([
