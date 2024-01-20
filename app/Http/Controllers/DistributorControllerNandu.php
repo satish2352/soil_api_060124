@@ -1021,7 +1021,7 @@ class DistributorControllerNandu extends Controller
 
             $messageview= Complaint::leftJoin('usersinfo as newuser_table', function($join) {
                 $join->on('newuser_table.user_id', '=','tbl_complaint.complaint_by');
-            })->where(['tbl_complaint.is_deleted' => 'no', 'id'=>$request->messageid])
+            })->where(['tbl_complaint.is_deleted' => 'no', 'tbl_complaint.id'=>$request->messageid])
             
             ->select('tbl_complaint.id',
             'tbl_complaint.date',
