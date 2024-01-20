@@ -650,6 +650,42 @@ class DistributorControllerNandu extends Controller
         }
     }
     
+    public function messageviewbyid(Request $request)
+    {
+        try
+        {
+            $messageview= Messages::where(['is_deleted' =>'no','complaint_by' =>$request->dist_id])
+                            // ->orderBy('id', 'DESC')
+                            ->orderBy('msg_status', 'ASC')
+                            ->get();
+            
+            if ($messageview)
+            {
+                 return response()->json([
+                    "data" => $messageview,
+                    "result" => true,
+                    "message" => 'Message Record Get Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Message Record Not Found'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
     
     
     
@@ -935,6 +971,41 @@ class DistributorControllerNandu extends Controller
            
         }
     }
+
+    public function complaintviewbyid(Request $request)
+    {
+        
+        try
+        {
+            $complaintview= Complaint::where(['is_deleted' =>'no','complaint_by' =>$request->dist_id])->orderBy('id', 'DESC')->get();
+            
+            if ($complaintview)
+            {
+                 return response()->json([
+                    "data" => $complaintview,
+                    "result" => true,
+                    "message" => 'Complaint Record Get Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Complaint Record Not Found'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
     
 
     public function complaintview_perticular(Request $request)
@@ -946,7 +1017,10 @@ class DistributorControllerNandu extends Controller
                 'msg_status' => 1,
                 'msg_read' => 'y',
             ];
-            Complaint::where('id',$request->messageid)->update($data);
+            Complaint::leftJoin('usersinfo as newuser_table', function($join) {
+                $join->on('newuser_table.user_id', '=','tbl_sale_summary.created_disctributor_id');
+            })
+            ->where('id',$request->messageid)->update($data);
 
             $messageview= Complaint::where(['is_deleted' => 'no', 'id'=>$request->messageid])->orderBy('id', 'DESC')->first();
             if ($messageview)

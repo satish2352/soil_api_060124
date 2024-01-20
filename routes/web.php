@@ -208,6 +208,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('messageview_perticular', 'DistributorControllerNandu@messageview_perticular');
             $router->post('messagedelete', 'DistributorControllerNandu@messagedelete');
             $router->post('messageview', 'DistributorControllerNandu@messageview');
+            $router->post('messageviewbyid', 'DistributorControllerNandu@messageviewbyid');
             $router->post('messagesearch', 'DistributorControllerNandu@messagesearch');
             $router->post('messagesearchbydate', 'DistributorControllerNandu@messagesearchbydate');
             
@@ -218,6 +219,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('complaintview_perticular', 'DistributorControllerNandu@complaintview_perticular');
             $router->post('complaintdelete', 'DistributorControllerNandu@complaintdelete');
             $router->post('complaintview', 'DistributorControllerNandu@complaintview');
+            $router->post('complaintviewbyid', 'DistributorControllerNandu@complaintviewbyid');
             $router->post('complaintsearch', 'DistributorControllerNandu@complaintsearch');
             $router->post('complaintsearchbydate', 'DistributorControllerNandu@complaintsearchbydate');
             
