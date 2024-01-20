@@ -601,7 +601,7 @@ class DistributorControllerNandu extends Controller
             'tbl_messages.message_by',
             'tbl_messages.msg_status',
             'tbl_messages.msg_read',
-            'tbl_messages.msg_reply',
+            // 'tbl_messages.msg_reply',
             'tbl_messages.msg',
             'tbl_messages.is_deleted',
             'tbl_messages.created_at',
