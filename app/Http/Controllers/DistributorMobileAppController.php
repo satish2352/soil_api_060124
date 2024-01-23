@@ -1137,26 +1137,26 @@ class DistributorMobileAppController extends Controller
 
        
         $result = UsersInfoForStructures::
-            leftJoin('usersinfo', function($join) {
+            join('usersinfo', function($join) {
                 $join->on('users_info_for_structures.added_by', '=', 'usersinfo.user_id');
             })
-            ->leftJoin('tbl_area as stateNew', function($join) {
+            ->join('tbl_area as stateNew', function($join) {
                 $join->on('usersinfo.state', '=', 'stateNew.location_id');
             })
           
-          ->leftJoin('tbl_area as districtNew', function($join) {
+          ->join('tbl_area as districtNew', function($join) {
             $join->on('usersinfo.district', '=', 'districtNew.location_id');
           })
           
           
-          ->leftJoin('tbl_area as talukaNew', function($join) {
+          ->join('tbl_area as talukaNew', function($join) {
             $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
           })
           
-          ->leftJoin('tbl_area as cityNew', function($join) {
+          ->join('tbl_area as cityNew', function($join) {
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
-          ->leftJoin('users','users.id','=','usersinfo.user_id')
+          ->join('users','users.id','=','usersinfo.user_id')
           ->where('users_info_for_structures.added_by',$request->dist_id)
          ->select(   'stateNew.name as state',
          'districtNew.name as district',
