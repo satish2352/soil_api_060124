@@ -1138,7 +1138,7 @@ class DistributorMobileAppController extends Controller
        
         $result = UsersInfoForStructures::
             join('usersinfo', function($join) {
-                $join->on('users_info_for_structures.added_by', '=', 'usersinfo.user_id');
+                $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
             })
             ->join('tbl_area as stateNew', function($join) {
                 $join->on('usersinfo.state', '=', 'stateNew.location_id');
