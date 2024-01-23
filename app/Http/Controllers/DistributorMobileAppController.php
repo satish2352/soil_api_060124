@@ -283,6 +283,7 @@ class DistributorMobileAppController extends Controller
             $ordrsummary->created_disctributor_amount = $requestdata->created_disctributor_amount;
             $ordrsummary->remark = $requestdata->remark;
             $ordrsummary->is_order_confirm_from_dist = $is_order_confirm_from_dist;
+            $ordrsummary->payment_mode = $requestdata->payment_mode;
             $ordrsummary->save();
             //dd($requestdata->order_created_by);
             //$requestdata = $request;
@@ -739,10 +740,13 @@ class DistributorMobileAppController extends Controller
                 'tbl_order_summary.date_confirm_from_dsc',
                 'tbl_order_summary.is_order_confirm_from_dist',
                 'tbl_order_summary.date_confirm_from_dist',
+                'tbl_order_summary.payment_mode',
                 'newuser_table.fname',
                 'newuser_table.mname',
                 'newuser_table.lname',
                 'newuser_table.phone',
+
+                
                 
             )
             ->get();
