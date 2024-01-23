@@ -3872,39 +3872,39 @@ class WebAPIController extends Controller
     {
         try
         {
-             $result = OrderSummary::where('tbl_order_summary.is_deleted','no')->orderBy('id', 'DESC')->get();
+             $result = OrderSummary::leftJoin('usersinfo as dist_name', function($join) {
+                                        $join->on('tbl_order_summary.created_disctributor_id', '=', 'dist_name.user_id');
+                                    })
+                                    ->where(['is_order_final_confirm' => 'yes','tbl_order_summary.is_deleted'=>'no'])
+                                    ->orderBy('id', 'DESC')
+                                    ->select(
+                                            'tbl_order_summary.*',
+                                            'dist_name.fname as fname',
+                                            'dist_name.mname as mname',
+                                            'dist_name.lname as lname',
+                                    )
+                                    ->get();
      
-                    
-                    
-            // $users = DB::table('tbl_sale_summary')
-            //      ->select('order_no', 'order_date', 'order_created_by', 'created_disctributor_id', 'created_disctributor_amount', 'dispatched_to_created_disctributor_by_warehouse', 'forwarded_bsc_id', 'forwarded_bsc_amount', 'dispatched_to_forwarded_bsc_by_warehouse', 'forwarded_dsc_id', 'forwarded_dsc_amount', 'dispatched_to_forwarded_dsc_amount_by_warehouse', 'account_approved', 'forward_to_warehouse', 'entry_by', 'order_dispatched', 'order_dispatched_date')
-            //     ->get();
-            
-            // $employees = DB::table('tbl_order_summary')
-            //   ->select('order_no', 'order_date', 'order_created_by', 'created_disctributor_id', 'created_disctributor_amount', 'dispatched_to_created_disctributor_by_warehouse', 'forwarded_bsc_id', 'forwarded_bsc_amount', 'dispatched_to_forwarded_bsc_by_warehouse', 'forwarded_dsc_id', 'forwarded_dsc_amount', 'dispatched_to_forwarded_dsc_amount_by_warehouse', 'account_approved', 'forward_to_warehouse', 'entry_by', 'order_dispatched', 'order_dispatched_date')
-            //     ->get();
-            
-            // $result = $users->union($employees);
         
-            foreach($result as $key=>$resultnew)
-            {
-                try
-                {
-                    $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
-                    $resultnew->fname=$details->fname;
-                    $resultnew->mname=$details->mname;
-                    $resultnew->lname=$details->lname;
+            // foreach($result as $key=>$resultnew)
+            // {
+            //     try
+            //     {
+            //         $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
+            //         $resultnew->fname=$details->fname;
+            //         $resultnew->mname=$details->mname;
+            //         $resultnew->lname=$details->lname;
                     
-                } catch(Exception $e) {
-                    return response()->json([
-                            "data" => '',
-                            "result" => false,
-                            "error" => true,
-                            "message" =>$e->getMessage()." ".$e->getCode()
-                        ]);
+            //     } catch(Exception $e) {
+            //         return response()->json([
+            //                 "data" => '',
+            //                 "result" => false,
+            //                 "error" => true,
+            //                 "message" =>$e->getMessage()." ".$e->getCode()
+            //             ]);
                    
-                 }
-            }
+            //      }
+            // }
 
             if ($result)
             {
