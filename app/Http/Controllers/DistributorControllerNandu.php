@@ -29,7 +29,8 @@ use App\Models\ {
     Allvideo,
     ProductDetails,
     Downloads,
-    WebVideos
+    WebVideos,
+    VideoWatchHistory
 };
 use DB;
 use App\Http\Controllers\CommonController As CommonController;
@@ -2592,7 +2593,71 @@ class DistributorControllerNandu extends Controller
             return $photoName.".".$applpic_ext;
         }
     }
+
+
+    public function video_watch_view_add(Request $request)
+    {
+        try
+        {
+            $video_history_watch= VideoWatchHistory::where(['user_id' =>$request->dist_id,'video_id' =>$request->video_id])->first();
+
+            if ($video_history_watch)
+            {
+                $video_total_duration_watch  = $video_history_watch->video_total_duration_watch;
+                $video_total_duration_watch_final  = int($video_total_duration_watch) + int($request->watch_seconds);
+                $video_history_watch_update= VideoWatchHistory::where([
+                                                    'user_id' =>$request->dist_id,
+                                                    'video_id' =>$request->video_id
+                                                    ])
+                                                    ->update([
+                                                        'video_total_duration_watch'=>$request->watch_seconds
+                                                    ]);
+
+
+                 return response()->json([
+                    "data" => $video_history_watch_update,
+                    "result" => true,
+                    "message" => 'Record Updated Successfully'
+                ]);
+            }
+            else
+            {
+
+                $video_history_watch_update= VideoWatchHistory::insert([
+                                                    'user_id'  => $request->dist_id,
+                                                    'video_id' => $request->video_id,
+                                                    'video_total_duration_watch'=> $request->watch_seconds
+                                                ]);
+
+
+                return response()->json([
+                    "data" => $video_history_watch_update,
+                    "result" => true,
+                    "message" => 'Record Updated Successfully'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => array(),
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
     
+    function secondsToHoursMinutes($seconds) {
+        // Calculate hours
+        $hours = floor($seconds / 3600);
+        
+        // Calculate remaining minutes
+        $minutes = floor(($seconds % 3600) / 60);
+        
+        // Return the result as an array
+        return ['hours' => $hours, 'minutes' => $minutes];
+    }
     
      
     

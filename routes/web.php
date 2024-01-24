@@ -241,6 +241,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('distributor_under_distributor', 'DistributorControllerNandu@distributor_under_distributor_mobileapp');
             $router->post('language_brochure_search', 'DistributorControllerNandu@language_brochure_search');
             
+
+            //vidos watch history
+            $router->post('video_watch_view_add', 'DistributorControllerNandu@video_watch_view_add');
+
             // Sale API
             $router->post('saleadd_mobileapp', 'DistributorControllerNandu@saleadd_mobileapp');
             $router->post('salelist_by_date', 'DistributorControllerNandu@salelist_by_date_mobileapp');
