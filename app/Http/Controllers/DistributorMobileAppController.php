@@ -227,11 +227,15 @@ class DistributorMobileAppController extends Controller
     {
         try
         {  
+
+            \Log::info('orderadd_mobileapp');
+            \Log::info($request);
+
             $forwarded_bsc_id = 0;
             $forwarded_dsc_id = 0;
             $is_order_confirm_from_dist = 'no';
             if($request->order_created_by =='fsc') {
-
+                // To find added by 
                 $forwarded_bsc_id_data = UsersInfoForStructures::where([
                                         'user_id'=>$request->created_disctributor_id,
                                         'user_type'=>'fsc',
