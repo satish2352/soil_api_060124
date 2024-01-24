@@ -228,9 +228,6 @@ class DistributorMobileAppController extends Controller
         try
         {  
 
-            \Log::info('orderadd_mobileapp');
-            \Log::info($request);
-
             $forwarded_bsc_id = 0;
             $forwarded_dsc_id = 0;
             $is_order_confirm_from_dist = 'no';
@@ -241,8 +238,6 @@ class DistributorMobileAppController extends Controller
                                         // 'user_type'=>'fsc',
                                     ])->select('added_by','user_type')->first(); 
 
-                                    \Log::info('forwarded_bsc_id_data');
-                                    \Log::info($forwarded_bsc_id_data);
 
                 if($forwarded_bsc_id_data) {
                     $forwarded_bsc_id = $forwarded_bsc_id_data->added_by;
@@ -263,13 +258,6 @@ class DistributorMobileAppController extends Controller
 
                 }
             }
-
-
-            \Log::info('forwarded_dsc_id');
-            \Log::info($forwarded_dsc_id);
-
-            \Log::info('forwarded_bsc_id');
-            \Log::info($forwarded_bsc_id);
 
             if($forwarded_dsc_id == '0' && $forwarded_bsc_id == '0') {
                 $is_order_confirm_from_dist = 'yes';
