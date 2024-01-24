@@ -652,6 +652,7 @@ class DistributorController extends Controller
           ->join('users','users.id','=','usersinfo.user_id')
           ->whereIn('usersinfo.user_type',['fsc','bsc','dsc'])
           ->where('usersinfo.is_deleted', '=', 'no')
+          ->where('usersinfo.new_list_to_view', '=', 'n')
          ->select(   'stateNew.name as state',
          'districtNew.name as district',
          'talukaNew.name as taluka',
