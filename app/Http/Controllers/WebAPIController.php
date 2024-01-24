@@ -6635,6 +6635,7 @@ class WebAPIController extends Controller
                             'user_type'=>'dsc'
                         ]);
                         Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
+                        UsersInfo::where(['user_id'=>$request->user_id])->update(['new_list_to_view'=>'n']);
                     }
                 } elseif($dist_promotion->user_type_old=='fsc') {
 
@@ -6647,6 +6648,7 @@ class WebAPIController extends Controller
                             'user_type'=>'bsc'
                         ]);
                         Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
+                        UsersInfo::where(['user_id'=>$request->user_id])->update(['new_list_to_view'=>'n']);
                     }
                 }
             } 
