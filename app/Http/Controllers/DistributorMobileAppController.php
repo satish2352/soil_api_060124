@@ -228,9 +228,6 @@ class DistributorMobileAppController extends Controller
         try
         {  
 
-            \Log::info('orderadd_mobileapp');
-            \Log::info($request);
-
             $forwarded_bsc_id = 0;
             $forwarded_dsc_id = 0;
             $is_order_confirm_from_dist = 'no';
@@ -261,16 +258,10 @@ class DistributorMobileAppController extends Controller
             }
 
 
-            \Log::info('forwarded_dsc_id');
-            \Log::info($forwarded_dsc_id);
-
-            \Log::info('forwarded_bsc_id');
-            \Log::info($forwarded_bsc_id);
-
             if($forwarded_dsc_id == 0 && $forwarded_bsc_id == 0) {
-                $is_order_confirm_from_dist = 'yes';
-            } else {
                 $is_order_confirm_from_dist = 'no';
+            } else {
+                $is_order_confirm_from_dist = 'yes';
             }
 
  
