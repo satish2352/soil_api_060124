@@ -2626,7 +2626,8 @@ class DistributorControllerNandu extends Controller
                 $video_history_watch_update= VideoWatchHistory::insert([
                                                     'user_id'  => $request->dist_id,
                                                     'video_id' => $request->video_id,
-                                                    'video_total_duration_watch'=> $request->watch_seconds
+                                                    'video_total_duration_watch'=> $request->watch_seconds,
+                                                    'video_total_duration'=> $request->video_duration
                                                 ]);
 
 
