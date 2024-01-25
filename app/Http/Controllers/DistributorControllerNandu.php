@@ -2668,25 +2668,25 @@ class DistributorControllerNandu extends Controller
         try
         {
 
-            $targetvideo = VideoWatchHistory::
-                                    leftJoin('tbl_target_videos', function($join) {
-                                        $join->on('video_watch_history.video_id','=','tbl_target_videos.id');
-                                    })
-                                    ->leftJoin('usersinfo', function($join) {
-                                        $join->on('video_watch_history.user_id','=','usersinfo.user_id');
-                                    })
-                                    ->select(   'video_watch_history.*',
-                                                'usersinfo.fname',
-                                                'usersinfo.mname',
-                                                'usersinfo.lname',
-                                                'usersinfo.email',
-                                                'usersinfo.phone',
-                                                'usersinfo.user_type',
-                                                'tbl_target_videos.title',
-                                                'tbl_target_videos.description',
-                                                'tbl_target_videos.url',
-                                            )
-                                    ->get();
+            $targetvideo = VideoWatchHistory::get();
+                                    // leftJoin('tbl_target_videos', function($join) {
+                                    //     $join->on('video_watch_history.video_id','=','tbl_target_videos.id');
+                                    // })
+                                    // ->leftJoin('usersinfo', function($join) {
+                                    //     $join->on('video_watch_history.user_id','=','usersinfo.user_id');
+                                    // })
+                                    // ->select(   'video_watch_history.*',
+                                    //             'usersinfo.fname',
+                                    //             'usersinfo.mname',
+                                    //             'usersinfo.lname',
+                                    //             'usersinfo.email',
+                                    //             'usersinfo.phone',
+                                    //             'usersinfo.user_type',
+                                    //             'tbl_target_videos.title',
+                                    //             'tbl_target_videos.description',
+                                    //             'tbl_target_videos.url',
+                                    //         )
+                                    // ->get();
             
            
 
