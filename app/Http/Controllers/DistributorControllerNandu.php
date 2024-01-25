@@ -2663,7 +2663,7 @@ class DistributorControllerNandu extends Controller
 
     
 
-    public function video_watch_view_view(Request $request)
+    public function target_video_watch_record_view(Request $request)
     {
         try
         {
