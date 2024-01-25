@@ -4521,12 +4521,15 @@ class DistributorController extends Controller
         try
         {
             $messageview= Messages::where('is_deleted', 'no')->where('message_by',$request->distributor_id)->get();
-            
-            foreach($messageview as $key=>$distributormeeting)
-            {
-                $distributormeeting->document=MESSAGE_UPLOADS_VIEW.$distributormeeting->document;
+            if($messageview) {
+
+                foreach($messageview as $key=>$distributormeeting)
+                {
+                    $distributormeeting->document=MESSAGE_UPLOADS_VIEW.$distributormeeting->document;
+                }
+                
             }
-            
+        
             if ($messageview)
             {
                  return response()->json([
