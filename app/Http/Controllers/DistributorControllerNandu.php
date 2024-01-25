@@ -2686,7 +2686,6 @@ class DistributorControllerNandu extends Controller
                                                 'tbl_target_videos.description',
                                                 'tbl_target_videos.url',
                                             )
-                                    ->orderBy('tbl_target_videos_to_distributor.id', 'DESC')
                                     ->get();
             
            
