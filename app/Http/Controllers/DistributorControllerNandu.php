@@ -2660,6 +2660,49 @@ class DistributorControllerNandu extends Controller
         return ['hours' => $hours, 'minutes' => $minutes];
     }
     
+
+    
+
+    public function video_watch_view_view(Request $request)
+    {
+        try
+        {
+
+            $targetvideo = TargetVideosToDistributor::leftJoin('usersinfo', function($join) {
+                                        $join->on('tbl_target_videos_to_distributor.dist_id','=','usersinfo.user_id');
+                                    })
+                                    ->where('tbl_target_videos_to_distributor.dist_id',$request->user_id)
+                                    ->where('tbl_target_videos_to_distributor.is_deleted','no')
+                                    ->select('tbl_target_videos_to_distributor.*',
+                                                'usersinfo.fname',
+                                                'usersinfo.mname',
+                                                'usersinfo.lname',
+                                                'usersinfo.email',
+                                                'usersinfo.phone',
+                                                'usersinfo.user_type',
+                                            )
+                                    ->orderBy('tbl_target_videos_to_distributor.id', 'DESC')
+                                    ->get();
+            
+           
+
+            return response()->json([
+                "data" => $targetvideo,
+                "result" => true,
+                "message" => 'Record get Successfully'
+            ]);
+        
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => array(),
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
+    
      
     
 }
