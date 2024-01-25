@@ -2708,25 +2708,33 @@ class DistributorControllerNandu extends Controller
     }
     
 
+  
+
+
     public function target_video_watch_record_view(Request $request)
     {
         try
         {
 
-            $targetvideo = TargetVideosToDistributor::leftJoin('usersinfo', function($join) {
-                                        $join->on('tbl_target_videos_to_distributor.dist_id','=','usersinfo.user_id');
+            $targetvideo = VideoWatchHistory::
+                                    leftJoin('tbl_target_videos', function($join) {
+                                        $join->on('video_watch_history.video_id','=','tbl_target_videos.id');
                                     })
-                                    ->where('tbl_target_videos_to_distributor.dist_id',$request->dist_id)
-                                    ->where('tbl_target_videos_to_distributor.is_deleted','no')
-                                    ->select('tbl_target_videos_to_distributor.*',
+                                    ->leftJoin('usersinfo', function($join) {
+                                        $join->on('video_watch_history.user_id','=','usersinfo.user_id');
+                                    })
+                                    ->where('video_watch_history.user_id',$request->dist_id)
+                                    ->select(   'video_watch_history.*',
                                                 'usersinfo.fname',
                                                 'usersinfo.mname',
                                                 'usersinfo.lname',
                                                 'usersinfo.email',
                                                 'usersinfo.phone',
                                                 'usersinfo.user_type',
+                                                'tbl_target_videos.title',
+                                                'tbl_target_videos.description',
+                                                'tbl_target_videos.url',
                                             )
-                                    ->orderBy('tbl_target_videos_to_distributor.id', 'DESC')
                                     ->get();
             
            
@@ -2747,6 +2755,7 @@ class DistributorControllerNandu extends Controller
            
         }
     }
+    
      
     
 }
