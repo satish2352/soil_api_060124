@@ -2663,7 +2663,7 @@ class DistributorControllerNandu extends Controller
 
     
 
-    public function target_video_watch_record_view(Request $request)
+    public function target_video_watch_record_view_admin(Request $request)
     {
         try
         {
@@ -2671,7 +2671,6 @@ class DistributorControllerNandu extends Controller
             $targetvideo = TargetVideosToDistributor::leftJoin('usersinfo', function($join) {
                                         $join->on('tbl_target_videos_to_distributor.dist_id','=','usersinfo.user_id');
                                     })
-                                    ->where('tbl_target_videos_to_distributor.dist_id',$request->user_id)
                                     ->where('tbl_target_videos_to_distributor.is_deleted','no')
                                     ->select('tbl_target_videos_to_distributor.*',
                                                 'usersinfo.fname',
@@ -2703,6 +2702,46 @@ class DistributorControllerNandu extends Controller
         }
     }
     
+
+    public function target_video_watch_record_view(Request $request)
+    {
+        try
+        {
+
+            $targetvideo = TargetVideosToDistributor::leftJoin('usersinfo', function($join) {
+                                        $join->on('tbl_target_videos_to_distributor.dist_id','=','usersinfo.user_id');
+                                    })
+                                    ->where('tbl_target_videos_to_distributor.dist_id',$request->dist_id)
+                                    ->where('tbl_target_videos_to_distributor.is_deleted','no')
+                                    ->select('tbl_target_videos_to_distributor.*',
+                                                'usersinfo.fname',
+                                                'usersinfo.mname',
+                                                'usersinfo.lname',
+                                                'usersinfo.email',
+                                                'usersinfo.phone',
+                                                'usersinfo.user_type',
+                                            )
+                                    ->orderBy('tbl_target_videos_to_distributor.id', 'DESC')
+                                    ->get();
+            
+           
+
+            return response()->json([
+                "data" => $targetvideo,
+                "result" => true,
+                "message" => 'Record get Successfully'
+            ]);
+        
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => array(),
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
      
     
 }

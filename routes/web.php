@@ -245,6 +245,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             //vidos watch history
             $router->post('video_watch_view_add', 'DistributorControllerNandu@video_watch_view_add');
             $router->post('target_video_watch_record_view', 'DistributorControllerNandu@target_video_watch_record_view');
+            $router->post('target_video_watch_record_view_admin', 'DistributorControllerNandu@target_video_watch_record_view_admin');
 
             // Sale API
             $router->post('saleadd_mobileapp', 'DistributorControllerNandu@saleadd_mobileapp');
