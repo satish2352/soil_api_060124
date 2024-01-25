@@ -4221,6 +4221,7 @@ class WebAPIController extends Controller
                 'tbl_order_summary.is_deleted',
                 'tbl_order_summary.created_at',
                 'tbl_order_summary.updated_at',
+                'tbl_order_summary.payment_mode',
                 
                 'districtNew.name as district',
                 
