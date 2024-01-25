@@ -2671,7 +2671,6 @@ class DistributorControllerNandu extends Controller
             $targetvideo = TargetVideosToDistributor::leftJoin('usersinfo', function($join) {
                                         $join->on('tbl_target_videos_to_distributor.user_id','=','usersinfo.user_id');
                                     })
-                                    ->where('tbl_target_videos_to_distributor.is_deleted','no')
                                     ->select('tbl_target_videos_to_distributor.*',
                                                 'usersinfo.fname',
                                                 'usersinfo.mname',
