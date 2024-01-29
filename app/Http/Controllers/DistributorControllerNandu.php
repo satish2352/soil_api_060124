@@ -93,7 +93,7 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $count= VideoWatchHistory::where('target_vedio_id',$request->dist_id)
+             $count= VideoWatchHistory::where('user_id',$request->dist_id)
                    
                     ->get();
         
