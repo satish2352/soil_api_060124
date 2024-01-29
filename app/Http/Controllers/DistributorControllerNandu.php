@@ -93,9 +93,8 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $count= TargetVideosToDistributor::where('target_vedio_id',$request->target_vedio_id)
-                    ->where('is_deleted','no')
-                    ->where('active','yes')
+             $count= VideoWatchHistory::where('target_vedio_id',$request->dist_id)
+                   
                     ->get();
         
         $count=sizeof($count);
