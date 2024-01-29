@@ -540,6 +540,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             //$router->post('webdash_distributor_sales_count', 'WebAPIController@webdash_distributor_sales_count');
             $router->post('webdash_sales_count', 'WebAPIController@webdash_sales_count');
             
+            $router->post('web_distributor_approved_to_final_list', 'WebAPIController@web_distributor_approved_to_final_list');
             $router->post('web_distributor_promotion', 'WebAPIController@web_distributor_promotion');
             $router->post('web_distributor_demotion', 'WebAPIController@web_distributor_demotion');
             

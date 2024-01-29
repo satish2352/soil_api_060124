@@ -6617,6 +6617,40 @@ class WebAPIController extends Controller
     // }
     
     
+    public function web_distributor_approved_to_final_list(Request $request)
+    {
+        try 
+        {
+           
+            $dist_promotion = UsersInfo::where(['user_id'=>$request->user_id])->update(['new_list_to_view'=>'n']);
+                
+            if ($dist_promotion)
+            {
+                 return response()->json([
+                    "data" => $dist_promotion,
+                    "result" => true,
+                    "message" => 'Distributor approved Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Distributor not approved'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
+    
     
     
     public function web_distributor_promotion(Request $request)
@@ -6636,7 +6670,7 @@ class WebAPIController extends Controller
                             'user_type'=>'dsc'
                         ]);
                         Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
-                        UsersInfo::where(['user_id'=>$request->user_id])->update(['new_list_to_view'=>'n']);
+                        // UsersInfo::where(['user_id'=>$request->user_id])->update(['new_list_to_view'=>'n']);
                     }
                 } elseif($dist_promotion->user_type_old=='fsc') {
 
@@ -6649,7 +6683,7 @@ class WebAPIController extends Controller
                             'user_type'=>'bsc'
                         ]);
                         Dist_Promotion_Demotion::where('user_id_need_to_promote_demote',$request->user_id)->update(['is_updated'=>'y']);
-                        UsersInfo::where(['user_id'=>$request->user_id])->update(['new_list_to_view'=>'n']);
+                        // UsersInfo::where(['user_id'=>$request->user_id])->update(['new_list_to_view'=>'n']);
                     }
                 }
             } 
