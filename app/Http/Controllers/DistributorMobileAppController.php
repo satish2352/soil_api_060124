@@ -627,9 +627,9 @@ class DistributorMobileAppController extends Controller
                                 $join->on('newuser_table.user_id', '=', 'tbl_order_summary.forwarded_dsc_id');
                             })
                             
-                            ->when($request->created_disctributor_id, function($query) use ($request) {
-                                $query->where('tbl_order_summary.forwarded_bsc_id',$request->created_disctributor_id)
-                                ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->created_disctributor_id);
+                            ->when($request->dist_id, function($query) use ($request) {
+                                $query->where('tbl_order_summary.forwarded_bsc_id',$request->dist_id)
+                                ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->dist_id);
                             }) 
                             ->when($request->fromdate, function($query) use ($request) {
                                 $query->where('tbl_order_summary.created_at','>=',$request->fromdate." 00:00:00")
