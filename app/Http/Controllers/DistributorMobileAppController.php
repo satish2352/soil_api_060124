@@ -231,6 +231,7 @@ class DistributorMobileAppController extends Controller
             $forwarded_bsc_id = 0;
             $forwarded_dsc_id = 0;
             $is_order_confirm_from_dist = 'no';
+            $is_order_confirm_from_dsc = 'no';
             if($request->order_created_by =='fsc') {
                 // To find added by 
                 $forwarded_bsc_id_data = UsersInfoForStructures::where([
@@ -294,6 +295,9 @@ class DistributorMobileAppController extends Controller
             $ordrsummary->remark = $requestdata->remark;
             $ordrsummary->is_order_confirm_from_dist = $is_order_confirm_from_dist;
             $ordrsummary->payment_mode = $requestdata->payment_mode;
+            if($is_order_confirm_from_dsc = 'yes') {
+                $ordrsummary->is_order_confirm_from_dsc = $is_order_confirm_from_dsc;
+            }
             $ordrsummary->save();
             //dd($requestdata->order_created_by);
             //$requestdata = $request;
