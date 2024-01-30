@@ -257,13 +257,20 @@ class DistributorMobileAppController extends Controller
                     $forwarded_dsc_id = 0;
 
                 }
-            }
+            } 
 
             if($forwarded_dsc_id == '0' && $forwarded_bsc_id == '0') {
                 $is_order_confirm_from_dist = 'yes';
             } else {
                 $is_order_confirm_from_dist = 'no';
             }
+
+            if($request->order_created_by =='dsc')  {
+              
+                $is_order_confirm_from_dist = 'yes';
+
+            }
+        
 
  
 
