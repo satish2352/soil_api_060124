@@ -361,8 +361,8 @@ function getSettings($type='')
  function send_notification($sendmsg,$send_to)
  {
     // dd($send_to);
-     $userToken = App\User::where(['id'=>$send_to,'is_block'=>'no','is_approved'=>'yes','is_deleted'=>'no', ])->pluck('app_token')->toArray();
-     $userId = App\User::where(['id'=>$send_to,'is_block'=>'no','is_approved'=>'yes','is_deleted'=>'no', ])->pluck('id')->toArray();
+     $userToken = App\Models\User::where(['id'=>$send_to,'is_block'=>'no','is_approved'=>'yes','is_deleted'=>'no', ])->pluck('app_token')->toArray();
+     $userId = App\Models\User::where(['id'=>$send_to,'is_block'=>'no','is_approved'=>'yes','is_deleted'=>'no', ])->pluck('id')->toArray();
 
      $fcm_server_keyFinal='AAAAog8TE8Y:APA91bFVPjkXqCY_Mube2butwlOz3x5RaVaJv5JYDXHV9AtJK96kFPrKZp3LCKqgG7PlZcWDqywPGlDUTkWBajmmoqqtxOAJkCmBbTyki8r6axzrF2i67oY3muMujYkaav3AYIKPwQJG';
      $title='Soil Charge Technology';
@@ -459,7 +459,7 @@ function getSettings($type='')
  function getUserRecord($user_id = 0)
  {
     if($user_id)
-     return (new App\User())->where('id','=',$user_id)->first();
+     return (new App\Models\User())->where('id','=',$user_id)->first();
     return Auth::user();
  }
 
@@ -472,7 +472,7 @@ function getSettings($type='')
 function getUserWithSlug($slug='')
 {
     if($slug)
-     return App\User::where('slug', $slug)->get()->first();
+     return App\Models\User::where('slug', $slug)->get()->first();
     return Auth::user();
 }
 
@@ -591,7 +591,7 @@ function getUserWithSlug($slug='')
   */
  function isActualParent($slug)
  {
-     return (new App\User())
+     return (new App\Models\User())
               ->isChildBelongsToThisParent(
                                     getUserWithSlug($slug)->id, 
                                     Auth::user()->id
