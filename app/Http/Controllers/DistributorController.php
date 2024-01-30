@@ -649,6 +649,23 @@ class DistributorController extends Controller
           ->leftJoin('tbl_area as cityNew', function($join) {
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
+
+          ->when($request->get('state'), function($state) use ($request) {
+            $state->where('usersinfo.state',$request->state);
+          })
+          
+          ->when($request->get('district'), function($district) use ($request) {
+            $district->where('usersinfo.district',$request->district);
+          })
+          
+          ->when($request->get('taluka'), function($taluka) use ($request) {
+            $taluka->where('usersinfo.taluka',$request->taluka);
+          })
+          
+          ->when($request->get('city'), function($city) use ($request) {
+            $city->where('usersinfo.city',$request->city);
+          })
+
           ->join('users','users.id','=','usersinfo.user_id')
           ->whereIn('usersinfo.user_type',['fsc','bsc','dsc'])
           ->where('usersinfo.is_deleted', '=', 'no')
