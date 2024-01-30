@@ -40,13 +40,16 @@ use App\Models\ {
                Counter,
                WebInternship,
                WebJobPosting,
-};
-use App\Models\SaleSummary;
-use App\Models\OrderSummary;
-use App\Models\OrderDetail;
-use App\Models\Downloads;
-use App\Models\Address;
-use App\Models\Principles;
+
+            SaleSummary,
+            SaleDetail,
+            OrderSummary,
+            OrderDetail,
+            Downloads,
+            Address,
+            Principles,
+
+        };
 use App\Models\{
     Crops,
     UsersInfoForStructures
@@ -4423,6 +4426,12 @@ class WebAPIController extends Controller
             {
                 try
                 {
+
+                    $resultnew->all_product = SaleDetail::where('tbl_sale_detail.order_no',$request->order_no)
+                                            ->where('tbl_sale_detail.is_deleted','no')
+                                            ->join('tbl_product','tbl_product.id','=','tbl_sale_detail.prod_id')
+                                            ->get();
+
                     $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
                     $resultnew->fname=$details->fname;
                     $resultnew->mname=$details->mname;
