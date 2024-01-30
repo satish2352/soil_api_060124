@@ -8131,7 +8131,7 @@ class WebAPIController extends Controller
     {
         try
         {
-            $result = WebJobPosting::where('is_deleted','no')->orderBy('id', 'DESC')->get();
+            $result = WebJobPosting::where('is_deleted','no')->orderBy('id', 'DESC')->select(`name`, `email`, `mobile`, `qualification`, `experience_from`, `experience_to`, `address`, `resume`)->get();
             foreach($result as $key=>$value)
             {
                 $value->photopath=JOBPOSTING_CONTENT_VIEW.$value->resume;
