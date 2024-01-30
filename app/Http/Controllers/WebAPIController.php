@@ -3730,7 +3730,7 @@ class WebAPIController extends Controller
 //   ->get();
    
         
-        //$result=DB::select("SELECT SUM(created_disctributor_amount) FROM `tbl_order_summary` WHERE `created_disctributor_id`='4' GROUP BY 'created_disctributor_id'");
+        //$result=DB::select("SELECT SUM(created_disctributor_amount) FROM 'tbl_order_summary' WHERE 'created_disctributor_id'='4' GROUP BY 'created_disctributor_id'");
             // foreach($result as $key=>$value)
             // {
             //     $value->all_product = OrderDetail::where('order_no',$request->order_no)
@@ -3802,7 +3802,7 @@ class WebAPIController extends Controller
 //   ->get();
    
         
-        //$result=DB::select("SELECT SUM(created_disctributor_amount) FROM `tbl_order_summary` WHERE `created_disctributor_id`='4' GROUP BY 'created_disctributor_id'");
+        //$result=DB::select("SELECT SUM(created_disctributor_amount) FROM 'tbl_order_summary' WHERE 'created_disctributor_id'='4' GROUP BY 'created_disctributor_id'");
             // foreach($result as $key=>$value)
             // {
             //     $value->all_product = OrderDetail::where('order_no',$request->order_no)
@@ -8131,7 +8131,7 @@ class WebAPIController extends Controller
     {
         try
         {
-            $result = WebJobPosting::where('is_deleted','no')->orderBy('id', 'DESC')->select(`name`, `email`, `mobile`, `qualification`, `experience_from`, `experience_to`, `address`, `resume`)->get();
+            $result = WebJobPosting::where('is_deleted','no')->select('name', 'email', 'mobile', 'qualification', 'experience_from', 'experience_to', 'address', 'resume')->orderBy('id', 'DESC')->get();
             foreach($result as $key=>$value)
             {
                 $value->photopath=JOBPOSTING_CONTENT_VIEW.$value->resume;
