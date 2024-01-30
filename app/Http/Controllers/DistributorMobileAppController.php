@@ -231,7 +231,6 @@ class DistributorMobileAppController extends Controller
             $forwarded_bsc_id = 0;
             $forwarded_dsc_id = 0;
             $is_order_confirm_from_dist = 'no';
-            $is_order_confirm_from_dsc = 'no';
             if($request->order_created_by =='fsc') {
                 // To find added by 
                 $forwarded_bsc_id_data = UsersInfoForStructures::where([
@@ -244,6 +243,17 @@ class DistributorMobileAppController extends Controller
                     $forwarded_bsc_id = $forwarded_bsc_id_data->added_by;
                 } else {
                     $forwarded_bsc_id = 0;
+                }
+
+
+                $forwarded_dsc_id = UsersInfoForStructures::where([
+                                    'user_id'=>$forwarded_bsc_id,
+                                    // 'user_type'=>'bsc',
+                                ])->select('added_by','user_type')->first() ; 
+                if($forwarded_dsc_id) {
+                    $forwarded_dsc_id = $forwarded_dsc_id->added_by;
+                } else {
+                    $forwarded_dsc_id = 0;
                 }
                
             } elseif($request->order_created_by =='bsc')  {
@@ -266,15 +276,6 @@ class DistributorMobileAppController extends Controller
                 $is_order_confirm_from_dist = 'no';
             }
 
-            if($request->order_created_by == 'dsc')  {
-              
-                $is_order_confirm_from_dist = 'yes';
-                $is_order_confirm_from_dsc = 'yes';
-
-            }
-        
-
- 
 
             $date=date("Y-m-d");
             $time= time();
@@ -295,10 +296,11 @@ class DistributorMobileAppController extends Controller
             $ordrsummary->remark = $requestdata->remark;
             $ordrsummary->is_order_confirm_from_dist = $is_order_confirm_from_dist;
             $ordrsummary->payment_mode = $requestdata->payment_mode;
-            if($is_order_confirm_from_dsc = 'yes') {
-                $ordrsummary->is_order_confirm_from_dsc = $is_order_confirm_from_dsc;
+            if($request->order_created_by == 'dsc')  {
+                $ordrsummary->is_order_confirm_from_dsc = 'yes';
                 $ordrsummary->is_order_final_confirm = 'yes';
-            }
+                $ordrsummary->is_order_confirm_from_dist = 'yes';
+            } 
             $ordrsummary->save();
             //dd($requestdata->order_created_by);
             //$requestdata = $request;
