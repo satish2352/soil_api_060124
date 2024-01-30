@@ -265,9 +265,10 @@ class DistributorMobileAppController extends Controller
                 $is_order_confirm_from_dist = 'no';
             }
 
-            if($request->order_created_by =='dsc')  {
+            if($request->order_created_by == 'dsc')  {
               
                 $is_order_confirm_from_dist = 'yes';
+                $is_order_confirm_from_dsc = 'yes';
 
             }
         
