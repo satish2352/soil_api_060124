@@ -297,6 +297,7 @@ class DistributorMobileAppController extends Controller
             $ordrsummary->payment_mode = $requestdata->payment_mode;
             if($is_order_confirm_from_dsc = 'yes') {
                 $ordrsummary->is_order_confirm_from_dsc = $is_order_confirm_from_dsc;
+                $ordrsummary->is_order_final_confirm = 'yes';
             }
             $ordrsummary->save();
             //dd($requestdata->order_created_by);
