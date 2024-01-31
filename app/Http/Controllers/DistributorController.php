@@ -2303,7 +2303,7 @@ class DistributorController extends Controller
         {
             
             $farmerVistByDistributor = FarmerVistByDistributor::
-                leftJoin('usersinfo as dist_name', function($join) {
+                    leftJoin('usersinfo as dist_name', function($join) {
                     $join->on('tbl_farmer_vist_by_distributor.created_by', '=', 'dist_name.user_id');
                   })
 
@@ -2333,6 +2333,27 @@ class DistributorController extends Controller
                     $join->on('dist_name.city', '=', 'cityNew.location_id');
                   })
           
+                  ->when($request->get('state'), function($query) use ($request) {
+                   
+                    $query->where('distfilter.state',$request->state);
+                  })
+                  
+                  ->when($request->get('district'), function($query) use ($request) {
+                    $query->where('distfilter.district',$request->district);
+                  })
+                  
+                  ->when($request->get('taluka'), function($query) use ($request) {
+                    $query->where('distfilter.taluka',$request->taluka);
+                  })
+                  
+                  ->when($request->get('city'), function($query) use ($request) {
+                    $query->where('distfilter.city',$request->city);
+                  })
+                  
+                  ->when($request->get('added_by'), function($query) use ($request) {
+                    $query->where('distfilter.created_by',$request->added_by);
+                  })
+                  
                   
                   ->select( 'tbl_farmer_vist_by_distributor.id as tbl_farmer_vist_by_distributor_id',
                   'tbl_farmer_vist_by_distributor.farmer_id',
@@ -2362,32 +2383,12 @@ class DistributorController extends Controller
         
                 )
                 ->orderBy('tbl_farmer_vist_by_distributor.id','desc')
+                ->get();
             // ->where('tbl_farmer_vist_by_distributor.status',0)
             // ->select('tbl_farmer_vist_by_distributor.*','usersinfo.*')
             // ->orderBy('tbl_farmer_vist_by_distributor.id', 'DESC')
            
-            ->when($request->get('state'), function($query) use ($request) {
-                   
-                  $query->where('distfilter.state',$request->state);
-                })
-                
-                ->when($request->get('district'), function($query) use ($request) {
-                  $query->where('distfilter.district',$request->district);
-                })
-                
-                ->when($request->get('taluka'), function($query) use ($request) {
-                  $query->where('distfilter.taluka',$request->taluka);
-                })
-                
-                ->when($request->get('city'), function($query) use ($request) {
-                  $query->where('distfilter.city',$request->city);
-                })
-                
-                ->when($request->get('added_by'), function($query) use ($request) {
-                  $query->where('distfilter.created_by',$request->added_by);
-                })
-                
-                ->get();
+           
 // dd($farmerVistByDistributor);
             if(!$farmerVistByDistributor) {
                 throw new Exception(api_error(1006), 1006);
