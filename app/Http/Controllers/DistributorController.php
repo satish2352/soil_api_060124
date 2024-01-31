@@ -2364,23 +2364,23 @@ class DistributorController extends Controller
            
             ->when($request->get('state'), function($query) use ($request) {
                    
-                  $query->where('usersinfo.state',$request->state);
+                  $query->where('dist_name.state',$request->state);
                 })
                 
                 ->when($request->get('district'), function($query) use ($request) {
-                  $query->where('usersinfo.district',$request->district);
+                  $query->where('dist_name.district',$request->district);
                 })
                 
                 ->when($request->get('taluka'), function($query) use ($request) {
-                  $query->where('usersinfo.taluka',$request->taluka);
+                  $query->where('dist_name.taluka',$request->taluka);
                 })
                 
-                ->when($request->get('usersinfo.city'), function($query) use ($request) {
+                ->when($request->get('dist_name.city'), function($query) use ($request) {
                   $query->where('city',$request->city);
                 })
                 
                 ->when($request->get('created_by'), function($query) use ($request) {
-                  $query->where('usersinfo.created_by',$request->dist_id);
+                  $query->where('dist_name.created_by',$request->dist_id);
                 })
                 
                 ->get();
