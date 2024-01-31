@@ -2379,8 +2379,8 @@ class DistributorController extends Controller
                   $query->where('city',$request->city);
                 })
                 
-                ->when($request->get('created_by'), function($query) use ($request) {
-                  $query->where('dist_name.created_by',$request->dist_id);
+                ->when($request->get('added_by'), function($query) use ($request) {
+                  $query->where('dist_name.created_by',$request->added_by);
                 })
                 
                 ->get();
