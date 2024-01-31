@@ -2306,6 +2306,10 @@ class DistributorController extends Controller
                 leftJoin('usersinfo as dist_name', function($join) {
                     $join->on('tbl_farmer_vist_by_distributor.created_by', '=', 'dist_name.user_id');
                   })
+
+                  ->leftJoin('usersinfo as distfilter', function($join) {
+                    $join->on('tbl_farmer_vist_by_distributor.created_by', '=', 'distfilter.user_id');
+                  })
                   
                   
                   ->leftJoin('usersinfo AS farm_name', function($join) {
@@ -2364,23 +2368,23 @@ class DistributorController extends Controller
            
             ->when($request->get('state'), function($query) use ($request) {
                    
-                  $query->where('dist_name.state',$request->state);
+                  $query->where('distfilter.state',$request->state);
                 })
                 
                 ->when($request->get('district'), function($query) use ($request) {
-                  $query->where('dist_name.district',$request->district);
+                  $query->where('distfilter.district',$request->district);
                 })
                 
                 ->when($request->get('taluka'), function($query) use ($request) {
-                  $query->where('dist_name.taluka',$request->taluka);
+                  $query->where('distfilter.taluka',$request->taluka);
                 })
                 
-                ->when($request->get('dist_name.city'), function($query) use ($request) {
-                  $query->where('city',$request->city);
+                ->when($request->get('city'), function($query) use ($request) {
+                  $query->where('distfilter.city',$request->city);
                 })
                 
                 ->when($request->get('added_by'), function($query) use ($request) {
-                  $query->where('dist_name.created_by',$request->added_by);
+                  $query->where('distfilter.created_by',$request->added_by);
                 })
                 
                 ->get();
