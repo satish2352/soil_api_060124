@@ -2351,7 +2351,7 @@ class DistributorController extends Controller
                   })
                   
                   ->when($request->get('added_by'), function($query) use ($request) {
-                    $query->where('distfilter.created_by',$request->added_by);
+                    $query->where('tbl_farmer_vist_by_distributor.created_by',$request->added_by);
                   })
                   
                   
