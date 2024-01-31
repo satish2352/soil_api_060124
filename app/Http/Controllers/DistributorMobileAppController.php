@@ -632,6 +632,8 @@ class DistributorMobileAppController extends Controller
     {
         try
         {
+
+            $userinfo = UsersInfo::where('user_id',$request->dist_id)->first();
              $result = OrderSummary::
              
                             leftJoin('usersinfo', function($join) {
@@ -653,9 +655,14 @@ class DistributorMobileAppController extends Controller
 
                             ->when($request->order_no, function($query) use ($request) {
                                 $query->where('tbl_order_summary.order_no','like', '%' . $request->order_no . '%' );
-                            }) 
-             
-                            ->where('tbl_order_summary.is_order_confirm_from_dist','no')
+                            });
+                            
+
+                            if($userinfo->user_type =='dsc') {
+                                $result = $result->where('tbl_order_summary.is_order_confirm_from_bsc','yes');
+                            }
+
+                            $result = $result->where('tbl_order_summary.is_order_confirm_from_dist','no')
                             ->where('tbl_order_summary.is_deleted','no')
                            
                             
