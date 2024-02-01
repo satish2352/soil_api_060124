@@ -240,6 +240,18 @@ class DistributorController extends Controller
             //     $this->checkLevelofDistributor($request->created_by);
             // }
             
+
+            UsersInfoForStructures::insert([
+                'user_id'=>$user->id,
+                'added_by'=>($request->created_by) ? $request->created_by: '0',
+                'user_type'=>$request->user_type
+            ]);  
+
+            if($request->created_by){
+                $this->checkLevelofDistributor(($request->created_by) ? $request->created_by: '0',$users->id);
+            }
+           
+
              
             if ($users)
             {
