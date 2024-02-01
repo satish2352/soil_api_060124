@@ -737,7 +737,9 @@ class DistributorController extends Controller
         'usersinfo.deviceid',
         'usersinfo.logintime',
         'usersinfo.created_by',
-        'usersinfo.created_on'
+        'usersinfo.created_on',
+        'users.is_blocked',
+        'users.is_approved',
          )
           ->orderBy('users.id', 'DESC')
           ->get();
