@@ -1612,7 +1612,7 @@ class DistributorController extends Controller
                            if(!$farmerdetails) {
                                 throw new Exception("Farmer Details Not Found");
                             }
-                            $presentFarmerFormeeting .=++$key.")".$farmerdetails->fname." ".$farmerdetails->mname." ".$farmerdetails->lname;
+                            $presentFarmerFormeeting .=++$key.")".$farmerdetails->fname;//." ".$farmerdetails->mname." ".$farmerdetails->lname;
                             $presentFarmerFormeeting .=",";
                             
                         }
