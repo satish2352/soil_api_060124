@@ -3521,6 +3521,15 @@ class WebAPIController extends Controller
             $ordrsummary->created_disctributor_id = $requestdata->created_disctributor_id;
             $ordrsummary->created_disctributor_amount = $requestdata->created_disctributor_amount;
             $ordrsummary->remark = $requestdata->remark;
+
+            $ordrsummary->forwarded_bsc_id = '0';
+            $ordrsummary->forwarded_dsc_id = '0';
+
+            $ordrsummary->payment_mode = 'cod';
+            $ordrsummary->is_order_confirm_from_dsc = 'yes';
+            $ordrsummary->is_order_final_confirm = 'yes';
+            $ordrsummary->is_order_confirm_from_dist = 'yes';
+
             $ordrsummary->save();
           
 
