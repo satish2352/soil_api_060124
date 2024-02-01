@@ -1618,7 +1618,9 @@ class DistributorController extends Controller
                         }
                          //$farmermeetingPresentDist->presentFarmerFormeeting= 
                     }
-                   $farmermeeting->presentFarmerFormeeting = rtrim($presentFarmerFormeeting, ',');
+                    if(count($presentFarmer) > 0 ) {
+                        $farmermeeting->presentFarmerFormeeting = rtrim($presentFarmerFormeeting, ',');
+                    }
                    
 
                 } catch(Exception $e) {
