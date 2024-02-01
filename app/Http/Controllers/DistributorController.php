@@ -742,7 +742,7 @@ class DistributorController extends Controller
         'usersinfo.logintime',
         'usersinfo.created_by',
         'usersinfo.created_on',
-        'users.is_blocked',
+        'users.is_block',
         'users.is_approved',
          )
           ->orderBy('users.id', 'DESC')
