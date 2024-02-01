@@ -8778,6 +8778,8 @@ class WebAPIController extends Controller
           ->where('front_usersinfo.is_deleted', '=', 'no')
           ->orderBy('front_usersinfo.id', 'DESC')
           ->select('front_usersinfo.id',
+          'front_usersinfo.list_data_status',
+          'front_usersinfo.list_data_read',
           'front_usersinfo.fname',
           'front_usersinfo.mname',
           'front_usersinfo.lname',
@@ -9079,6 +9081,10 @@ class WebAPIController extends Controller
         
         try
         {
+            $resultNew = FrontUsers::where('id',$request->id)->update([
+                'list_data_read'=>'y',
+                'list_data_status'=>'1',
+            ]);
             $result = FrontUsers::where('id',$request->id)->first();
             // dd($result);
             $result->aadhar_card_image_front = FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result['aadhar_card_image_front'];
