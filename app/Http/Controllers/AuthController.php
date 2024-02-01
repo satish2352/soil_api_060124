@@ -142,7 +142,7 @@ class AuthController extends Controller {
             {
                  return response()->json([
                         "status" => false,
-                        "message" => "Unauthorized"
+                        "message" => "User name and password not matched with record"
                     ]);
                 
             }
