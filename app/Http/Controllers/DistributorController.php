@@ -662,6 +662,10 @@ class DistributorController extends Controller
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
 
+          ->leftJoin('users', function($join) {
+            $join->on('usersinfo.user_id', '=', 'users.id');
+          })
+
           ->when($request->get('state'), function($state) use ($request) {
             $state->where('usersinfo.state',$request->state);
           })
@@ -678,7 +682,7 @@ class DistributorController extends Controller
             $city->where('usersinfo.city',$request->city);
           })
 
-          ->join('users','users.id','=','usersinfo.user_id')
+        //   ->join('users','users.id','=','usersinfo.user_id')
           ->whereIn('usersinfo.user_type',['fsc','bsc','dsc'])
           ->where('usersinfo.is_deleted', '=', 'no')
           ->where('usersinfo.new_list_to_view', '=', 'n')
