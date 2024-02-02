@@ -445,7 +445,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Photo Not Added'
             ]);
@@ -566,7 +566,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Photo Not Updated'
             ]);
@@ -607,7 +607,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor not found '
             ]);
@@ -633,7 +633,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor not found '
             ]);
@@ -1179,7 +1179,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farmer Not Added'
             ]);
@@ -1219,7 +1219,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farmer Not Found'
             ]);
@@ -1290,7 +1290,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farmer Meeting Not Added'
             ]);
@@ -1384,7 +1384,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farmer Meeting Photo Not Added'
             ]);
@@ -1492,7 +1492,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farmer Meeting Photo Not Updated'
             ]);
@@ -1529,7 +1529,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farmer Meeting Not Updated'
             ]);
@@ -1774,7 +1774,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Meeting Not Added'
             ]);
@@ -1869,7 +1869,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Meeting Photo Not Added'
             ]);
@@ -1981,7 +1981,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Meeting Photo Not Updated'
             ]);
@@ -2200,7 +2200,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Meeting Not Found'
             ]);
@@ -2229,7 +2229,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Meeting Not Updated'
             ]);
@@ -2562,7 +2562,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Vist Towards Farmer Not Found'
             ]);
@@ -2585,7 +2585,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Vist Towards Farmer Not Found'
             ]);
@@ -2620,7 +2620,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Meeting Not Added'
             ]);
@@ -2719,7 +2719,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Farm Visit Photo Not Added'
             ]);
@@ -2851,7 +2851,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Vist Towards Farmer Not Successfully'
             ]);
@@ -3069,7 +3069,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Target Videos To Distributor Not Found'
             ]);
@@ -3092,7 +3092,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Target Videos To Distributor Not Found'
             ]);
@@ -3126,7 +3126,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Target Videos To Distributor Not Added'
             ]);
@@ -3154,7 +3154,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Target Videos To Distributor Not Updated'
             ]);
@@ -3396,7 +3396,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'SCT Photo Not Added'
             ]);
@@ -4664,7 +4664,7 @@ class DistributorController extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Not Blocked'
             ]);
@@ -4692,7 +4692,7 @@ class DistributorController extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Distributor Not Unblocked'
             ]);
@@ -4779,7 +4779,7 @@ class DistributorController extends Controller
         else
         {
              return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                "message" => 'Notification Not Sent'
             ]);
@@ -4806,7 +4806,7 @@ class DistributorController extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'Not Read Notification'
             ]);
@@ -4845,7 +4845,7 @@ class DistributorController extends Controller
         else
         {
             return response()->json([
-                "data" => '',
+                "data" => array(),
                 "result" => false,
                 "message" => 'No List Notification'
             ]);
