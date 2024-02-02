@@ -651,10 +651,10 @@ class DistributorControllerNandu extends Controller
         try
         {
             $messageview= Messages::where('is_deleted', 'no')
-                                    ->when($request->get('dist_id'), function($query) use ($request) {
-                                        $query->where('message_by', $request->dist_id);
+                                    ->when($request->get('msg_status'), function($query) use ($request) {
+                                        $query->where('msg_status', $request->msg_status);
                                     })
-                                    ->orderBy('msg_status', 'ASC')
+                                    ->orderBy('msg_status', 'DESC')
                                     ->get();
             
             if ($messageview)
@@ -979,8 +979,8 @@ class DistributorControllerNandu extends Controller
         try
         {
             $complaintview= Complaint::where('is_deleted', 'no')
-                                    ->when($request->get('dist_id'), function($query) use ($request) {
-                                        $query->where('complaint_by', $request->dist_id);
+                                    ->when($request->get('msg_status'), function($query) use ($request) {
+                                        $query->where('msg_status', $request->msg_status);
                                     })
                                     ->orderBy('id', 'DESC')
                                     ->get();
