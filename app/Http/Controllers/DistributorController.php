@@ -3342,9 +3342,9 @@ class DistributorController extends Controller
             $inputfilenametoupload='photo_two';
             if (!empty($request->hasFile($inputfilenametoupload)))
             {   
-                $photo_two_lat_long=explode("_",$request->lat_long_string);
-                $photo_two_lat = $photo_two_lat_long[2];
-                $photo_two_long = $photo_two_lat_long[3];
+                //$photo_two_lat_long=explode("_",$request->lat_long_string);
+                $photo_two_lat = '';//$photo_two_lat_long[2];
+                $photo_two_long = '';//$photo_two_lat_long[3];
                 $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
                 $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_two'=>$filename,'photo_two_lat'=>$photo_two_lat,'photo_two_long'=>$photo_two_long]);
             
