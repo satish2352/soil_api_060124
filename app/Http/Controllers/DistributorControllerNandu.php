@@ -650,11 +650,12 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-            $messageview= Messages::where('is_deleted', 'no')
-                                    ->when($request->get('msg_status'), function($query) use ($request) {
-                                        $query->where('msg_status', $request->msg_status);
-                                    })
-                                    ->orderBy('msg_status', 'DESC')
+            $messageview= Messages::where('is_deleted', 'no');
+                                    if($request->msg_status) {
+                                        $messageview=  $messageview->where('msg_status', $request->msg_status);
+                                        
+                                    }
+                                    $messageview=  $messageview->orderBy('msg_status', 'DESC')
                                     ->get();
             
             if ($messageview)
