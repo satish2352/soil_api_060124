@@ -5921,7 +5921,12 @@ class WebAPIController extends Controller
     {
         try 
         {
-            $result = SCTResult::where('is_deleted','no')->orderBy('id', 'DESC')->get();
+            $result = SCTResult::where('is_deleted','no')
+                                ->when($request->get('dist_id'), function($query) use ($request) {
+                                    $query->where('created_by', $request->dist_id);
+                                })
+                                ->orderBy('id', 'DESC')
+                                ->get();
             
             if(!$result) {
                 throw new Exception(api_error(1006), 1006);
