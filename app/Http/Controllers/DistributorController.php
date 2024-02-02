@@ -3313,94 +3313,97 @@ class DistributorController extends Controller
     
     public function sct_resultadd_images_distributorapp(Request $request)
     {
-       $sctresult = new SCTResult();
-       $imagedataPath=SCT_RESULT_PHOTO_UPLOAD;
-        
-        if ( !is_dir( $imagedataPath) ) 
+
+        try
         {
-            mkdir( $imagedataPath );       
-        }
+
+            $sctresult = new SCTResult();
+            $imagedataPath=SCT_RESULT_PHOTO_UPLOAD;
+            
+            if ( !is_dir( $imagedataPath) ) 
+            {
+                mkdir( $imagedataPath );       
+            }
+            
+            $idLastInserted=$request->id;
+            $photoName=$idLastInserted."_photo_one";
+            $inputfilenametoupload='photo_one';
+            
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {   
+                $photo_one_lat_long=explode("_",$request->lat_long_string);
+                $photo_one_lat = $photo_one_lat_long[0];
+                $photo_one_long = $photo_one_lat_long[1];
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_one'=>$filename,'photo_one_lat'=>$photo_one_lat,'photo_one_long'=>$photo_one_long]);
+            }
         
-        $idLastInserted=$request->id;
-        $photoName=$idLastInserted."_photo_one";
-        $inputfilenametoupload='photo_one';
-        
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {   
-            $photo_one_lat_long=explode("_",$request->lat_long_string);
-            $photo_one_lat = $photo_one_lat_long[0];
-            $photo_one_long = $photo_one_lat_long[1];
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_one'=>$filename,'photo_one_lat'=>$photo_one_lat,'photo_one_long'=>$photo_one_long]);
-        }
-       
-        $photoName=$idLastInserted."_photo_two";
-        $inputfilenametoupload='photo_two';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {   
-            $photo_two_lat_long=explode("_",$request->lat_long_string);
-            $photo_two_lat = $photo_two_lat_long[2];
-            $photo_two_long = $photo_two_lat_long[3];
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_two'=>$filename,'photo_two_lat'=>$photo_two_lat,'photo_two_long'=>$photo_two_long]);
-           
-        }
-        
-        
-        $photoName=$idLastInserted."_photo_three";
-        $inputfilenametoupload='photo_three';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $photo_three_lat_long=explode("_",$request->lat_long_string);
-            $photo_three_lat = $photo_three_lat_long[4];
-            $photo_three_long = $photo_three_lat_long[5];
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_three'=>$filename,'photo_three_lat'=>$photo_three_lat,'photo_three_long'=>$photo_three_long]);
-           
-        }
-        
-        
-        $photoName=$idLastInserted."_photo_four";
-        $inputfilenametoupload='photo_four';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {   
-            $photo_four_lat_long=explode("_",$request->lat_long_string);
-            $photo_four_lat = $photo_four_lat_long[6];
-            $photo_four_long = $photo_four_lat_long[7];
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_four'=>$filename,'photo_four_lat'=>$photo_four_lat,'photo_four_long'=>$photo_four_long]);
-           
-        }
-        
-        $photoName=$idLastInserted."_photo_five";
-        $inputfilenametoupload='photo_five';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $photo_five_lat_long=explode("_",$request->lat_long_string);
-            $photo_five_lat = $photo_five_lat_long[8];
-            $photo_five_long = $photo_five_lat_long[9];
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_five'=>$filename,'photo_five_lat'=>$photo_five_lat,'photo_five_long'=>$photo_five_long]);
-           
-        }
-        
-        
-        if ($sctresult)
-        {
-             return response()->json([
+            $photoName=$idLastInserted."_photo_two";
+            $inputfilenametoupload='photo_two';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {   
+                $photo_two_lat_long=explode("_",$request->lat_long_string);
+                $photo_two_lat = $photo_two_lat_long[2];
+                $photo_two_long = $photo_two_lat_long[3];
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_two'=>$filename,'photo_two_lat'=>$photo_two_lat,'photo_two_long'=>$photo_two_long]);
+            
+            }
+            
+            
+            $photoName=$idLastInserted."_photo_three";
+            $inputfilenametoupload='photo_three';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $photo_three_lat_long=explode("_",$request->lat_long_string);
+                $photo_three_lat = $photo_three_lat_long[4];
+                $photo_three_long = $photo_three_lat_long[5];
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_three'=>$filename,'photo_three_lat'=>$photo_three_lat,'photo_three_long'=>$photo_three_long]);
+            
+            }
+            
+            
+            $photoName=$idLastInserted."_photo_four";
+            $inputfilenametoupload='photo_four';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {   
+                $photo_four_lat_long=explode("_",$request->lat_long_string);
+                $photo_four_lat = $photo_four_lat_long[6];
+                $photo_four_long = $photo_four_lat_long[7];
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_four'=>$filename,'photo_four_lat'=>$photo_four_lat,'photo_four_long'=>$photo_four_long]);
+            
+            }
+            
+            $photoName=$idLastInserted."_photo_five";
+            $inputfilenametoupload='photo_five';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $photo_five_lat_long=explode("_",$request->lat_long_string);
+                $photo_five_lat = $photo_five_lat_long[8];
+                $photo_five_long = $photo_five_lat_long[9];
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $sctresult=SCTResult::where('id',$idLastInserted)->update(['photo_five'=>$filename,'photo_five_lat'=>$photo_five_lat,'photo_five_long'=>$photo_five_long]);
+            
+            }
+            
+            
+            return response()->json([
                 "data" => $sctresult,
                 "result" => true,
                 "message" => 'SCT Photo Added'
             ]);
-        }
-        else
-        {
-             return response()->json([
-                "data" => array(),
-                "result" => false,
-                "message" => 'SCT Photo Not Added'
-            ]);
-            
+
+
+       } catch(Exception $e) {
+            return response()->json([
+                    "data" => array(),
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
         }
     }
     
