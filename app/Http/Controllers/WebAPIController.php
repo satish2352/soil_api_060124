@@ -5922,6 +5922,7 @@ class WebAPIController extends Controller
         try 
         {
 
+            info("info");
             info($request->dist_id);
             $result = SCTResult::where('is_deleted','no');
             if($request->dist_id) {
