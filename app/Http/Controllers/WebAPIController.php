@@ -5921,14 +5921,11 @@ class WebAPIController extends Controller
     {
         try 
         {
-
-            info("info");
-            info($request->dist_id);
-            $result = SCTResult::where('is_deleted','no');
-            if($request->dist_id) {
-                $result = $result->where('created_by', $request->dist_id);
-            }
-            $result = $result->orderBy('id', 'DESC')
+            $result = SCTResult::where('is_deleted','no')
+                                ->when($request->get('dist_id'), function($query) use ($request) {
+                                    $query->where('created_by', $request->dist_id);
+                                })
+                                ->orderBy('id', 'DESC')
                                 ->get();
             
             if(!$result) {
