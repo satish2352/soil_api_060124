@@ -134,26 +134,7 @@ class FarmerController extends Controller
         $result = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
                             ->where('usersinfo.is_deleted', '=', 'no')
         
-                 ->when($request->get('state'), function($query) use ($request) {
-                   
-                  $query->where('state',$request->state);
-                })
                 
-                ->when($request->get('district'), function($query) use ($request) {
-                  $query->where('district',$request->district);
-                })
-                
-                ->when($request->get('taluka'), function($query) use ($request) {
-                  $query->where('taluka',$request->taluka);
-                })
-                
-                ->when($request->get('city'), function($query) use ($request) {
-                  $query->where('city',$request->city);
-                })
-                
-                ->when($request->get('added_by'), function($query) use ($request) {
-                  $query->where('added_by',$request->added_by);
-                })
                 // ->join('users','users.id','=','usersinfo.user_id')
                 ->leftJoin('usersinfo AS sct_farmer','sct_farmer.user_id','=','usersinfo.user_id')
                 ->leftJoin('usersinfo AS sct_dist','sct_dist.user_id','=','usersinfo.added_by')
@@ -173,6 +154,27 @@ class FarmerController extends Controller
                   
                   ->leftJoin('tbl_area as cityNew', function($join) {
                     $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                  })
+
+
+                  ->when($request->get('state'), function($query) use ($request) {
+                    $query->where('usersinfo.state',$request->state);
+                  })
+                  
+                  ->when($request->get('district'), function($query) use ($request) {
+                    $query->where('usersinfo.district',$request->district);
+                  })
+                  
+                  ->when($request->get('taluka'), function($query) use ($request) {
+                    $query->where('usersinfo.taluka',$request->taluka);
+                  })
+                  
+                  ->when($request->get('city'), function($query) use ($request) {
+                    $query->where('usersinfo.city',$request->city);
+                  })
+                  
+                  ->when($request->get('added_by'), function($query) use ($request) {
+                    $query->where('usersinfo.added_by',$request->added_by);
                   })
           
              ->select('usersinfo.user_id',
