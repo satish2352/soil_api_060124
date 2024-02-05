@@ -5923,7 +5923,7 @@ class WebAPIController extends Controller
         {
 
             info("info");
-            info($request['dist_id']);
+            info($request);
             $result = SCTResult::where('is_deleted','no');
             if($request->dist_id) {
                 $result = $result->where('created_by', $request['dist_id']);
