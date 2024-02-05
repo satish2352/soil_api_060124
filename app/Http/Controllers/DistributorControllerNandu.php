@@ -652,7 +652,7 @@ class DistributorControllerNandu extends Controller
         {
             $messageview= Messages::where('is_deleted', 'no');
                                     if($request->msg_status) {
-                                        if($request->msg_status == '0') {
+                                        if($request->msg_status == '1') {
                                             $messageview=  $messageview->whereIn('msg_status',array('0','1'));
                                         } else {
                                             $messageview=  $messageview->where('msg_status', $request->msg_status);
