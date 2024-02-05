@@ -982,11 +982,15 @@ class DistributorControllerNandu extends Controller
         
         try
         {
-            $complaintview= Complaint::where('is_deleted', 'no')
-                                    ->when($request->get('msg_status'), function($query) use ($request) {
-                                        $query->where('msg_status', $request->msg_status);
-                                    })
-                                    ->orderBy('id', 'DESC')
+            $complaintview= Complaint::where('is_deleted', 'no');
+                                    if($request->msg_status) {
+                                        if($request->msg_status == '1') {
+                                            $complaintview=  $complaintview->whereIn('msg_status',array('0','1'));
+                                        } else {
+                                            $complaintview=  $complaintview->where('msg_status', $request->msg_status);
+                                        } 
+                                    }
+            $complaintview=  $complaintview->orderBy('id', 'DESC')
                                     ->get();
             
             if ($complaintview)
