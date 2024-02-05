@@ -2662,8 +2662,8 @@ class DistributorController extends Controller
         if (!empty($request->hasFile($inputfilenametoupload)))
         {     
             $photo_two_lat_long=explode("_",$request->lat_long_string);
-            $photo_two_lat = $photo_two_lat_long[2];
-            $photo_two_long = $photo_two_lat_long[3];
+            $photo_two_lat = $photo_two_lat_long[0];
+            $photo_two_long = $photo_two_lat_long[1];
             $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
             $farmermeeting=FarmerVistByDistributor::where('id',$idLastInserted)->update(['photo_two'=>$filename,'photo_two_lat'=>$photo_two_lat,'photo_two_long'=>$photo_two_long]);
             
@@ -2675,8 +2675,8 @@ class DistributorController extends Controller
         if (!empty($request->hasFile($inputfilenametoupload)))
         {     
             $photo_three_lat_long=explode("_",$request->lat_long_string);
-            $photo_three_lat = $photo_three_lat_long[4];
-            $photo_three_long = $photo_three_lat_long[5];
+            $photo_three_lat = $photo_three_lat_long[0];
+            $photo_three_long = $photo_three_lat_long[1];
             $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
             $farmermeeting=FarmerVistByDistributor::where('id',$idLastInserted)->update(['photo_three'=>$filename,'photo_three_lat'=>$photo_three_lat,'photo_three_long'=>$photo_three_long]);
             
@@ -2688,8 +2688,8 @@ class DistributorController extends Controller
         if (!empty($request->hasFile($inputfilenametoupload)))
         {     
             $photo_four_lat_long=explode("_",$request->lat_long_string);
-            $photo_four_lat = $photo_four_lat_long[6];
-            $photo_four_long = $photo_four_lat_long[7];
+            $photo_four_lat = $photo_four_lat_long[0];
+            $photo_four_long = $photo_four_lat_long[1];
             $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
             $farmermeeting=FarmerVistByDistributor::where('id',$idLastInserted)->update(['photo_four'=>$filename,'photo_four_lat'=>$photo_four_lat,'photo_four_long'=>$photo_four_long]);
             
@@ -2700,8 +2700,8 @@ class DistributorController extends Controller
         if (!empty($request->hasFile($inputfilenametoupload)))
         {     
             $photo_five_lat_long=explode("_",$request->lat_long_string);
-            $photo_five_lat = $photo_five_lat_long[8];
-            $photo_five_long = $photo_five_lat_long[9];
+            $photo_five_lat = $photo_five_lat_long[0];
+            $photo_five_long = $photo_five_lat_long[1];
             $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
             $farmermeeting=FarmerVistByDistributor::where('id',$idLastInserted)->update(['photo_five'=>$filename,'photo_five_lat'=>$photo_five_lat,'photo_five_long'=>$photo_five_long]);
             
