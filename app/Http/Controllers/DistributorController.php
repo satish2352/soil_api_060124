@@ -3539,7 +3539,7 @@ class DistributorController extends Controller
     {
         try
         {
-            $sctresult =SCTResult::where('is_deleted','no')->where('created_by',$request->created_by)->get();
+            $sctresult =SCTResult::where('is_deleted','no')->where('created_by',$request->created_by)->orderBy('id','DESC')->get();
             
             foreach($sctresult as $key=>$sctresults)
             {
