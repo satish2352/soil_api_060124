@@ -2691,9 +2691,12 @@ class DistributorControllerNandu extends Controller
                                     })
                                     ->leftJoin('usersinfo', function($join) {
                                         $join->on('video_watch_history.user_id','=','usersinfo.user_id');
-                                    })
-                                    // ->where('video_watch_history.user_id',$request->dist_id)
-                                    ->select(   'video_watch_history.*',
+                                    });
+
+            if(isset($request->dist_id) && $request->get('dist_id') !='') {
+                $targetvideo = $targetvideo->where('video_watch_history.user_id', $request->dist_id);
+            }
+            $targetvideo = $targetvideo->select(   'video_watch_history.*',
                                                 'usersinfo.fname',
                                                 'usersinfo.mname',
                                                 'usersinfo.lname',
