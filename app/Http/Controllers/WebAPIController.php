@@ -5922,7 +5922,7 @@ class WebAPIController extends Controller
         try 
         {
             $result = SCTResult::where('is_deleted','no');
-            if(isset($request->dist_id) && $request->get('dist_id')) {
+            if(isset($request->dist_id) && $request->get('dist_id') !='') {
                 $result = $result->where('created_by', $request->dist_id);
             }
             $result = $result->orderBy('id', 'DESC')
