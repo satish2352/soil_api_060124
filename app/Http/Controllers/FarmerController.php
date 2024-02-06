@@ -274,7 +274,7 @@ class FarmerController extends Controller
             $cityName=$this->commonController->getAreaNameById($value->city);
             $value->city=$cityName->name;
             
-            $value->photo=FARMER_PHOTO_VIEW.$value->photo;
+            $value->photo_new=FARMER_PHOTO_VIEW.$value->photo;
         }
         //dd($result);
         if ($result)
