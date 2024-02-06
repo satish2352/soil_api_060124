@@ -5922,9 +5922,9 @@ class WebAPIController extends Controller
         try 
         {
             $result = SCTResult::where('is_deleted','no');
-            if(isset($request->dist_id) && $request->get('dist_id') !='') {
-                $result = $result->where('created_by', $request->dist_id);
-            }
+            // if(isset($request->dist_id) && $request->get('dist_id') !='') {
+            //     $result = $result->where('created_by', $request->dist_id);
+            // }
             $result = $result->orderBy('id', 'DESC')
                                 ->get();
             
@@ -7085,7 +7085,7 @@ class WebAPIController extends Controller
             elseif($request->hasFile('photo_one'))
             {
                 return response()->json([
-                "data" => $user,
+                "data" => $client_logo,
                 "result" => true,
                 "message" => 'Logo Updated Successfully'
                 ]);
