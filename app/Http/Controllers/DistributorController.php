@@ -176,7 +176,7 @@ class DistributorController extends Controller
             }
         }
         catch(Exception $e) {
-            \Log::info($e->getMessage()." ".$e->getCode());
+
                 return response()->json([
                         "data" => '',
                         "result" => false,
@@ -1188,7 +1188,7 @@ class DistributorController extends Controller
         
         }
         catch(Exception $e) {
-            info($e->getMessage()." ".$e->getCode());
+
                 return response()->json([
                         "data" => '',
                         "result" => false,
@@ -1568,8 +1568,7 @@ class DistributorController extends Controller
                 $farmerMeetingData->where('usersinfo.city',$request->city);
               });
 
-              info('$request->dist_id');
-              info($request->dist_id);
+
               if($request->dist_id !='') {
                 $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
               }
@@ -1590,7 +1589,7 @@ class DistributorController extends Controller
               )
               ->orderBy('id','desc')
               ->get();
-           info($farmerMeetingData);
+info($farmerMeetingData);
             foreach($farmerMeetingData as $key=>$farmermeeting)
             {
                 try
@@ -1605,7 +1604,7 @@ class DistributorController extends Controller
                     // }
                     
                     $presentFarmer= array_unique($presentFarmer);
-                    info($presentFarmer);
+
                     // $distributordetails=$this->commonController->getDistributorNameById($farmermeeting->created_by);  
                     
                     // $farmermeeting->dfname=$distributordetails->fname;
@@ -3065,7 +3064,7 @@ class DistributorController extends Controller
     
     public function distributortargetvideodelete_distributorweb(Request $request)
     {
-        info($request->video_id);
+
         $targetvideo = TargetVideos::where('id',$request->video_id)->update(['is_deleted'=>'yes']);
       
         if ($targetvideo)
@@ -3708,14 +3707,11 @@ class DistributorController extends Controller
         
             $details = UsersInfoForStructures::where('user_id',$distributorId_who_going_to_add_new_dist)->first();
         
-            \Log::info('line 3485');
-            \Log::info($details);
 
             if($details->user_type =='fsc')
             {
                 $fsclist = UsersInfoForStructures::where('added_by',$distributorId_who_going_to_add_new_dist)->where('user_type','fsc')->get(); 
-                \Log::info('$fsclist count to check fsc to bsc ');
-                \Log::info($fsclist);
+                
                 if(count($fsclist)>=5)
                 {
                     $data=[
@@ -3745,8 +3741,7 @@ class DistributorController extends Controller
 
 
         } catch(Exception $e) {
-            \Log::info('line 3522 in checl level');
-            \Log::info($e);
+            
 
             return response()->json([
                     "data" => '',
@@ -4764,7 +4759,7 @@ class DistributorController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
     
         $result = curl_exec($ch);
-        info($result);
+
         if ($result === false) {
              //dd("fail");
             die('Curl failed:' . curl_errno($ch));
