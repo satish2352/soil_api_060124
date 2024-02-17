@@ -1562,11 +1562,15 @@ class DistributorController extends Controller
               
               ->when($request->get('city'), function($farmerMeetingData) use ($request) {
                 $farmerMeetingData->where('usersinfo.city',$request->city);
-              })
-              ->when($request->get('dist_id'), function($farmerMeetingData) use ($request) {
-                $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
-              })
-              ->select(
+              });
+
+              if($request->get('dist_id')!='') {
+                $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
+              }
+            //   ->when($request->get('dist_id'), function($farmerMeetingData) use ($request) {
+            //     $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
+            //   })
+            $farmerMeetingData = $farmerMeetingData->select(
                 'tbl_farmer_meeting.id',
                 'tbl_farmer_meeting.id as tbl_farmer_meeting_id', 'tbl_farmer_meeting.date', 'tbl_farmer_meeting.meeting_place', 'tbl_farmer_meeting.farmer_id', 'tbl_farmer_meeting.meeting_title', 'tbl_farmer_meeting.meeting_description', 
                 'tbl_farmer_meeting.created_by', 'tbl_farmer_meeting.photo_one', 'tbl_farmer_meeting.photo_one_lat', 'tbl_farmer_meeting.photo_one_long', 'tbl_farmer_meeting.photo_two', 'tbl_farmer_meeting.photo_two_lat', 
