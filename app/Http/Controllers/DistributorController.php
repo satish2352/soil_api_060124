@@ -1543,6 +1543,10 @@ class DistributorController extends Controller
     public function farmermeetinglist_distributorweb(Request $request)
     {
         try{
+
+            info('hi 12341241');
+            info($request);
+
             $presentFarmerFormeeting='';
             $farmerMeetingData =FarmerMeeting::where('tbl_farmer_meeting.is_deleted','no')
                 ->leftJoin('usersinfo','tbl_farmer_meeting.created_by','=','usersinfo.user_id')
