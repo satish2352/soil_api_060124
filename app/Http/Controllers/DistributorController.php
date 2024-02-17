@@ -1564,6 +1564,8 @@ class DistributorController extends Controller
                 $farmerMeetingData->where('usersinfo.city',$request->city);
               });
 
+              info('$request->dist_id');
+              info($request->dist_id);
               if($request->dist_id !='') {
                 $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
               }
