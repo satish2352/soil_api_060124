@@ -324,6 +324,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('farmermeetingdetails_distributorweb', 'DistributorController@farmermeetingdetails_distributorweb');
             
             //Plot Visit 
+            $router->post('getSctStructure', 'WebAPIController@getSctStructure');
             $router->post('plotvisitlist_web', 'WebAPIController@plotvisitlist_web');
             $router->post('plotvisitadd_web', 'WebAPIController@plotvisitadd_web');
             $router->post('plotvisitget_web', 'WebAPIController@plotvisitget_web');

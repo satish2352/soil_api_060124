@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Response;
 use Exception;
 use JWTAuth;
 use App\Task;
@@ -57,6 +58,7 @@ use App\Models\{
 use File;
 use Carbon\Carbon;
 use DB;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 use App\Http\Controllers\CommonController As CommonController;
 
@@ -10014,5 +10016,202 @@ class WebAPIController extends Controller
            
         }
     }
-    
+
+
+    public function getSctStructure()
+    {
+
+        try
+        {
+             $dsclist_record = UsersInfoForStructures::
+                leftJoin('usersinfo', function($join) {
+                    $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+                })
+
+                ->leftJoin('tbl_area as stateNew', function($join) {
+                    $join->on('usersinfo.state', '=', 'stateNew.location_id');
+                  })
+                  
+                  ->leftJoin('tbl_area as districtNew', function($join) {
+                    $join->on('usersinfo.district', '=', 'districtNew.location_id');
+                  })
+                  
+                  
+                  ->leftJoin('tbl_area as talukaNew', function($join) {
+                    $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+                  })
+                  
+                  ->leftJoin('tbl_area as cityNew', function($join) {
+                    $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                  })
+                    ->where('users_info_for_structures.user_type','dsc')
+                    ->select(
+                        'users_info_for_structures.added_by',
+                        'usersinfo.*',
+                         'stateNew.name as state',
+                         'districtNew.name as district',
+                         'talukaNew.name as taluka',
+                         'cityNew.name as city'
+                        )
+                    ->get();
+            
+        
+       
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+
+        $selectedFormNo='';
+        $excelData =  $dsclist_record;
+        $filename='All Applicant List';
+        $headerApplicationReportToExcelForAll =['Name'];
+        $dataExcel= [];
+        // dd($dsclist_record);
+        foreach ($dsclist_record as $key => $value) {
+
+            if($value->added_by == 'superadmin') {
+                $added_by_name = 'Superadmin' ;   
+            } else {
+
+                $distributordetails=$this->commonController->getUserNameById($value->added_by);
+                $added_by_name = ucwords($distributordetails->fname." ".$distributordetails->mname." ".$distributordetails->lname);
+            }
+            
+            
+            array_push($dataExcel, array(
+                'Level' =>'DSC',
+                'Added By' => $added_by_name,
+                'Name' => ucwords($value->fname." ".$value->mname." ".$value->lname),
+                'Contact No.' => $value->phone,
+                'State' => $value->state,
+                'District' => $value->district,
+                'Taluka' => $value->taluka,
+            ));
+
+
+            $bsclist_record = UsersInfoForStructures::leftJoin('usersinfo', function($join) {
+                    $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+                })
+
+                ->leftJoin('tbl_area as stateNew', function($join) {
+                    $join->on('usersinfo.state', '=', 'stateNew.location_id');
+                })
+                
+                ->leftJoin('tbl_area as districtNew', function($join) {
+                $join->on('usersinfo.district', '=', 'districtNew.location_id');
+                })
+                
+                
+                ->leftJoin('tbl_area as talukaNew', function($join) {
+                $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+                })
+                
+                ->leftJoin('tbl_area as cityNew', function($join) {
+                $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                })
+                ->where('users_info_for_structures.added_by',$value->user_id)
+                ->where('users_info_for_structures.user_type','bsc')
+                ->select(
+                    'usersinfo.*',
+                        'stateNew.name as state',
+                        'districtNew.name as district',
+                        'talukaNew.name as taluka',
+                        'cityNew.name as city'
+                    )
+                ->get();
+
+                if($bsclist_record) {
+                    foreach ($bsclist_record as $keyNew => $valueBsc) {
+                        array_push($dataExcel, array(
+                            'Level' =>'BSC',
+                            'Added By' => ucwords($value->fname." ".$value->mname." ".$value->lname),
+                            'Name' => ucwords($valueBsc->fname." ".$valueBsc->mname." ".$valueBsc->lname),
+                            'Contact No.' => $valueBsc->phone,
+                            'State' => $valueBsc->state,
+                            'District' => $valueBsc->district,
+                            'Taluka' => $valueBsc->taluka,
+                        ));
+
+
+
+                        $fsclist_record= UsersInfoForStructures::leftJoin('usersinfo', function($join) {
+                            $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+                        })
+        
+                        ->leftJoin('tbl_area as stateNew', function($join) {
+                            $join->on('usersinfo.state', '=', 'stateNew.location_id');
+                            })
+                            
+                            ->leftJoin('tbl_area as districtNew', function($join) {
+                            $join->on('usersinfo.district', '=', 'districtNew.location_id');
+                            })
+                            
+                            
+                            ->leftJoin('tbl_area as talukaNew', function($join) {
+                            $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+                            })
+                            
+                            ->leftJoin('tbl_area as cityNew', function($join) {
+                            $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                            })
+                            ->where('users_info_for_structures.added_by',$valueBsc->user_id)
+                            // ->where('usersinfo.is_deleted','no')
+                            // ->where('usersinfo.active','yes')
+                            ->where('users_info_for_structures.user_type','fsc')
+                            ->select(
+                                'usersinfo.*',
+                                    'stateNew.name as state',
+                                    'districtNew.name as district',
+                                    'talukaNew.name as taluka',
+                                    'cityNew.name as city'
+                                )
+                            ->get();
+
+
+                            if($fsclist_record) {
+                                foreach ($fsclist_record as $keyNew => $valueFsc) {
+                                    array_push($dataExcel, array(
+                                        'Level' =>'FSC',
+                                        'Added By' => ucwords($valueBsc->fname." ".$valueBsc->mname." ".$valueBsc->lname),
+                                        'Name' => ucwords($valueFsc->fname." ".$valueFsc->mname." ".$valueFsc->lname),
+                                        'Contact No.' => $valueFsc->phone,
+                                        'State' => $valueFsc->state,
+                                        'District' => $valueFsc->district,
+                                        'Taluka' => $valueFsc->taluka,
+                                    ));
+
+                                }
+                            }
+                    }
+
+                }
+
+
+                
+            
+
+        }
+
+  
+        $list = collect(
+          $dataExcel
+
+        );
+        //env('APP_URL').'/uploads/sctstructure/'.
+        (new FastExcel($list))->export('sctstructure.xlsx');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="sctstructure.xlsx"');
+        header('Content-Length: ' . filesize('sctstructure.xlsx'));
+        readfile('sctstructure.xlsx');
+       
+    }
+
+
+   
 }
