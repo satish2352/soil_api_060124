@@ -10205,6 +10205,10 @@ class WebAPIController extends Controller
         );
         //env('APP_URL').'/uploads/sctstructure/'.
         (new FastExcel($list))->export('sctstructure.xlsx');
+        header('Access-Control-Allow-Origin: *'); // Allow requests from any origin
+        header('Access-Control-Allow-Methods: GET, OPTIONS'); // Allow GET requests and preflight OPTIONS requests
+
+
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="sctstructure.xlsx"');
         header('Content-Length: ' . filesize('sctstructure.xlsx'));
