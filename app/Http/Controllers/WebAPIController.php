@@ -10217,7 +10217,7 @@ class WebAPIController extends Controller
 
         $type = pathinfo('sctstructure.xlsx', PATHINFO_EXTENSION);
         $data = file_get_contents('sctstructure.xlsx');
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        $base64 = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet/' . $type . ';base64,' . base64_encode($data);
 
         return response()->json([
             "data" => $base64,
