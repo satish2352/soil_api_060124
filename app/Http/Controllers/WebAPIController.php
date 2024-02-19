@@ -10205,14 +10205,25 @@ class WebAPIController extends Controller
         );
         //env('APP_URL').'/uploads/sctstructure/'.
         (new FastExcel($list))->export('sctstructure.xlsx');
-        header('Access-Control-Allow-Origin: *'); // Allow requests from any origin
-        header('Access-Control-Allow-Methods: GET, OPTIONS'); // Allow GET requests and preflight OPTIONS requests
+        // header('Access-Control-Allow-Origin: *'); // Allow requests from any origin
+        // header('Access-Control-Allow-Methods: GET, OPTIONS'); // Allow GET requests and preflight OPTIONS requests
 
 
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="sctstructure.xlsx"');
-        header('Content-Length: ' . filesize('sctstructure.xlsx'));
-        readfile('sctstructure.xlsx');
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        // header('Content-Disposition: attachment; filename="sctstructure.xlsx"');
+        // header('Content-Length: ' . filesize('sctstructure.xlsx'));
+        // readfile('sctstructure.xlsx');
+
+
+        $type = pathinfo('sctstructure.xlsx', PATHINFO_EXTENSION);
+        $data = file_get_contents('sctstructure.xlsx');
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        return response()->json([
+            "data" => $base64,
+            "result" => true,
+            "message" => 'SCT Structure data Get Successfully'
+        ]);
        
     }
 
