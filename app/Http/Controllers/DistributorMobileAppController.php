@@ -302,7 +302,9 @@ class DistributorMobileAppController extends Controller
                 $ordrsummary->is_order_confirm_from_dsc = 'yes';
                 $ordrsummary->is_order_final_confirm = 'yes';
                 $ordrsummary->is_order_confirm_from_dist = 'yes';
-            } 
+            } else if($request->order_created_by == 'bsc')  {
+                $ordrsummary->is_order_confirm_from_bsc = 'yes';
+            }
             $ordrsummary->save();
             //dd($requestdata->order_created_by);
             //$requestdata = $request;
@@ -646,15 +648,10 @@ class DistributorMobileAppController extends Controller
                                 $join->on('newuser_table.user_id', '=', 'tbl_order_summary.forwarded_dsc_id');
                             })
                             
-                            // ->when($request->dist_id, function($query) use ($request) {
-                            //     $query->where('tbl_order_summary.forwarded_bsc_id',$request->dist_id)
-                            //     ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->dist_id);
-                            // }) 
-
                             ->when($request->dist_id, function($query) use ($request) {
-                                $query->where('tbl_order_summary.forwarded_dsc_id',$request->dist_id);
+                                $query->where('tbl_order_summary.forwarded_bsc_id',$request->dist_id)
+                                ->orWhere('tbl_order_summary.forwarded_dsc_id',$request->dist_id);
                             }) 
-
                             ->when($request->fromdate, function($query) use ($request) {
                                 $query->where('tbl_order_summary.created_at','>=',$request->fromdate." 00:00:00")
                               ->where('tbl_order_summary.created_at','<=',$request->todate." 23:59:59");
