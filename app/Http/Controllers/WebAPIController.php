@@ -8783,7 +8783,7 @@ class WebAPIController extends Controller
           
           ->whereIn('front_usersinfo.user_type',['fsc','bsc','dsc'])
           ->where('front_usersinfo.is_deleted', '=', 'no')
-          ->orderBy('front_usersinfo.id', 'ASC')
+          ->orderBy('front_usersinfo.id', 'DESC')
           ->select('front_usersinfo.id',
         //   'front_usersinfo.list_data_status',
           'front_usersinfo.list_data_read',
