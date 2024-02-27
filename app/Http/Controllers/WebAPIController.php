@@ -8785,7 +8785,7 @@ class WebAPIController extends Controller
           ->where('front_usersinfo.is_deleted', '=', 'no')
         //   ->orderBy('front_usersinfo.list_data_status', 'ASC')
           ->select('front_usersinfo.id',
-          'front_usersinfo.list_data_status',
+        //   'front_usersinfo.list_data_status',
           'front_usersinfo.list_data_read',
           'front_usersinfo.fname',
           'front_usersinfo.mname',
