@@ -121,7 +121,7 @@ define('INTERNSHIP_CONTENT_VIEW','https://web.soilchargertechnology.com//public/
 
 //JOBPOSTING_CONTENT
 define('JOBPOSTING_CONTENT_UPLOAD', WEB_UPLOADS.'jobposting/');
-define('JOBPOSTING_CONTENT_VIEW', WEB_VIEW.'jobposting/');
+define('JOBPOSTING_CONTENT_VIEW', 'https://web.soilchargertechnology.com//public/uploads/web/jobposting/');
 
 
 //AUDIO_CONTENT
