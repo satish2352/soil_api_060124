@@ -658,7 +658,7 @@ class DistributorControllerNandu extends Controller
                                             $messageview=  $messageview->where('msg_status', $request->msg_status);
                                         } 
                                     }
-                                    $messageview=  $messageview->orderBy('msg_status', 'DESC')
+                                    $messageview=  $messageview->orderBy('msg_status', 'asc')
                                     ->get();
             
             if ($messageview)
