@@ -5430,19 +5430,24 @@ class WebAPIController extends Controller
     
     public function list_notification_web(Request $request)
     {
-        $result= Notification::where('is_read','no')->get();
-        foreach ($result as $key=>$distInfo)
-        {
-            $distributordetails=$this->commonController->getDistributorNameById($distInfo->distributor_id);
+        $result= Notification::leftJoin('usersinfo', function($join) {
+                $join->on('notification.distributor_id', '=', 'usersinfo.user_id');
+            })
+            ->select('notification.*', 'usersinfo.fname as dfname','usersinfo.mname as dmname','usersinfo.lname as dlname')
+            ->where('notification.is_read','no')
+            ->get();
+        // foreach ($result as $key=>$distInfo)
+        // {
+        //     $distributordetails=$this->commonController->getDistributorNameById($distInfo->distributor_id);
                     
-                    if(!$distributordetails) {
-                        throw new Exception('unable to get ditributor details');
-                    }
-                    //dd($distributordetails['fname']);
-                    $distInfo->dfname=$distributordetails['fname'];
-                    $distInfo->dmname=$distributordetails['mname'];
-                    $distInfo->dlname=$distributordetails['lname'];
-        }
+        //             if(!$distributordetails) {
+        //                 throw new Exception('unable to get ditributor details');
+        //             }
+        //             //dd($distributordetails['fname']);
+        //             $distInfo->dfname=$distributordetails['fname'];
+        //             $distInfo->dmname=$distributordetails['mname'];
+        //             $distInfo->dlname=$distributordetails['lname'];
+        // }
         if ($result)
         {
             return response()->json([
