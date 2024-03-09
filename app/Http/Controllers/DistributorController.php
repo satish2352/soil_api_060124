@@ -580,7 +580,11 @@ class DistributorController extends Controller
     public function distributorinfo(Request $request)
     {
 
-        $userinfo = UsersInfo::where('user_id',$request->id)->first();
+        $userinfo = UsersInfo::leftJoin('usersinfo as usersinfonew', function($join) {
+            $join->on('usersinfo.reference_from', '=', 'usersinfonew.user_id');
+        })
+        ->select('usersinfo.*','usersinfonew.fname','usersinfonew.mname','usersinfonew.lname')
+        ->where('usersinfo.user_id',$request->id)->first();
         if($userinfo)
         {
 
