@@ -132,7 +132,7 @@ class DistributorController extends Controller
             $users->education = $request->education;
             $users->exp_in_agricultural = $request->exp_in_agricultural;
             $users->other_distributorship = $request->other_distributorship;
-            $users->reference_from = $request->reference_from;
+            $users->reference_from = $request->created_by;
             $users->shop_location = $request->shop_location;
             $users->geolocation = $request->geolocation;
             // $users->shop_act_image = $request->shop_act_image;
