@@ -583,7 +583,7 @@ class DistributorController extends Controller
         $userinfo = UsersInfo::leftJoin('usersinfo as usersinfonew', function($join) {
             $join->on('usersinfo.reference_from', '=', 'usersinfonew.user_id');
         })
-        ->select('usersinfo.*','usersinfonew.fname','usersinfonew.mname','usersinfonew.lname')
+        ->select('usersinfo.*','usersinfonew.fname as refname','usersinfonew.mname as remname','usersinfonew.lname as relname')
         ->where('usersinfo.user_id',$request->id)->first();
         if($userinfo)
         {
