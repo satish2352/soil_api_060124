@@ -6794,6 +6794,46 @@ class WebAPIController extends Controller
     }
     
     
+
+    // Satish New Code 
+
+    public function web_distributor_promotion_demotion_own(Request $request)
+    {
+        try 
+        {
+            User::where('id',$request->user_id)->update(['user_type'=>$request->user_type]);
+            UsersInfo::where('user_id',$request->user_id)->update(['user_type'=>$request->user_type]);
+            $updated = UsersInfoForStructures::where(['user_id'=>$request->user_id])->update([
+                'user_type'=>$request->user_type
+            ]);
+               
+            if ($updated)
+            {
+                 return response()->json([
+                    "result" => true,
+                    "message" => 'Distributor updated Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Distributor Not Found'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
+    
+    //New COde Satish 
     
     
     
