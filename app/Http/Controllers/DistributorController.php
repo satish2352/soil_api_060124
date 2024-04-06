@@ -704,6 +704,12 @@ class DistributorController extends Controller
          'cityNew.name as city',
          'usersinfo.id as id',
         'usersinfo.user_id',
+
+        'under_user.under_user_name',
+        'under_user.under_user_fname',
+        'under_user.under_user_mname',
+        'under_user.under_user_lname',
+
         'usersinfo.name',
         'usersinfo.fname',
         'usersinfo.mname',
