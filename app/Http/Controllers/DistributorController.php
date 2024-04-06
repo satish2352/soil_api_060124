@@ -764,7 +764,7 @@ class DistributorController extends Controller
         'users.is_approved',
          )
           ->orderBy('users.id', 'DESC')
-          ->distict('users.id')
+          ->distinct('users.id')
           ->get();
         foreach($result as $key=>$value)
         {
