@@ -763,8 +763,8 @@ class DistributorController extends Controller
         'users.is_block',
         'users.is_approved',
          )
-          ->orderBy('users.id', 'DESC')
-          ->distinct('users.id')
+          ->orderBy('usersinfo.id', 'DESC')
+          ->distinct('usersinfo.id')
           ->get();
         foreach($result as $key=>$value)
         {
