@@ -705,10 +705,10 @@ class DistributorController extends Controller
          'usersinfo.id as id',
         'usersinfo.user_id',
 
-        'under_user.under_user_name',
-        'under_user.under_user_fname',
-        'under_user.under_user_mname',
-        'under_user.under_user_lname',
+        'under_user.name as under_user_name',
+        'under_user.fname as under_user_fname',
+        'under_user.mname as under_user_mname',
+        'under_user.lname as under_user_lname',
 
         'usersinfo.name',
         'usersinfo.fname',
