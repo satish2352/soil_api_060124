@@ -652,6 +652,14 @@ class DistributorController extends Controller
         $result = UsersInfo::leftJoin('tbl_area as stateNew', function($join) {
             $join->on('usersinfo.state', '=', 'stateNew.location_id');
           })
+
+          ->leftJoin('users_info_for_structures', function($join) {
+            $join->on('users_info_for_structures.user_id', '=', 'users_info_for_structures.user_id');
+          })
+
+          ->leftJoin('usersinfo as under_user', function($join) {
+            $join->on('users_info_for_structures.user_id', '=', 'under_user.user_id');
+          })
           
           ->leftJoin('tbl_area as districtNew', function($join) {
             $join->on('usersinfo.district', '=', 'districtNew.location_id');

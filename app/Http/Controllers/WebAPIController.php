@@ -7982,7 +7982,13 @@ class WebAPIController extends Controller
     {
         try
         {
-            $result = Enquiry::where('is_deleted','no')->orderBy('id', 'DESC')->get();
+            $result = Enquiry::where('is_deleted','no')
+                                ->when($request->get('datefrom'), function($query) use ($request) {
+                                    $query->whereBetween('created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                                }) 
+                                
+                                ->orderBy('id', 'DESC')
+                                ->get();
             
             if ($result)
             {
@@ -8011,7 +8017,12 @@ class WebAPIController extends Controller
     {
         try
         {
-            $result = WebInternship::where('is_deleted','no')->orderBy('id', 'desc')->get();
+            //$query->whereBetween('order_date', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+            $result = WebInternship::where('is_deleted','no')
+            ->when($request->get('datefrom'), function($query) use ($request) {
+                $query->whereBetween('created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+             }) 
+            ->orderBy('id', 'desc')->get();
             foreach($result as $key=>$value)
             {
                 $value->photopath=INTERNSHIP_CONTENT_VIEW.$value->resume;
@@ -8192,7 +8203,14 @@ class WebAPIController extends Controller
     {
         try
         {
-            $result = WebJobPosting::where('is_deleted','no')->select('id','name', 'email', 'mobile', 'qualification', 'experience_from', 'experience_to', 'address', 'resume')->orderBy('id', 'DESC')->get();
+            $result = WebJobPosting::where('is_deleted','no')
+                                    ->when($request->get('datefrom'), function($query) use ($request) {
+                                        $query->whereBetween('created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                                    }) 
+                                    
+                                    ->select('id','name', 'email', 'mobile', 'qualification', 'experience_from', 'experience_to', 'address', 'resume')
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
             foreach($result as $key=>$value)
             {
                 $value->photopath=JOBPOSTING_CONTENT_VIEW.$value->resume;
