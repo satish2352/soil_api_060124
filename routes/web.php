@@ -560,6 +560,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
             $router->post('fsc_list_structure', 'WebAPIController@fsc_list_structure');
             $router->post('bsc_list_structure', 'WebAPIController@bsc_list_structure');
+            $router->post('bsc_list_structure_for_mannual_change', 'WebAPIController@bsc_list_structure_for_mannual_change');
+
+            
             $router->post('dsc_list_structure', 'WebAPIController@dsc_list_structure');
 
             $router->post('subscriber_count_distributor', 'WebAPIController@subscriber_count_distributor');

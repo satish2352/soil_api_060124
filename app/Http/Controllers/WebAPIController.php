@@ -10011,6 +10011,73 @@ class WebAPIController extends Controller
             
         }
     }
+
+    //New BSC List For Mannual
+    public function bsc_list_structure_for_mannual_change(Request $request)
+    {
+        try
+        {
+                $dsclist_record= UsersInfoForStructures::leftJoin('usersinfo', function($join) {
+                    $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+                })
+
+                ->leftJoin('tbl_area as stateNew', function($join) {
+                    $join->on('usersinfo.state', '=', 'stateNew.location_id');
+                    })
+                    
+                    ->leftJoin('tbl_area as districtNew', function($join) {
+                    $join->on('usersinfo.district', '=', 'districtNew.location_id');
+                    })
+                    
+                    
+                    ->leftJoin('tbl_area as talukaNew', function($join) {
+                    $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+                    })
+                    
+                    ->leftJoin('tbl_area as cityNew', function($join) {
+                    $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                    })
+                    // ->where('usersinfo.is_deleted','no')
+                    // ->where('usersinfo.active','yes')
+                    ->where('users_info_for_structures.user_type','bsc')
+                    ->select(
+                        'usersinfo.*',
+                            'stateNew.name as state',
+                            'districtNew.name as district',
+                            'talukaNew.name as taluka',
+                            'cityNew.name as city'
+                        )
+                    ->get();
+            
+        
+            if($dsclist_record)
+            
+            {
+                    return response()->json([
+                    "data" => $dsclist_record,
+                    "result" => true,
+                    "message" => 'DSC Record Get Successfully'
+                ]);
+            }
+            else
+            {
+                    return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'DSC Record Not Found'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+            
+        }
+    }
     
      
     
