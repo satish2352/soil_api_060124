@@ -839,6 +839,14 @@ class DistributorController extends Controller
           ->leftJoin('tbl_area as districtNew', function($join) {
             $join->on('usersinfo.district', '=', 'districtNew.location_id');
           })
+
+          ->leftJoin('users_info_for_structures', function($join) {
+            $join->on('usersinfo.user_id', '=', 'users_info_for_structures.user_id');
+          })
+
+          ->leftJoin('usersinfo as under_user', function($join) {
+            $join->on('users_info_for_structures.added_by', '=', 'under_user.user_id');
+          })
           
           
           ->leftJoin('tbl_area as talukaNew', function($join) {
@@ -869,6 +877,12 @@ class DistributorController extends Controller
         // 'usersinfo.district',
         // 'usersinfo.taluka',
         // 'usersinfo.city',
+
+        'under_user.name as under_user_name',
+        'under_user.fname as under_user_fname',
+        'under_user.mname as under_user_mname',
+        'under_user.lname as under_user_lname',
+
         'usersinfo.address',
         'usersinfo.pincode',
         'usersinfo.crop',
@@ -911,6 +925,7 @@ class DistributorController extends Controller
         'usersinfo.new_list_to_view'
          )
           ->orderBy('users.id', 'DESC')
+          ->distinct('usersinfo.id')
           ->get();
         foreach($result as $key=>$value)
         {
