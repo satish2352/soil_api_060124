@@ -841,12 +841,13 @@ class DistributorController extends Controller
           })
 
           ->leftJoin('users_info_for_structures', function($join) {
-            $join->on('usersinfo.user_id', '=', 'users_info_for_structures.user_id');
+            $join->on('usersinfo.id', '=', 'users_info_for_structures.user_id');
           })
 
           ->leftJoin('usersinfo as under_user', function($join) {
-            $join->on('users_info_for_structures.added_by', '=', 'under_user.user_id');
+            $join->on('users_info_for_structures.added_by', '=', 'under_user.id');
           })
+          
           
           
           ->leftJoin('tbl_area as talukaNew', function($join) {
@@ -925,7 +926,7 @@ class DistributorController extends Controller
         'usersinfo.new_list_to_view'
          )
           ->orderBy('users.id', 'DESC')
-          ->distinct('usersinfo.id')
+        //   ->distinct('usersinfo.id')
           ->get();
         foreach($result as $key=>$value)
         {
