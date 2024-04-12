@@ -654,7 +654,7 @@ class DistributorController extends Controller
           })
 
           ->leftJoin('users_info_for_structures', function($join) {
-            $join->on('usersinfo.id', '=', 'users_info_for_structures.user_id');
+            $join->on('usersinfo.user_id', '=', 'users_info_for_structures.user_id');
           })
 
           ->leftJoin('usersinfo as under_user', function($join) {
@@ -841,7 +841,7 @@ class DistributorController extends Controller
           })
 
           ->leftJoin('users_info_for_structures', function($join) {
-            $join->on('usersinfo.id', '=', 'users_info_for_structures.user_id');
+            $join->on('usersinfo.user_id', '=', 'users_info_for_structures.user_id');
           })
 
           ->leftJoin('usersinfo as under_user', function($join) {
