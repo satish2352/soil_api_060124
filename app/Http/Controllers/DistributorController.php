@@ -658,7 +658,7 @@ class DistributorController extends Controller
           })
 
           ->leftJoin('usersinfo as under_user', function($join) {
-            $join->on('users_info_for_structures.added_by', '=', 'under_user.id');
+            $join->on('users_info_for_structures.added_by', '=', 'under_user.user_id');
           })
           
           ->leftJoin('tbl_area as districtNew', function($join) {
@@ -845,7 +845,7 @@ class DistributorController extends Controller
           })
 
           ->leftJoin('usersinfo as under_user', function($join) {
-            $join->on('users_info_for_structures.added_by', '=', 'under_user.id');
+            $join->on('users_info_for_structures.added_by', '=', 'under_user.user_id');
           })
           
           
