@@ -2298,7 +2298,7 @@ class DistributorControllerNandu extends Controller
         try
         {
 
-            $farmerlist_record_user_type= UsersInfo::where('id',$request->disctributor_id)->select('user_type')->first();
+            $farmerlist_record_user_type= UsersInfo::where('user_id',$request->disctributor_id)->select('user_type')->first();
          
 
             $farmerlist_record= UsersInfo::where('added_by',$request->disctributor_id)
