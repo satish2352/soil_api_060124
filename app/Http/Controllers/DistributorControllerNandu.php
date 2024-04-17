@@ -2297,11 +2297,21 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $farmerlist_record= UsersInfo::where('added_by',$request->disctributor_id)
+
+            $farmerlist_record_user_type= UsersInfo::where('id',$request->disctributor_id)->select('user_type')->first();
+         
+
+            $farmerlist_record= UsersInfo::where('added_by',$request->disctributor_id)
                     ->where('is_deleted','no')
-                    ->where('active','yes')
-                    ->where('user_type','fsc')
-                    ->get();
+                    ->where('active','yes');
+
+            if($farmerlist_record_user_type->user_type == 'dsc') {
+                $farmerlist_record = $farmerlist_record->where('user_type','bsc');
+            } else if($farmerlist_record_user_type->user_type == 'bsc')  {
+                $farmerlist_record = $farmerlist_record->where('user_type','fsc');
+            }
+            
+            $farmerlist_record = $farmerlist_record->get();
                     
             $farmerlist_recorddcount=sizeof($farmerlist_record);
             if($farmerlist_recorddcount>0)
