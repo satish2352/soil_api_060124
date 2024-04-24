@@ -461,7 +461,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_companyprofile";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_companyprofile";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -516,7 +516,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_companyprofile";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_companyprofile";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -689,7 +689,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_companyprofile";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_companyprofile";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -742,7 +742,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_companyprofile";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_companyprofile";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -904,7 +904,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_coverphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_coverphoto";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -959,7 +959,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_coverphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_coverphoto";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1127,7 +1127,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_gallaryphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_gallaryphoto";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1182,7 +1182,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_gallaryphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_gallaryphoto";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1349,7 +1349,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_gallaryphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_gallaryphoto";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1404,7 +1404,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_gallaryphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_gallaryphoto";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1721,7 +1721,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_blog1";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_blog1";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1732,7 +1732,7 @@ class WebAPIController extends Controller
                     $users=WebBlog::where('id',$user->id)->update(['photo_one'=>$photoName.".".$applpic_ext]);
                 }
                 
-                $photoName=$user->id."_blog2";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_blog2";
                 if (!empty($request->photo_two))
                 {     
                     $applpic_ext = $request->file('photo_two')->getClientOriginalExtension();
@@ -1787,7 +1787,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_companyprofile";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_companyprofile";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1810,7 +1810,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_companyprofile";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_companyprofile";
                 if ($request->hasFile('photo_two'))
                 {     
                     $applpic_ext = $request->file('photo_two')->getClientOriginalExtension();
@@ -1980,7 +1980,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_blog1";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_blog1";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -1991,7 +1991,7 @@ class WebAPIController extends Controller
                     $users=WebBlog::where('id',$user->id)->update(['photo_one'=>$photoName.".".$applpic_ext]);
                 }
                 
-                $photoName=$user->id."_blog2";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_blog2";
                 if (!empty($request->photo_two))
                 {     
                     $applpic_ext = $request->file('photo_two')->getClientOriginalExtension();
@@ -2046,7 +2046,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_blog1";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_blog1";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -2069,7 +2069,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_blog2";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_blog2";
                 if ($request->hasFile('photo_two'))
                 {     
                     $applpic_ext = $request->file('photo_two')->getClientOriginalExtension();
@@ -2237,7 +2237,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_Testimonials";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_Testimonials";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -2293,7 +2293,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_Testimonials";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_Testimonials";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -2460,7 +2460,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_audio";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_audio";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -2515,7 +2515,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_audio";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_audio";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -2685,7 +2685,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_product1";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_product1";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -2707,7 +2707,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_product2";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_product2";
                 if (!empty($request->photo_two))
                 {     
                     $applpic_ext = $request->file('photo_two')->getClientOriginalExtension();
@@ -2729,7 +2729,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_product3";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_product3";
                 if (!empty($request->photo_three))
                 {     
                     $applpic_ext = $request->file('photo_three')->getClientOriginalExtension();
@@ -2751,7 +2751,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_product4";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_product4";
                 if (!empty($request->photo_four))
                 {     
                     $applpic_ext = $request->file('photo_four')->getClientOriginalExtension();
@@ -2773,7 +2773,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$user->id."_product5";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_product5";
                 if (!empty($request->photo_five))
                 {     
                     $applpic_ext = $request->file('photo_five')->getClientOriginalExtension();
@@ -2845,7 +2845,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$productDetails->product_id."_product1";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$productDetails->product_id."_product1";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -2870,7 +2870,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$productDetails->product_id."_product2";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$productDetails->product_id."_product2";
                 if (!empty($request->photo_two))
                 {     
                     $applpic_ext = $request->file('photo_two')->getClientOriginalExtension();
@@ -2895,7 +2895,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$productDetails->product_id."_product3";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$productDetails->product_id."_product3";
                 if (!empty($request->photo_three))
                 {     
                     $applpic_ext = $request->file('photo_three')->getClientOriginalExtension();
@@ -2920,7 +2920,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$productDetails->product_id."_product4";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$productDetails->product_id."_product4";
                 if (!empty($request->photo_four))
                 {     
                     $applpic_ext = $request->file('photo_four')->getClientOriginalExtension();
@@ -2945,7 +2945,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$productDetails->product_id."_product5";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$productDetails->product_id."_product5";
                 if (!empty($request->photo_five))
                 {     
                     $applpic_ext = $request->file('photo_five')->getClientOriginalExtension();
@@ -3221,7 +3221,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$agency->id."_agencyphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$agency->id."_agencyphoto";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -3276,7 +3276,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_agencyphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_agencyphoto";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -5701,7 +5701,7 @@ class WebAPIController extends Controller
                 }
                 
                  $idLastInserted=$brochure->id;
-                 $photoName=$idLastInserted."_download";
+                 $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_download";
                  $inputfilenametoupload='photo_one';
                  if (!empty($request->hasFile($inputfilenametoupload)))
                  {     
@@ -5834,7 +5834,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_download";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_download";
                 //dd($request->hasFile('photo_one'));
                 if ($request->hasFile('photo_one'))
                 {     
@@ -7013,7 +7013,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$client_logo->id."_logo";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$client_logo->id."_logo";
                 if (!empty($request->logo))
                 {     
                     $applpic_ext = $request->file('logo')->getClientOriginalExtension();
@@ -7108,7 +7108,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_logo";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_logo";
                 if ($request->hasFile('logo'))
                 {     
                     $applpic_ext = $request->file('logo')->getClientOriginalExtension();
@@ -7477,7 +7477,7 @@ class WebAPIController extends Controller
                 // }
                 
                 
-                $photoName=$requestdata->id."_internshipmenuphoto";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_internshipmenuphoto";
                 if ($request->hasFile('internshipmenuphoto'))
                 {     
                     $applpic_ext = $request->file('internshipmenuphoto')->getClientOriginalExtension();
@@ -7621,7 +7621,7 @@ class WebAPIController extends Controller
                 mkdir( $imagedataPath );       
             }
         
-            $photoName=$idLastInserted."_internshipmenuphoto";
+            $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_internshipmenuphoto";
             $inputfilenametoupload='internshipmenuphoto';
             
             if (!empty($request->hasFile($inputfilenametoupload)))
@@ -8141,7 +8141,7 @@ class WebAPIController extends Controller
                 }
                 
                 
-                $photoName=$requestdata->id."_resume";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_resume";
                 if ($request->hasFile('resume'))
                 {     
                     $applpic_ext = $request->file('resume')->getClientOriginalExtension();
@@ -8327,7 +8327,7 @@ class WebAPIController extends Controller
                 }
                 
                 
-                $photoName=$requestdata->id."_resume";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_resume";
                 if ($request->hasFile('resume'))
                 {     
                     $applpic_ext = $request->file('resume')->getClientOriginalExtension();
@@ -8538,7 +8538,7 @@ class WebAPIController extends Controller
                 
                 
                 
-                $photoName=$user->id."_photo";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$user->id."_photo";
                 if (!empty($request->photo_one))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -8690,7 +8690,7 @@ class WebAPIController extends Controller
                     mkdir( $imagedataPath );       
                 }
                 
-                $photoName=$requestdata->id."_companyprofile";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$requestdata->id."_companyprofile";
                 if ($request->hasFile('photo_one'))
                 {     
                     $applpic_ext = $request->file('photo_one')->getClientOriginalExtension();
@@ -8999,7 +8999,7 @@ class WebAPIController extends Controller
             
             $imagedataPath=FRONT_DISTRIBUTOR_OWN_DOCUMENTS;
                 
-                $photoName=$request->id."_aadhar_card_image_front";
+                $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$request->id."_aadhar_card_image_front";
                 if ($request->hasFile('aadhar_card_image_front'))
                 {     
                     $applpic_ext = $request->file('aadhar_card_image_front')->getClientOriginalExtension();
@@ -9254,7 +9254,7 @@ class WebAPIController extends Controller
                     }
                     $idLastInserted=$user->id;
                     
-                    $photoName=$idLastInserted."_aadhar_card_image_front";
+                    $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_aadhar_card_image_front";
                     $inputfilenametoupload=$aadhar_card_image_front;
                     if (!empty($request->hasFile($inputfilenametoupload)))
                     {     
@@ -9262,7 +9262,7 @@ class WebAPIController extends Controller
                         $users=UsersInfo::where('user_id',$idLastInserted)->update(['aadhar_card_image_front'=>$filename]);
                     }
                     
-                    $photoName=$idLastInserted."_aadhar_card_image_back";
+                    $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_aadhar_card_image_back";
                     $inputfilenametoupload=$aadhar_card_image_back;
                     if (!empty($request->hasFile($inputfilenametoupload)))
                     {     
@@ -9270,7 +9270,7 @@ class WebAPIController extends Controller
                         $users=UsersInfo::where('user_id',$idLastInserted)->update(['aadhar_card_image_back'=>$filename]);
                     }
                     
-                    $photoName=$idLastInserted."_pan_card";
+                    $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_pan_card";
                     $inputfilenametoupload=$pan_card;
                     if (!empty($request->hasFile($inputfilenametoupload)))
                     {     
@@ -9279,7 +9279,7 @@ class WebAPIController extends Controller
                     }
                     
                     
-                    $photoName=$idLastInserted."_light_bill";
+                    $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_light_bill";
                     $inputfilenametoupload=$light_bill;
                     if (!empty($request->hasFile($inputfilenametoupload)))
                     {     
@@ -9288,7 +9288,7 @@ class WebAPIController extends Controller
                     }
                     
                     
-                    $photoName=$idLastInserted."_shop_act_image";
+                    $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_shop_act_image";
                     $inputfilenametoupload=$shop_act_image;
                     if (!empty($request->hasFile($inputfilenametoupload)))
                     {     
@@ -9296,7 +9296,7 @@ class WebAPIController extends Controller
                         $users = UsersInfo::where('user_id',$idLastInserted)->update(['shop_act_image'=>$filename]);
                     }
                     
-                    $photoName=$idLastInserted."_product_purchase_bill";
+                    $photoName= str_replace(array('-', ':',' '), '',date('d-m-Y h:i:s')).$idLastInserted."_product_purchase_bill";
                     $inputfilenametoupload=$product_purchase_bill;
                     if (!empty($request->hasFile($inputfilenametoupload)))
                     {     
