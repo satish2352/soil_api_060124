@@ -8603,6 +8603,10 @@ class WebAPIController extends Controller
             {
                 $value->photopath=FRONTPRODUCT_CONTENT_VIEW.$value->photo;
                 $value->productphotopath=PRODUCT_CONTENT_VIEW.$value->photo_one;
+                $value->long_description=strip_tags($value->long_description);
+                $value->additional_info=strip_tags($value->additional_info);
+                
+                
             }
             if ($result)
             {
