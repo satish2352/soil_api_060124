@@ -183,9 +183,9 @@ class FarmerController extends Controller
                 
                 ->when($request->get('added_by'), function($query) use ($request) {
                     if($request->added_by =='super') {
-                        $query->whereBetween('usersinfo.added_by', $request->added_by);
+                        $query->where('usersinfo.added_by', $request->added_by);
                     } else {
-                        $query->whereBetween('usersinfo.added_by', '<>', 'superadmin');
+                        $query->where('usersinfo.added_by', '<>', 'superadmin');
                     }
                     
                  })
