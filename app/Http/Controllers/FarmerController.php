@@ -179,7 +179,16 @@ class FarmerController extends Controller
 
                 ->when($request->get('datefrom'), function($query) use ($request) {
                    $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
-                }) 
+                })
+                
+                ->when($request->get('added_by'), function($query) use ($request) {
+                    if($request->added_by =='super') {
+                        $query->whereBetween('usersinfo.added_by', $request->added_by);
+                    } else {
+                        $query->whereBetween('usersinfo.added_by', '<>', 'superadmin');
+                    }
+                    
+                 })
           
              ->select('usersinfo.user_id',
              'sct_farmer.fname as sct_farmer_fname','sct_farmer.mname as as sct_farmer_mname','sct_farmer.lname as sct_farmer_lname',
