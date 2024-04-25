@@ -179,18 +179,22 @@ class FarmerController extends Controller
 
                 ->when($request->get('datefrom'), function($query) use ($request) {
                    $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
-                })
+                });
                 
-                ->when($request->get('added_by'), function($query) use ($request) {
-                    if($request->added_by =='superadmin') {
-                        $query->where('usersinfo.added_by', $request->added_by);
-                    } else {
-                        $query->where('usersinfo.added_by', '<>', 'superadmin');
-                    }
+                if($request->added_by =='superadmin') {
+                    $result =  $result->when($request->get('added_by'), function($query) use ($request) {
+                            $query->where('usersinfo.added_by', $request->added_by);
+                    });
+
+                } else {
                     
-                 })
+                    $result =  $result->when($request->get('added_by'), function($query) use ($request) {
+                        $query->where('usersinfo.added_by', '<>', 'superadmin');
+                    });
+                }
+                
           
-             ->select('usersinfo.user_id',
+                $result =  $result->select('usersinfo.user_id',
              'sct_farmer.fname as sct_farmer_fname','sct_farmer.mname as as sct_farmer_mname','sct_farmer.lname as sct_farmer_lname',
              'sct_dist.fname as sct_dist_fname','sct_dist.mname as sct_dist_mname','sct_dist.lname as sct_dist_lname',
              'usersinfo.aadharcard','usersinfo.email','usersinfo.phone',
