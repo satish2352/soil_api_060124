@@ -178,7 +178,7 @@ class FarmerController extends Controller
                   })
 
                 ->when($request->get('datefrom'), function($query) use ($request) {
-                   $query->whereBetween('usersinfo.created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                   $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
                 }) 
           
              ->select('usersinfo.user_id',
