@@ -176,6 +176,10 @@ class FarmerController extends Controller
                   ->when($request->get('added_by'), function($query) use ($request) {
                     $query->where('usersinfo.added_by',$request->added_by);
                   })
+
+                ->when($request->get('datefrom'), function($query) use ($request) {
+                   $query->whereBetween('usersinfo.created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                }) 
           
              ->select('usersinfo.user_id',
              'sct_farmer.fname as sct_farmer_fname','sct_farmer.mname as as sct_farmer_mname','sct_farmer.lname as sct_farmer_lname',
