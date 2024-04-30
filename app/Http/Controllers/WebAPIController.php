@@ -8829,22 +8829,22 @@ class WebAPIController extends Controller
           })
           
 
-        // ->leftJoin('tbl_area as stateNewBusiness', function($join) {
-        //     $join->on('front_usersinfo.business_state', '=', 'stateNewBusiness.location_id');
-        //   })
+        ->leftJoin('tbl_area as stateNewBusiness', function($join) {
+            $join->on('front_usersinfo.business_state', '=', 'stateNewBusiness.location_id');
+          })
           
-        //   ->leftJoin('tbl_area as districtNewBusiness', function($join) {
-        //     $join->on('front_usersinfo.business_district', '=', 'districtNewBusiness.location_id');
-        //   })
+          ->leftJoin('tbl_area as districtNewBusiness', function($join) {
+            $join->on('front_usersinfo.business_district', '=', 'districtNewBusiness.location_id');
+          })
           
           
-        //   ->leftJoin('tbl_area as talukaNewBusiness', function($join) {
-        //     $join->on('front_usersinfo.taluka', '=', 'talukaNewBusiness.location_id');
-        //   })
+          ->leftJoin('tbl_area as talukaNewBusiness', function($join) {
+            $join->on('front_usersinfo.taluka', '=', 'talukaNewBusiness.location_id');
+          })
           
-        //   ->leftJoin('tbl_area as cityNewBusiness', function($join) {
-        //     $join->on('front_usersinfo.city', '=', 'cityNewBusiness.location_id');
-        //   })
+          ->leftJoin('tbl_area as cityNewBusiness', function($join) {
+            $join->on('front_usersinfo.city', '=', 'cityNewBusiness.location_id');
+          })
 
 
           
@@ -8904,10 +8904,10 @@ class WebAPIController extends Controller
           'talukaNew.name as taluka',
           'cityNew.name as city',
 
-        //   'stateNewBusiness.name as state_business',
-        //   'districtNewBusiness.name as district_business',
-        //   'talukaNewBusiness.name as taluka_business',
-        //   'cityNewBusiness.name as city_business'
+          'stateNewBusiness.name as state_business',
+          'districtNewBusiness.name as district_business',
+          'talukaNewBusiness.name as taluka_business',
+          'cityNewBusiness.name as city_business'
           )
           ->get();
 
