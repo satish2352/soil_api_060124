@@ -9162,6 +9162,14 @@ class WebAPIController extends Controller
             $result = FrontUsers::where('id',$request->id)->first();
             // dd($result);
             $result->aadhar_card_image_front = FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result['aadhar_card_image_front'];
+            $result->aadhar_card_image_back = FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result['aadhar_card_image_back'];
+            $result->light_bill = FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result['light_bill'];
+            $result->pan_card = FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result['pan_card'];
+            $result->product_purchase_bill = FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result['product_purchase_bill'];
+            $result->shop_act_image = FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result['shop_act_image'];
+
+          
+
             // $value->aadhar_card_image_front=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$result[0]['aadhar_card_image_front'];
             // foreach($result as $key=>$value)
             // {
