@@ -1862,6 +1862,100 @@ class DistributorControllerNandu extends Controller
         }
     }
     
+
+    public function saleview_by_name_mobileapp(Request $request)
+    {
+        try
+        {
+            $result = SaleSummary::
+            // leftJoin('tbl_sale_detail', function($join) {
+            //     $join->on('tbl_sale_summary.order_no', '=', 'tbl_sale_detail.order_no');
+            // })
+          
+            // ->leftJoin('tbl_product', function($join) {
+            //     $join->on('tbl_sale_detail.prod_id', '=', 'tbl_product.id');
+            // })
+
+            leftJoin('usersinfo as newuser_table', function($join) {
+                $join->on('newuser_table.user_id', '=','tbl_sale_summary.created_disctributor_id');
+            })
+            ->leftJoin('usersinfo as newuser_table_order_for', function($join) {
+                $join->on('newuser_table_order_for.user_id', '=','tbl_sale_summary.order_created_for');
+            })
+            
+            
+            ->where('newuser_table_order_for.fname', 'like', '%' . $request->name_of_person . '%')
+            ->orWhere('newuser_table_order_for.mname', 'like', '%' . $request->name_of_person . '%')
+            ->orWhere('newuser_table_order_for.lname', 'like', '%' . $request->name_of_person . '%')
+            ->where('tbl_sale_summary.created_disctributor_id',$request->created_disctributor_id)
+            ->where('tbl_sale_summary.is_deleted','no')
+            ->select(
+                'tbl_sale_summary.*',
+              
+                'newuser_table.fname',
+                'newuser_table.mname',
+                'newuser_table.lname',
+                'newuser_table.phone',
+
+                'newuser_table_order_for.fname as order_for_fname',
+                'newuser_table_order_for.mname as order_for_mname',
+                'newuser_table_order_for.lname as order_for_lname',
+                
+            )
+            ->get();
+        
+            foreach($result as $key=>$value)
+            {
+                //$value->all_product = OrderDetail::where('order_no',$request->order_no)->get();
+                if($value->account_approved=='no' && $value->forward_to_warehouse=='no'){
+                    $value->status = 'Pending';
+                }elseif($value->account_approved=='yes' && $value->forward_to_warehouse=='no'){
+                    $value->status = 'Verified';
+                }elseif($value->order_dispatched=='yes'){
+                    $value->status = 'Order Dispatched From warehouse';
+                }elseif($value->account_approved=='yes' && $value->forward_to_warehouse=='yes'){
+                    $value->status = 'Forwaded to warehouse';
+                }
+                // $value->all_product = SaleDetail::leftJoin('tbl_product','tbl_product.id','=','tbl_sale_detail.prod_id')
+                //                     ->where('tbl_sale_detail.order_no',$request->order_no)
+                //                     ->where('tbl_sale_detail.is_deleted','no')
+                //                     ->get();
+
+
+                $value->all_product = SaleDetail::where('tbl_sale_detail.order_no',$request->order_no)
+                                            ->leftJoin('tbl_product_details', function($join) {
+                                                $join->on('tbl_sale_detail.prod_id', '=', 'tbl_product_details.id');
+                                            })
+                                            ->where('tbl_sale_detail.is_deleted','no')
+                                            ->join('tbl_product','tbl_product.id','=','tbl_sale_detail.prod_id')
+                                            ->get();
+               
+
+            }
+            
+            if ($result)
+            {
+                 return response()->json([
+                    "data" => $result,
+                    "result" => true,
+                    "message" => 'Information get Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => array(),
+                    "result" => false,
+                    "message" => 'Information not found'
+                ]);
+                
+            }
+        }
+        catch(Exception $e) {
+          return  'Message: ' .$e->getMessage();
+        }
+    }
+    
     // Sale Update
     public function saleupdate_mobileapp(Request $request)
     {
@@ -2301,6 +2395,11 @@ class DistributorControllerNandu extends Controller
         try
         {
              $farmerlist_record= UsersInfo::where('added_by',$request->disctributor_id)
+                    ->when($request->get('farmer_name'), function($query) use ($request) {
+                        $query->where('fname', 'like', '%' . $request->farmer_name . '%')
+                              ->orWhere('mname', 'like', '%' . $request->farmer_name . '%')
+                              ->orWhere('lname', 'like', '%' . $request->farmer_name . '%');
+                    }) 
                     ->where('is_deleted','no')
                     ->where('active','yes')
                     ->where('user_type','farmer')

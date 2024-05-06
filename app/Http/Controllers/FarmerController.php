@@ -189,7 +189,7 @@ class FarmerController extends Controller
                 } else {
                     
                     $result =  $result->when($request->get('added_by'), function($query) use ($request) {
-                        $query->where('usersinfo.added_by', '<>', 'superadmin');
+                        $query->where('usersinfo.added_by', '!=', 'superadmin');
                     });
                 }
                 
