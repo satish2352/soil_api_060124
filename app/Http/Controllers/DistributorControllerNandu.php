@@ -1533,6 +1533,7 @@ class DistributorControllerNandu extends Controller
             $ordrsummary->order_created_by = $requestdata->order_created_by;
             $ordrsummary->entry_by = 'distributor';
             $ordrsummary->created_disctributor_id = $requestdata->created_disctributor_id;
+            $ordrsummary->order_created_for = $requestdata->order_created_for;
             $ordrsummary->created_disctributor_amount = $requestdata->created_disctributor_amount;
             $ordrsummary->save();
           
@@ -1748,6 +1749,10 @@ class DistributorControllerNandu extends Controller
             leftJoin('usersinfo as newuser_table', function($join) {
                 $join->on('newuser_table.user_id', '=','tbl_sale_summary.created_disctributor_id');
             })
+            ->leftJoin('usersinfo as newuser_table_order_for', function($join) {
+                $join->on('newuser_table_order_for.user_id', '=','tbl_sale_summary.order_created_for');
+            })
+            
             
             ->where('tbl_sale_summary.order_no',$request->order_no)
             ->where('tbl_sale_summary.created_disctributor_id',$request->created_disctributor_id)
@@ -1759,6 +1764,10 @@ class DistributorControllerNandu extends Controller
                 'newuser_table.mname',
                 'newuser_table.lname',
                 'newuser_table.phone',
+
+                'newuser_table_order_for.fname as order_for_fname',
+                'newuser_table_order_for.mname as order_for_mname',
+                'newuser_table_order_for.lname as order_for_lname',
                 
             )
             ->get();
