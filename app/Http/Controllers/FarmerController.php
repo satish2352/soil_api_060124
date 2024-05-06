@@ -183,12 +183,11 @@ class FarmerController extends Controller
                 
                 if($request->added_by === 'superadmin') {
                     $result =  $result->when($request->get('added_by'), function($query) use ($request) {
-                        info("i m in else");
                             $query->where('usersinfo.added_by', $request->added_by);
                     });
 
                 } else {
-                    
+                    info("i m in else");
                     $result =  $result->when($request->get('added_by'), function($query) use ($request) {
                         $query->whereNotIn('usersinfo.added_by', ['superadmin']);
                     });
