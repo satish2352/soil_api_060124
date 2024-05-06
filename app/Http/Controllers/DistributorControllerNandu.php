@@ -1676,9 +1676,47 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $result = SaleSummary::where('is_deleted','no')
-                        ->where('created_disctributor_id',$request->created_disctributor_id)
-                        ->orderBy('id','DESC')
+             $result = SaleSummary::
+                        leftJoin('usersinfo as newuser_table', function($join) {
+                            $join->on('newuser_table.user_id', '=','tbl_sale_summary.created_disctributor_id');
+                        })
+                        ->leftJoin('usersinfo as newuser_table_order_for', function($join) {
+                            $join->on('newuser_table_order_for.user_id', '=','tbl_sale_summary.order_created_for');
+                        })
+                        
+                        ->where('tbl_sale_summary.is_deleted','no')
+                        ->where('tbl_sale_summary.created_disctributor_id',$request->created_disctributor_id)
+                        ->select(
+                            'tbl_sale_summary.id',
+                            'tbl_sale_summary.order_no',
+                            'tbl_sale_summary.order_date',
+                            'tbl_sale_summary.order_created_by',
+                            'tbl_sale_summary.order_created_for',
+                            'tbl_sale_summary.created_disctributor_id',
+                            'tbl_sale_summary.created_disctributor_amount',
+                            'tbl_sale_summary.dispatched_to_created_disctributor_by_warehouse',
+                            'tbl_sale_summary.forwarded_bsc_id',
+                            'tbl_sale_summary.forwarded_bsc_amount',
+                            'tbl_sale_summary.dispatched_to_forwarded_bsc_by_warehouse',
+                            'tbl_sale_summary.forwarded_dsc_id',
+                            'tbl_sale_summary.forwarded_dsc_amount',
+                            'tbl_sale_summary.dispatched_to_forwarded_dsc_amount_by_warehouse',
+                            'tbl_sale_summary.account_approved',
+                            'tbl_sale_summary.forward_to_warehouse',
+                            'tbl_sale_summary.entry_by',
+                            'tbl_sale_summary.order_dispatched',
+                            'tbl_sale_summary.order_dispatched_date',
+
+                            'newuser_table_order_for.fname as order_for_fname',
+                            'newuser_table_order_for.mname as order_for_mname',
+                            'newuser_table_order_for.lname as order_for_lname',
+
+                            'newuser_table.fname',
+                            'newuser_table.mname',
+                            'newuser_table.lname',
+                            'newuser_table.phone',
+                        )
+                        ->orderBy('tbl_sale_summary.id','DESC')
                         ->get();
             
             foreach($result as $key=>$resultnew)
@@ -1692,22 +1730,22 @@ class DistributorControllerNandu extends Controller
                 }elseif($resultnew->account_approved=='yes' && $resultnew->forward_to_warehouse=='yes'){
                     $resultnew->status = 'Forwaded to warehouse';
                 }
-                try
-                {
-                    $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
-                    $resultnew->fname=$details->fname;
-                    $resultnew->mname=$details->mname;
-                    $resultnew->lname=$details->lname;
+                // try
+                // {
+                //     $details=$this->commonController->getUserNameById($resultnew->created_disctributor_id);                        
+                //     $resultnew->fname=$details->fname;
+                //     $resultnew->mname=$details->mname;
+                //     $resultnew->lname=$details->lname;
                     
-                } catch(Exception $e) {
-                    return response()->json([
-                            "data" => array(),
-                            "result" => false,
-                            "error" => true,
-                            "message" =>$e->getMessage()." ".$e->getCode()
-                        ]);
+                // } catch(Exception $e) {
+                //     return response()->json([
+                //             "data" => array(),
+                //             "result" => false,
+                //             "error" => true,
+                //             "message" =>$e->getMessage()." ".$e->getCode()
+                //         ]);
                    
-                 }
+                //  }
             }
             
             if ($result)
