@@ -3628,14 +3628,12 @@ info($farmerMeetingData);
     {
         try
         {
-            DB::enableQueryLog();
 
             $sctresult =SCTResult::where([
                 'id'=>$request->id,
                 'created_by'=>$request->created_by,
             ])->update(['is_deleted'=>'yes']);
                    
-            info(DB::getQueryLog());
             if ($sctresult)
             {
                  return response()->json([
@@ -3649,7 +3647,7 @@ info($farmerMeetingData);
                  return response()->json([
                     "data" => '',
                     "result" => false,
-                    "message" => 'SCT Result Deleted Found'
+                    "message" => 'SCT Result Not Deleted Try Again'
                 ]);
                 
             }
