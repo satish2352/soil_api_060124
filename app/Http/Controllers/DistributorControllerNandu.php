@@ -1357,7 +1357,9 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $videossearch= Video::where('title', 'like', '%' . $request->search . '%')
+            //  $videossearch= Video::where('title', 'like', '%' . $request->search . '%')
+            $videossearch= WebVideos::where('title', 'like', '%' . $request->search . '%')
+             
                     ->where('status',0)
                     ->orderBy('id', 'DESC')
                     ->get();
