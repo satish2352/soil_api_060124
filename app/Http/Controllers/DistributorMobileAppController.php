@@ -1265,6 +1265,114 @@ class DistributorMobileAppController extends Controller
         }
 
     }
+
+
+    public function distributor_added_by_me_get(Request $request)
+    {
+
+       
+        $result = UsersInfoForStructures::
+            join('usersinfo', function($join) {
+                $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+            })
+            ->join('tbl_area as stateNew', function($join) {
+                $join->on('usersinfo.state', '=', 'stateNew.location_id');
+            })
+          
+          ->join('tbl_area as districtNew', function($join) {
+            $join->on('usersinfo.district', '=', 'districtNew.location_id');
+          })
+          
+          
+          ->join('tbl_area as talukaNew', function($join) {
+            $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+          })
+          
+          ->join('tbl_area as cityNew', function($join) {
+            $join->on('usersinfo.city', '=', 'cityNew.location_id');
+          })
+          ->join('users','users.id','=','usersinfo.user_id')
+          ->where('users_info_for_structures.added_by',$request->dist_id)
+          ->where('users_info_for_structures.user_id',$request->user_id)
+         ->select(   'stateNew.name as state',
+         'districtNew.name as district',
+         'talukaNew.name as taluka',
+         'cityNew.name as city',
+         'usersinfo.id as id',
+        'usersinfo.user_id',
+        'usersinfo.name',
+        'usersinfo.fname',
+        'usersinfo.mname',
+        'usersinfo.lname',
+        'usersinfo.email',
+        'usersinfo.phone',
+        'usersinfo.aadharcard',
+        // 'usersinfo.state',
+        // 'usersinfo.district',
+        // 'usersinfo.taluka',
+        // 'usersinfo.city',
+        'usersinfo.address',
+        'usersinfo.pincode',
+        'usersinfo.crop',
+        'usersinfo.acre',
+        'usersinfo.password',
+        'usersinfo.visible_password',
+        'usersinfo.photo',
+        'usersinfo.is_sms_send',
+        'usersinfo.notification',
+        'usersinfo.user_type',
+        'usersinfo.shop_name',
+        'usersinfo.total_area',
+        'usersinfo.other_bussiness',
+        'usersinfo.is_deleted',
+        'usersinfo.active',
+        'usersinfo.remember_token',
+        'usersinfo.otp',
+        'usersinfo.is_verified',
+        'usersinfo.occupation',
+        'usersinfo.education',
+        'usersinfo.exp_in_agricultural',
+        'usersinfo.other_distributorship',
+        'usersinfo.reference_from',
+        'usersinfo.shop_location',
+        'usersinfo.aadhar_card_image_front',
+        'usersinfo.aadhar_card_image_back',
+        'usersinfo.pan_card',
+        'usersinfo.light_bill',
+        'usersinfo.shop_act_image',
+        'usersinfo.product_purchase_bill',
+        'usersinfo.geolocation',
+        'usersinfo.added_by',
+        'usersinfo.devicetoken',
+        'usersinfo.devicetype',
+        'usersinfo.devicename',
+        'usersinfo.deviceid',
+        'usersinfo.logintime',
+        'usersinfo.created_by',
+        'usersinfo.created_on'
+         )
+          ->get();
+      
+        if (count($result) > 0)
+        {
+            $response = array();
+            $response['data'] = $result;
+            $response['code'] = 200;
+            $response['message'] = 'Distributor List Get Successfully';
+            $response['result'] = true;
+            return response()->json($response);
+        }
+        else
+        {
+            $response = array();
+            $response['data'] = array();
+            $response['code'] = 400;
+            $response['message'] = 'Distributor List Not Found';
+            $response['result'] = false;
+            return response()->json($response);
+        }
+
+    }
     
     
    
