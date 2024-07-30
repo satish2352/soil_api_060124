@@ -1365,11 +1365,8 @@ class DistributorControllerNandu extends Controller
                         'id',
                         'title',
                         'description',
-                        'language',
                         'url',
                         'status',
-                        'activeinactive',
-                        'remember_token',
                         'created_at  as date' ,
                         'updated_at',
                     )
