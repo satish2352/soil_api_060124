@@ -152,6 +152,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('sct_resultadd_images_distributorapp', 'DistributorController@sct_resultadd_images_distributorapp');
             $router->post('sct_resultadd_images_update_distributorapp', 'DistributorController@sct_resultadd_images_update_distributorapp');
             $router->post('sct_resultlist_distributorapp', 'DistributorController@sct_resultlist_distributorapp');
+            $router->post('sct_result_delete_distributorapp', 'DistributorController@sct_result_delete_distributorapp');
             
             //Subscriber Target
             $router->post('subscribertargetget_distributorapp', 'DistributorController@subscribertargetget_distributorapp');

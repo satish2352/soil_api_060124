@@ -3623,6 +3623,45 @@ info($farmerMeetingData);
     }
     
     
+    
+    public function sct_result_delete_distributorapp(Request $request)
+    {
+        try
+        {
+            $sctresult =SCTResult::where([
+                'id'=>$request->id,
+                'created_by'=>$request->created_by,
+            ])->update(['is_deleted'=>'yes']);
+                            
+            if ($sctresult)
+            {
+                 return response()->json([
+                    "data" => $sctresult,
+                    "result" => true,
+                    "message" => 'SCT Result Deleted Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'SCT Result Deleted Found'
+                ]);
+                
+            }
+        } catch(Exception $e) {
+            return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>$e->getMessage()." ".$e->getCode()
+                ]);
+           
+        }
+    }
+    
+    
     public function suscriberadd_distributorapp(Request $request)
     {
         try
