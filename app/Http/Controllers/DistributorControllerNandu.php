@@ -1358,9 +1358,13 @@ class DistributorControllerNandu extends Controller
         try
         {
             //  $videossearch= Video::where('title', 'like', '%' . $request->search . '%')
-            $videossearch= WebVideos::where('title', 'like', '%' . $request->search . '%')
-             
-                    ->where('status',0)
+            $videossearch= WebVideos::where('status',0)
+            ->when($request->get('datefrom'), function($query) use ($request) {
+                $query->whereBetween('created_at', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+            }) 
+            ->when($request->get('search'), function($query) use ($request) {
+                $query->where('title', 'like', '%' . $request->search . '%');
+            }) 
                     ->select(
                         'id',
                         'title',
