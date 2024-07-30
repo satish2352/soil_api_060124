@@ -1361,6 +1361,18 @@ class DistributorControllerNandu extends Controller
             $videossearch= WebVideos::where('title', 'like', '%' . $request->search . '%')
              
                     ->where('status',0)
+                    ->select(
+                        'id',
+                        'title',
+                        'description',
+                        'language',
+                        'url',
+                        'status',
+                        'activeinactive',
+                        'remember_token',
+                        'created_at  as date' ,
+                        'updated_at',
+                    )
                     ->orderBy('id', 'DESC')
                     ->get();
             $videossearchcount=sizeof($videossearch);
