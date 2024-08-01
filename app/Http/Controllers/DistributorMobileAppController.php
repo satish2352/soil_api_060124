@@ -1375,5 +1375,66 @@ class DistributorMobileAppController extends Controller
     }
     
     
+    public function distributor_update(Request $request)
+    {
+        try
+        {
+            $user = User::where(['id'=> $request->user_id]);
+            $user->name = ucwords($request->fname)." ".ucwords($request->mname)." ".ucwords($request->lname)." ";
+            $user->email = $request->email;
+            $user->save();
+            
+            $users =  UsersInfo::where(['user_id'=> $request->user_id]);
+            $users->fname = $request->fname;
+            $users->mname = $request->mname;
+            $users->lname = $request->lname;
+            $users->aadharcard = $request->aadharcard;
+            $users->pincode = $request->pincode;
+            $users->email = $request->email;
+            $users->phone = $request->phone;
+            $users->state = $request->state;
+            $users->district = $request->district;
+            $users->taluka = $request->taluka;
+            $users->city = $request->city;
+            $users->address = $request->address;
+            $users->occupation = $request->occupation;
+            $users->education = $request->education;
+            $users->exp_in_agricultural = $request->exp_in_agricultural;
+            $users->other_distributorship = $request->other_distributorship;
+            $users->reference_from = $request->created_by;
+            $users->shop_location = $request->shop_location;
+            $users->save();      
+             
+            if ($users)
+            {
+                 return response()->json([
+                    "data" => $users,
+                    "result" => true,
+                    "message" => 'Distributor Added Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Distributor Not Added'
+                ]);
+                
+            }
+        }
+        catch(Exception $e) {
+
+                return response()->json([
+                        "data" => '',
+                        "result" => false,
+                        // "message" =>$e->getMessage()." ".$e->getCode()
+                        "message" => "Some data missing or duplicate 183"
+                    ]);
+               
+        }
+
+    }
+    
    
 }
