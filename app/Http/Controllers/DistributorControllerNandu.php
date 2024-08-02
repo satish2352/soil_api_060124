@@ -2918,10 +2918,10 @@ class DistributorControllerNandu extends Controller
 
             $targetvideo = VideoWatchHistory::
                                     leftJoin('tbl_target_videos_to_distributor', function($join) {
-                                        $join->on('video_watch_history.video_id','=','tbl_target_videos_to_distributor.id');
+                                        $join->on('video_watch_history.video_id','=','tbl_target_videos_to_distributor.target_vedio_id');
                                     })
                                     ->leftJoin('tbl_target_videos', function($join) {
-                                        $join->on('tbl_target_videos_to_distributor.target_vedio_id','=','tbl_target_videos.id');
+                                        $join->on('video_watch_history.video_id','=','tbl_target_videos.id');
                                     })
                                     ->leftJoin('usersinfo', function($join) {
                                         $join->on('video_watch_history.user_id','=','usersinfo.user_id');
