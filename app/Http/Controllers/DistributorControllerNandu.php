@@ -742,7 +742,7 @@ class DistributorControllerNandu extends Controller
                     ->orWhere('msg', 'like', '%' . $request->search . '%')
                     ->where('message_by',$request->dist_id)
                     ->where('is_deleted','no')
-                    ->groupBy('id', 'DESC')
+                    ->groupBy('id')
                     ->get();
             
             $messagesearchcount=sizeof($messagesearch);
@@ -1199,7 +1199,7 @@ class DistributorControllerNandu extends Controller
              ->orWhere('msg', 'like', '%' . $request->search . '%')
                     ->where('complaint_by' ,$request->dist_id)
                     ->where('is_deleted','no')
-                    ->groupBy('id', 'DESC')
+                    ->groupBy('id')
                     ->get();
             $Complaintcount=sizeof($complaintsearch);
             if ($Complaintcount>0)
