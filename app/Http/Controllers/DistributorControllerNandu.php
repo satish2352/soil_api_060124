@@ -737,11 +737,12 @@ class DistributorControllerNandu extends Controller
         try
         {
              $messagesearch= Messages::where('subject', 'like', '%' . $request->search . '%')
-             ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
-             ->orWhere('message', 'like', '%' . $request->search . '%')
+                    ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
+                    ->orWhere('message', 'like', '%' . $request->search . '%')
+                    ->orWhere('msg', 'like', '%' . $request->search . '%')
                     ->where('message_by',$request->dist_id)
                     ->where('is_deleted','no')
-                    ->orderBy('id', 'DESC')
+                    ->groupBy('id', 'DESC')
                     ->get();
             
             $messagesearchcount=sizeof($messagesearch);
@@ -1195,9 +1196,10 @@ class DistributorControllerNandu extends Controller
              $complaintsearch= Complaint::where('subject', 'like', '%' . $request->search . '%')
              ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
              ->orWhere('complaint', 'like', '%' . $request->search . '%')
+             ->orWhere('msg', 'like', '%' . $request->search . '%')
                     ->where('complaint_by' ,$request->dist_id)
                     ->where('is_deleted','no')
-                    ->orderBy('id', 'DESC')
+                    ->groupBy('id', 'DESC')
                     ->get();
             $Complaintcount=sizeof($complaintsearch);
             if ($Complaintcount>0)
