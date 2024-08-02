@@ -1375,7 +1375,7 @@ class DistributorMobileAppController extends Controller
     }
     
     
-    public function distributor_update(Request $request)
+    public function distributor_update_new(Request $request)
     {
         try
         {

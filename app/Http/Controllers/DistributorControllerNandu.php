@@ -737,6 +737,8 @@ class DistributorControllerNandu extends Controller
         try
         {
              $messagesearch= Messages::where('subject', 'like', '%' . $request->search . '%')
+             ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
+             ->orWhere('message', 'like', '%' . $request->search . '%')
                     ->where('message_by',$request->dist_id)
                     ->where('is_deleted','no')
                     ->orderBy('id', 'DESC')
@@ -1191,6 +1193,8 @@ class DistributorControllerNandu extends Controller
         try
         {
              $complaintsearch= Complaint::where('subject', 'like', '%' . $request->search . '%')
+             ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
+             ->orWhere('complaint', 'like', '%' . $request->search . '%')
                     ->where('complaint_by' ,$request->dist_id)
                     ->where('is_deleted','no')
                     ->orderBy('id', 'DESC')

@@ -614,5 +614,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
             $router->post('distributor_added_by_me', 'DistributorMobileAppController@distributor_added_by_me');
             $router->post('distributor_added_by_me_get', 'DistributorMobileAppController@distributor_added_by_me_get');
+            $router->post('distributor_update_new', 'DistributorMobileAppController@distributor_update_new');
+
+            
         });
 });
