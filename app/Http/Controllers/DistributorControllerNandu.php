@@ -2933,6 +2933,7 @@ class DistributorControllerNandu extends Controller
                                                 'video_watch_history.video_id',
                                                 'video_watch_history.video_total_duration',
                                                 'video_watch_history.video_total_duration_watch',
+                                                
                                                 // 'video_watch_history.created_at',
                                                 // 'video_watch_history.updated_at',
                                                 DB::raw("CONVERT_TZ(video_watch_history.created_at, 'UTC', '{$timezone}') as created_at"),
