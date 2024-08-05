@@ -1352,6 +1352,22 @@ class DistributorMobileAppController extends Controller
         'usersinfo.created_on'
          )
           ->get();
+
+
+          foreach( $result as $key => $value ) {
+
+
+            $imagedataPath=DISTRIBUTOR_OWN_DOCUMENTS;
+            
+            $value->aadhar_card_image_front_path = $imagedataPath.$value->aadhar_card_image_front;
+            $value->aadhar_card_image_back_path = $imagedataPath.$value->aadhar_card_image_back;
+            $value->pan_card_path = $imagedataPath.$value->pan_card;
+            $value->light_bill_path = $imagedataPath.$value->light_bill;
+            $value->shop_act_image_path = $imagedataPath.$value->shop_act_image;
+            $value->product_purchase_bill_path = $imagedataPath.$value->product_purchase_bill;
+
+              
+          }
       
         if (count($result) > 0)
         {
