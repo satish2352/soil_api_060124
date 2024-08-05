@@ -293,7 +293,7 @@ class DistributorMobileAppController extends Controller
             $ordrsummary->order_cerated_for_id = $requestdata->order_cerated_for_id;
             $ordrsummary->created_disctributor_id = $requestdata->created_disctributor_id;
             $ordrsummary->created_disctributor_amount = $requestdata->created_disctributor_amount;
-            $ordrsummary->remark = $requestdata->remark;
+            $ordrsummary->remark = isset($requestdata->remark) ? $requestdata->remark :'NA';
             $ordrsummary->is_order_confirm_from_dist = $is_order_confirm_from_dist;
             $ordrsummary->payment_mode = $requestdata->payment_mode;
             $ordrsummary->address_one = $requestdata->address_one;
