@@ -2431,6 +2431,8 @@ class DistributorControllerNandu extends Controller
             if($farmerlist_recorddcount>0)
             
             {
+
+                $farmerlist_record->photo = DISTRIBUTOR_OWN_DOCUMENTS.$farmerlist_record->photo;
                  return response()->json([
                     "data" => $farmerlist_record,
                     "result" => true,
