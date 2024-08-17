@@ -1870,6 +1870,7 @@ info($farmerMeetingData);
                         'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
                         'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
                         'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
+                        'presentFarmers'=>[]
                     ];
 
                     // if ($data->farmer_id) {
@@ -1880,15 +1881,17 @@ info($farmerMeetingData);
                     //     ];
                     // }
 
-                }
-
                     if ($data->farmer_id) {
-                        $meetings[$data->id]['presentFarmers'][] = [
+                        $meetings_new[$data->id]['presentFarmers'][] = [
                             'fname' => $data->farmer_fname,
                             'mname' => $data->farmer_mname,
                             'lname' => $data->farmer_lname
                         ];
                     }
+
+                }
+
+                    
 
                     array_push($meetings, $meetings_new);
 
