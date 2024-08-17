@@ -1302,49 +1302,56 @@ class DistributorController extends Controller
     
     public function farmermeetingadd_distributorapp(Request $request)
     {
-        $farmer = new FarmerMeeting();
-        $farmer->date = $request->date;
-        $farmer->meeting_place = $request->meeting_place;
-        $farmer->farmer_id = $request->farmer_id;
-        $farmer->meeting_title = $request->meeting_title;
-        $farmer->meeting_description = $request->meeting_description;
-        
-        $farmer->created_by = $request->created_by;
-        $farmer->longitude = $request->longitude;
-        $farmer->latitude = $request->latitude;
-        $farmer->save();
+        try {
 
-        $farmerMeetingTableID = $farmer->id;
         
-        $meetingFarmerID = explode(",",$request->farmer_id);
-
-        foreach ($meetingFarmerID as $key => $value) {
-            $farmerdetails=$this->commonController->getFarmerNameById($value);
-            $farmerMeetingDetails = new FarmerMeetingDetails();
-            $farmerMeetingDetails->farmer_meeting_table_id = $farmerMeetingTableID;
-            $farmerMeetingDetails->farmer_id = $request->farmer_id;
-            $farmerMeetingDetails->farmer_fname = $farmerdetails->fname;
-            $farmerMeetingDetails->farmer_mname = $farmerdetails->mname;
-            $farmerMeetingDetails->farmer_lname = $farmerdetails->lname;
-            $farmer->save();
-        }
-        
-        if ($farmer)
-        {
-             return response()->json([
-                "data" => $farmer,
-                "result" => true,
-                "message" => 'Farmer Meeting Added By Distributor'
-            ]);
-        }
-        else
-        {
-             return response()->json([
-                "data" => array(),
-                "result" => false,
-                "message" => 'Farmer Meeting Not Added'
-            ]);
+            $farmer = new FarmerMeeting();
+            $farmer->date = $request->date;
+            $farmer->meeting_place = $request->meeting_place;
+            $farmer->farmer_id = $request->farmer_id;
+            $farmer->meeting_title = $request->meeting_title;
+            $farmer->meeting_description = $request->meeting_description;
             
+            $farmer->created_by = $request->created_by;
+            $farmer->longitude = $request->longitude;
+            $farmer->latitude = $request->latitude;
+            $farmer->save();
+
+            $farmerMeetingTableID = $farmer->id;
+            
+            $meetingFarmerID = explode(",",$request->farmer_id);
+
+            foreach ($meetingFarmerID as $key => $value) {
+                $farmerdetails=$this->commonController->getFarmerNameById($value);
+                $farmerMeetingDetails = new FarmerMeetingDetails();
+                $farmerMeetingDetails->farmer_meeting_table_id = $farmerMeetingTableID;
+                $farmerMeetingDetails->farmer_id = $request->farmer_id;
+                $farmerMeetingDetails->farmer_fname = $farmerdetails->fname;
+                $farmerMeetingDetails->farmer_mname = $farmerdetails->mname;
+                $farmerMeetingDetails->farmer_lname = $farmerdetails->lname;
+                $farmer->save();
+            }
+            
+            if ($farmer)
+            {
+                return response()->json([
+                    "data" => $farmer,
+                    "result" => true,
+                    "message" => 'Farmer Meeting Added By Distributor'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    "data" => array(),
+                    "result" => false,
+                    "message" => 'Farmer Meeting Not Added'
+                ]);
+                
+            }
+        }
+        catch(Exception $e) {
+            info("Farmer meeting :".$e->getMessage());
         }
     }
     
