@@ -2982,46 +2982,39 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-
             $timezone = 'Asia/Kolkata'; // Specify the target timezone for India
-
+    
             $targetvideo = VideoWatchHistory::
-                                    leftJoin('tbl_target_videos_to_distributor', function($join) {
-                                        $join->on('video_watch_history.video_id','=','tbl_target_videos_to_distributor.target_vedio_id');
-                                    })
-                                    ->leftJoin('tbl_target_videos', function($join) {
-                                        $join->on('video_watch_history.video_id','=','tbl_target_videos.id');
-                                    })
-                                    ->leftJoin('usersinfo', function($join) {
-                                        $join->on('video_watch_history.user_id','=','usersinfo.user_id');
-                                    })
-                                    ->where('video_watch_history.user_id',$request->dist_id)
-                                    ->select(   
-                                                'video_watch_history.id',
-                                                'video_watch_history.user_id',
-                                                'video_watch_history.video_id',
-                                                'video_watch_history.video_total_duration',
-                                                'video_watch_history.video_total_duration_watch',
-                                                
-                                                // 'video_watch_history.created_at',
-                                                // 'video_watch_history.updated_at',
-                                                DB::raw("CONVERT_TZ(video_watch_history.created_at, 'UTC', '{$timezone}') as created_at"),
-                                                DB::raw("CONVERT_TZ(video_watch_history.updated_at, 'UTC', '{$timezone}') as updated_at"),
-
-                                                'usersinfo.fname',
-                                                'usersinfo.mname',
-                                                'usersinfo.lname',
-                                                'usersinfo.email',
-                                                'usersinfo.phone',
-                                                'usersinfo.user_type',
-                                                'tbl_target_videos.title',
-                                                'tbl_target_videos.description',
-                                                'tbl_target_videos.url',
-                                            )
-                                    ->get();
-            
+                leftJoin('tbl_target_videos_to_distributor', function($join) {
+                    $join->on('video_watch_history.video_id', '=', 'tbl_target_videos_to_distributor.target_vedio_id');
+                })
+                ->leftJoin('tbl_target_videos', function($join) {
+                    $join->on('video_watch_history.video_id', '=', 'tbl_target_videos.id');
+                })
+                ->leftJoin('usersinfo', function($join) {
+                    $join->on('video_watch_history.user_id', '=', 'usersinfo.user_id');
+                })
+                ->where('video_watch_history.user_id', $request->dist_id)
+                ->select(   
+                    'video_watch_history.id',
+                    'video_watch_history.user_id',
+                    'video_watch_history.video_id',
+                    'video_watch_history.video_total_duration',
+                    'video_watch_history.video_total_duration_watch',
+                    DB::raw("CONVERT_TZ(video_watch_history.created_at, 'UTC', '{$timezone}') as created_at"),
+                    DB::raw("CONVERT_TZ(video_watch_history.updated_at, 'UTC', '{$timezone}') as updated_at"),
+                    'usersinfo.fname',
+                    'usersinfo.mname',
+                    'usersinfo.lname',
+                    'usersinfo.email',
+                    'usersinfo.phone',
+                    'usersinfo.user_type',
+                    'tbl_target_videos.title',
+                    'tbl_target_videos.description',
+                    'tbl_target_videos.url',
+                )
+                ->get();
            
-
             return response()->json([
                 "data" => $targetvideo,
                 "result" => true,
@@ -3038,6 +3031,7 @@ class DistributorControllerNandu extends Controller
            
         }
     }
+    
     
      
     
