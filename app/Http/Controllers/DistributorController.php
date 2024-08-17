@@ -1854,6 +1854,8 @@ info($farmerMeetingData);
                     ];
                 }
 
+                info('$meetings  $meetings : ' . $meetings  );
+
                 if ($data->farmer_id) {
                     $meetings[$meetingId]['presentFarmers'][] = [
                         'fname' => $data->farmer_fname,
@@ -1863,9 +1865,11 @@ info($farmerMeetingData);
 
                 }
 
+                info('$meetings  $meetings 2: ' . $meetings  );
+
             }
 
-                $response = array_values($meetings);
+                $response = $meetings;
                 info('$response $response'.$response);
                 if (!empty($response)) {
                     return $response()->json([
