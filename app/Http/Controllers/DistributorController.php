@@ -1818,12 +1818,11 @@ info($farmerMeetingData);
                
     //     }
     // }
-    
-    
+
+
     public function farmermeetinglist_distributorapp(Request $request)
     {
-        try
-        {
+        try {
             $response = "";
             $farmerMeetingData = FarmerMeeting::select('farmer_meetings.*', 'farmer_meeting_details.farmer_id', 'farmer_meeting_details.farmer_fname', 'farmer_meeting_details.farmer_mname', 'farmer_meeting_details.farmer_lname')
                 ->leftJoin('farmer_meeting_details', 'farmer_meetings.id', '=', 'farmer_meeting_details.farmer_meeting_table_id')
@@ -1833,7 +1832,7 @@ info($farmerMeetingData);
                 ->get();
 
             $meetings = [];
-            
+
             foreach ($farmerMeetingData as $data) {
                 $meetingId = $data->id;
 
@@ -1861,30 +1860,26 @@ info($farmerMeetingData);
                         'mname' => $data->farmer_mname,
                         'lname' => $data->farmer_lname
                     ];
-                
-            }
 
-            $response = array_values($meetings);
-            
-            if (!empty($response))
-            {
-                return $response()->json([
-                    "data" => $response,
-                    "result" => true,
-                    "message" => 'Farmer Meeting Get Successfully'
-                ]);
+                }
+
+                $response = array_values($meetings);
+
+                if (!empty($response)) {
+                    return $response()->json([
+                        "data" => $response,
+                        "result" => true,
+                        "message" => 'Farmer Meeting Get Successfully'
+                    ]);
+                } else {
+                    return $response()->json([
+                        "data" => '',
+                        "result" => false,
+                        "message" => 'Farmer Meeting Not Found'
+                    ]);
+                }
             }
-            else
-            {
-                return $response()->json([
-                    "data" => '',
-                    "result" => false,
-                    "message" => 'Farmer Meeting Not Found'
-                ]);
-            }
-        } 
-        catch (Exception$e) 
-        {
+        } catch (Exception $e) {
             return $response()->json([
                 "data" => '',
                 "result" => false,
