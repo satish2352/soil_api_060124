@@ -1857,7 +1857,7 @@ info($farmerMeetingData);
 
 
                 if (!isset($meetings[$data->id])) {
-                    $meetings_new = [
+                    $meetings = [
                         'id' => $data->id,
                         'date' => $data->date,
                         'meeting_place' => $data->meeting_place,
@@ -1882,7 +1882,7 @@ info($farmerMeetingData);
                     // }
 
                     if ($data->farmer_id) {
-                        $meetings_new[$data->id]['presentFarmers'][] = [
+                        $meetings[$data->id]['presentFarmers'][] = [
                             'fname' => $data->farmer_fname,
                             'mname' => $data->farmer_mname,
                             'lname' => $data->farmer_lname
@@ -1893,7 +1893,7 @@ info($farmerMeetingData);
 
                     
 
-                    array_push($meetings, $meetings_new);
+                    // array_push($meetings, $meetings_new);
 
 
                 
