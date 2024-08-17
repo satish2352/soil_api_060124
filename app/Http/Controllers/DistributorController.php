@@ -1320,11 +1320,10 @@ class DistributorController extends Controller
             $farmerMeetingTableID = $farmer->id;
             
             $meetingFarmerID = explode(",",$request->farmer_id);
-info('$meetingFarmerID: ' . $farmerMeetingTableID  );
-info('$farmerMeetingTableID: ' . $farmerMeetingTableID  );
             foreach ($meetingFarmerID as $key => $value) {
-                info('$value: ' . $value  );
                 $farmerdetails=$this->commonController->getFarmerNameById($value);
+                info('$farmerdetails: ' . $farmerdetails  );
+                info('$farmerdetails->fname: ' . $farmerdetails->fname  );
                 $farmerMeetingDetails = new FarmerMeetingDetails();
                 $farmerMeetingDetails->farmer_meeting_table_id = $farmerMeetingTableID;
                 $farmerMeetingDetails->farmer_id = $request->farmer_id;
