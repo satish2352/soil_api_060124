@@ -1878,7 +1878,7 @@ info($farmerMeetingData);
                         ];
                     }
 
-                    $meetings.push($meetings_new);
+                    array_push($meetings, $meetings_new);
 
 
                 
