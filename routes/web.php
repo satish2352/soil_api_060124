@@ -19,7 +19,7 @@ $router->get('allclear', function() {
     return "All Cache Clear";
 });
 
-
+$router->get("password/reset/{token}", "AuthController@resetPasswordPage");
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
@@ -30,7 +30,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->post("forgotPassword", "AuthController@forgotPassword");
     $router->post("resetPassword", "AuthController@resetPassword");
-    $router->get("password/reset/{token}", "AuthController@resetPasswordPage");
+    
 
     $router->post('statelist', 'CommonController@statelist');
     $router->post('districtlist', 'CommonController@districtlist');
