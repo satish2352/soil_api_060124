@@ -1824,6 +1824,7 @@ info($farmerMeetingData);
     {
         try
         {
+            $response = "";
             $farmerMeetingData = FarmerMeeting::select('farmer_meetings.*', 'farmer_meeting_details.farmer_id', 'farmer_meeting_details.farmer_fname', 'farmer_meeting_details.farmer_mname', 'farmer_meeting_details.farmer_lname')
                 ->leftJoin('farmer_meeting_details', 'farmer_meetings.id', '=', 'farmer_meeting_details.farmer_meeting_table_id')
                 ->where('farmer_meetings.is_deleted', 'no')
