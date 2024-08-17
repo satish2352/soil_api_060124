@@ -295,11 +295,21 @@ class AuthController extends Controller {
         $email = $request->input('email');
     
         if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception('Invalid email address.');
+            // throw new \Exception('Invalid email address.');
+            return response()->json([
+                'data' =>  array(),
+                'result' => false,
+                'message' => "Invalid email address"
+            ]);
         }
     
         if (!\DB::table('users')->where('email', $email)->exists()) {
-            throw new \Exception('Email address not found.');
+            // throw new \Exception('Email address not found.');
+            return response()->json([
+                'data' =>  array(),
+                'result' => false,
+                'message' => "Email address not found."
+            ]);
         }
     }
     
