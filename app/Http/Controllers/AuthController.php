@@ -270,21 +270,22 @@ class AuthController extends Controller {
                     'X-Mailer: PHP/' . phpversion(); // Headers
 
             if (mail($to, $subject, $message, $headers)) {
-                echo 'Email sent successfully';
+                info('Email sent successfully');
             } else {
-                echo 'Failed to send email';
+                info('Failed to send email');
             }
     
             return response()->json([
-                'status' => 'success',
-                'message' => 'Password reset link has been sent to your email address.'
+                "data" => array(),
+                "result" => true,
+                "message" => 'Password reset link has been sent to your email address.'
             ]);
     
         } catch (\Exception $e) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to send password reset link. Please try again later.',
-                'error' => $e->getMessage()
+                'data' =>  array(),
+                'result' => false,
+                'message' => $e->getMessage()
             ]);
         }
     }
