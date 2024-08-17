@@ -30,7 +30,8 @@ use App\Models\ {
     ProductDetails,
     Downloads,
     WebVideos,
-    VideoWatchHistory
+    VideoWatchHistory,
+    Notification
 };
 use DB;
 use Carbon\Carbon;
@@ -592,7 +593,14 @@ class DistributorControllerNandu extends Controller
                 'msg_read' => 'y',
               ];
         $messageupdate = Messages::where('id',$request->id)->update($data);
+        $messageupdateData = Messages::where('id',$request->id)->first();
       
+        $dataToInsert = [
+            "distributor_id"=>$messageupdateData->message_by,
+            "message"=>$request->msg,
+            "is_read"=>"no",
+        ];
+        $notification = Notification::insert($dataToInsert);
         if ($messageupdate)
         {
              return response()->json([
