@@ -1173,14 +1173,26 @@ class DistributorController extends Controller
             return $validator->errors()->all();
         }
 
-        $user = new User();
-        $user->name = $request->fname;
-        $user->email = $request->email;
-        $user->password = app('hash')->make($request->password);
-        $user->visible_password =$request->password;
-        $user->user_type ='farmer';
-        $user->save();
-        $user->id;
+        try {
+            $user = new User();
+            $user->name = $request->fname;
+            $user->email = $request->email;
+            $user->password = app('hash')->make($request->password);
+            $user->visible_password =$request->password;
+            $user->user_type ='farmer';
+            $user->save();
+            $user->id;
+        }
+        catch(QueryException  $e) {
+
+                return response()->json([
+                        "data" => '',
+                        "result" => false,
+                        "message" =>$e->getMessage()." ".$e->getCode()
+                        //"message" => "Some data missing or duplicate"
+                    ]);
+            
+        }
         
         
         $users = new UsersInfo();
