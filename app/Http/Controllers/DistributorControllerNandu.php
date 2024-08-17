@@ -2481,7 +2481,25 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $farmerlist_record= UsersInfo::where('added_by',$request->disctributor_id)
+             $farmerlist_record= UsersInfo::
+             leftJoin('tbl_area as stateNew', function ($join) {
+                $join->on('usersinfo.state', '=', 'stateNew.location_id');
+            })
+
+            ->leftJoin('tbl_area as districtNew', function ($join) {
+                $join->on('usersinfo.district', '=', 'districtNew.location_id');
+            })
+
+
+            ->leftJoin('tbl_area as talukaNew', function ($join) {
+                $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+            })
+
+            ->leftJoin('tbl_area as cityNew', function ($join) {
+                $join->on('usersinfo.city', '=', 'cityNew.location_id');
+            })
+             
+                ->where('added_by',$request->disctributor_id)
                     ->when($request->get('farmer_name'), function($query) use ($request) {
                         $query->where('fname', 'like', '%' . $request->farmer_name . '%')
                               ->orWhere('mname', 'like', '%' . $request->farmer_name . '%')
@@ -2490,6 +2508,13 @@ class DistributorControllerNandu extends Controller
                     ->where('is_deleted','no')
                     ->where('active','yes')
                     ->where('user_type','farmer')
+                    ->select(
+                        'usersinfo.*',
+                        'stateNew.name as state_name',
+                        'districtNew.name as district_name',
+                        'talukaNew.name as taluka_name',
+                        'cityNew.name as city_name'
+                        )
                     ->orderBy('id', 'DESC')
                     ->get();
                     
