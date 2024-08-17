@@ -3016,10 +3016,12 @@ class DistributorControllerNandu extends Controller
                 )
                 ->get();
            
-                $targetvideo->each(function($item) {
-                    $item->created_at_new = Carbon::parse($item->created_at)->setTimezone('Asia/Kolkata');
-                    $item->updated_at_new = Carbon::parse($item->updated_at)->setTimezone('Asia/Kolkata');
-                });
+               // Convert created_at and updated_at to Asia/Kolkata time zone
+            $targetvideo->transform(function($item) {
+                $item->created_at = Carbon::parse($item->created_at)->setTimezone('Asia/Kolkata')->toDateTimeString();
+                $item->updated_at = Carbon::parse($item->updated_at)->setTimezone('Asia/Kolkata')->toDateTimeString();
+                return $item;
+            });
             return response()->json([
                 "data" => $targetvideo,
                 "result" => true,
