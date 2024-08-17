@@ -1832,7 +1832,7 @@ info($farmerMeetingData);
                 ->get();
 
             $meetings = [];
-info('$farmerMeetingData '.$farmerMeetingData);
+            info('$farmerMeetingData '.$farmerMeetingData);
             foreach ($farmerMeetingData as $data) {
                 $meetingId = $data->id;
 
@@ -1863,8 +1863,10 @@ info('$farmerMeetingData '.$farmerMeetingData);
 
                 }
 
-                $response = array_values($meetings);
+            }
 
+                $response = array_values($meetings);
+                info('$response $response'.$response);
                 if (!empty($response)) {
                     return $response()->json([
                         "data" => $response,
@@ -1878,7 +1880,6 @@ info('$farmerMeetingData '.$farmerMeetingData);
                         "message" => 'Farmer Meeting Not Found'
                     ]);
                 }
-            }
         } catch (Exception $e) {
             // return $response()->json([
             //     "data" => '',
