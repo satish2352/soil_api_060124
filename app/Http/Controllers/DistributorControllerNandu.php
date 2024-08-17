@@ -231,9 +231,9 @@ class DistributorControllerNandu extends Controller
 
             foreach ($farmerMeetingData as $data) {
                 $meetingId = $data->id;
-
-                if (!isset($meetings[$meetingId])) {
-                    $meetings[$meetingId] = [
+    
+                if (!isset($response[$meetingId])) {
+                    $response[$meetingId] = [
                         'id' => $data->id,
                         'date' => $data->date,
                         'meeting_place' => $data->meeting_place,
@@ -248,20 +248,19 @@ class DistributorControllerNandu extends Controller
                         'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
                         'presentFarmers' => []
                     ];
-
                 }
-
+    
                 if ($data->farmer_id) {
-                    $meetings[$meetingId]['presentFarmers'][] = [
+                    $response[$meetingId]['presentFarmers'][] = [
                         'fname' => $data->farmer_fname,
                         'mname' => $data->farmer_mname,
                         'lname' => $data->farmer_lname
                     ];
                 }
-
             }
-
-            $response = $meetings;
+    
+            // Convert associative array to indexed array
+            $response = array_values($response);
 
 
             if (!empty($response)) {
