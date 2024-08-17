@@ -301,15 +301,14 @@ class AuthController extends Controller {
         $email = $request->input('email');
         $password = $request->input('password');
     
-        // Verify the token
-        $passwordReset = \DB::table('password_resets')->where('email', $email)->where('token', $token)->first();
+        // $passwordReset = \DB::table('password_resets')->where('email', $email)->where('token', $token)->first();
     
-        if (!$passwordReset) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid or expired password reset token.'
-            ]);
-        }
+        // if (!$passwordReset) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'Invalid or expired password reset token.'
+        //     ]);
+        // }
     
         try {
             // Update the user's password
@@ -317,8 +316,7 @@ class AuthController extends Controller {
             $user->password = app('hash')->make($password);
             $user->save();
     
-            // Delete the password reset token
-            \DB::table('password_resets')->where('email', $email)->delete();
+            // \DB::table('password_resets')->where('email', $email)->delete();
     
             return response()->json([
                 'status' => 'success',
