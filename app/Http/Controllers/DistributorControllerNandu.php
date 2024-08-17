@@ -2982,7 +2982,6 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-            $timezone = 'Asia/Kolkata'; // Specify the target timezone for India
     
             $targetvideo = VideoWatchHistory::
                 leftJoin('tbl_target_videos_to_distributor', function($join) {
@@ -3003,8 +3002,6 @@ class DistributorControllerNandu extends Controller
                     'video_watch_history.video_total_duration_watch',
                     'video_watch_history.created_at',
                     'video_watch_history.updated_at',
-                    // DB::raw("CONVERT_TZ(video_watch_history.created_at, 'UTC', '{$timezone}') as created_at"),
-                    // DB::raw("CONVERT_TZ(video_watch_history.updated_at, 'UTC', '{$timezone}') as updated_at"),
                     'usersinfo.fname',
                     'usersinfo.mname',
                     'usersinfo.lname',
