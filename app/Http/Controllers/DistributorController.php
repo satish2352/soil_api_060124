@@ -1738,88 +1738,161 @@ info($farmerMeetingData);
         }
     }
     
-    public function farmermeetinglist_distributorapp(Request $request)
-    {
-        try
-        {
-            //dd($request->user_id);
-            $presentFarmerFormeeting='';
-            $farmerMeetingData =FarmerMeeting::where('is_deleted','no')->where('created_by',$request->user_id)->orderBy('id', 'DESC')->get();
-            //$farmerMeetingData =FarmerMeeting::all();
+    // public function farmermeetinglist_distributorapp(Request $request)
+    // {
+    //     try
+    //     {
+    //         //dd($request->user_id);
+    //         $presentFarmerFormeeting='';
+    //         $farmerMeetingData =FarmerMeeting::where('is_deleted','no')->where('created_by',$request->user_id)->orderBy('id', 'DESC')->get();
+    //         //$farmerMeetingData =FarmerMeeting::all();
             
-            foreach($farmerMeetingData as $key=>$farmermeeting)
-            {
-                try
-                {
+    //         foreach($farmerMeetingData as $key=>$farmermeeting)
+    //         {
+    //             try
+    //             {
                     
-                    $distributordetails=$this->commonController->getDistributorNameById($farmermeeting->created_by);
+    //                 $distributordetails=$this->commonController->getDistributorNameById($farmermeeting->created_by);
                     
-                    $farmermeeting->dfname=$distributordetails->fname;
-                    $farmermeeting->dmname=$distributordetails->mname;
-                    $farmermeeting->dlname=$distributordetails->lname;
-                    //dd($farmermeeting);
-                    $presentFarmer=explode(",",$farmermeeting->farmer_id);
-                    //dd($presentFarmer);
-                    foreach($presentFarmer as $key=>$farmermeetingPresentDist)
-                    {
-                        if($farmermeetingPresentDist!=''|| $farmermeetingPresentDist!=NULL || $farmermeetingPresentDist!=null)
-                        {
-                            $farmermeeting->photopathone=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_one;
-                            $farmermeeting->photopathtwo=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_two;
-                            $farmermeeting->photopaththree=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_three;
-                            $farmermeeting->photopathfour=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_four;
-                            $farmermeeting->photopathfive=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_five;
+    //                 $farmermeeting->dfname=$distributordetails->fname;
+    //                 $farmermeeting->dmname=$distributordetails->mname;
+    //                 $farmermeeting->dlname=$distributordetails->lname;
+    //                 //dd($farmermeeting);
+    //                 $presentFarmer=explode(",",$farmermeeting->farmer_id);
+    //                 //dd($presentFarmer);
+    //                 foreach($presentFarmer as $key=>$farmermeetingPresentDist)
+    //                 {
+    //                     if($farmermeetingPresentDist!=''|| $farmermeetingPresentDist!=NULL || $farmermeetingPresentDist!=null)
+    //                     {
+    //                         $farmermeeting->photopathone=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_one;
+    //                         $farmermeeting->photopathtwo=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_two;
+    //                         $farmermeeting->photopaththree=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_three;
+    //                         $farmermeeting->photopathfour=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_four;
+    //                         $farmermeeting->photopathfive=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_five;
                         
                         
-                            $farmerdetails=$this->commonController->getFarmerNameById($farmermeetingPresentDist);
-                            $presentFarmerFormeeting .=++$key.")".$farmerdetails->fname." ".$farmerdetails->mname." ".$farmerdetails->lname;
-                            $presentFarmerFormeeting .=",";
+    //                         $farmerdetails=$this->commonController->getFarmerNameById($farmermeetingPresentDist);
+    //                         $presentFarmerFormeeting .=++$key.")".$farmerdetails->fname." ".$farmerdetails->mname." ".$farmerdetails->lname;
+    //                         $presentFarmerFormeeting .=",";
                             
-                        }
+    //                     }
                         
-                    }
-                    $farmermeeting->presentFarmerFormeeting=$presentFarmerFormeeting;
+    //                 }
+    //                 $farmermeeting->presentFarmerFormeeting=$presentFarmerFormeeting;
                     
-                } catch(Exception $e) {
-                return response()->json([
-                        "data" => '',
-                        "result" => false,
-                        "error" => true,
-                        "message" =>$e->getMessage()." ".$e->getCode()
-                    ]);
+    //             } catch(Exception $e) {
+    //             return response()->json([
+    //                     "data" => '',
+    //                     "result" => false,
+    //                     "error" => true,
+    //                     "message" =>$e->getMessage()." ".$e->getCode()
+    //                 ]);
                
-                 }
-            }
+    //              }
+    //         }
             
-            if ($farmerMeetingData)
-            {
-                 return response()->json([
-                    "data" => $farmerMeetingData,
-                    "result" => true,
-                    "message" => 'Farmer Meeting Get Successfully'
-                ]);
-            }
-            else
-            {
-                 return response()->json([
-                    "data" => '',
-                    "result" => false,
-                    "message" => 'Farmer Meeting Not Found'
-                ]);
+    //         if ($farmerMeetingData)
+    //         {
+    //              return response()->json([
+    //                 "data" => $farmerMeetingData,
+    //                 "result" => true,
+    //                 "message" => 'Farmer Meeting Get Successfully'
+    //             ]);
+    //         }
+    //         else
+    //         {
+    //              return response()->json([
+    //                 "data" => '',
+    //                 "result" => false,
+    //                 "message" => 'Farmer Meeting Not Found'
+    //             ]);
                 
-            }
-        } catch(Exception $e) {
-                return response()->json([
-                        "data" => '',
-                        "result" => false,
-                        "error" => true,
-                        "message" =>$e->getMessage()." ".$e->getCode()
-                    ]);
+    //         }
+    //     } catch(Exception $e) {
+    //             return response()->json([
+    //                     "data" => '',
+    //                     "result" => false,
+    //                     "error" => true,
+    //                     "message" =>$e->getMessage()." ".$e->getCode()
+    //                 ]);
                
+    //     }
+    // }
+    
+    
+    publicfunction farmermeetinglist_distributorapp(Request $request)
+{
+    try
+    {
+        // Retrieve meetings with joined farmer details$farmerMeetingData = FarmerMeeting::select('farmer_meetings.*', 'farmer_meeting_details.farmer_id', 'farmer_meeting_details.farmer_fname', 'farmer_meeting_details.farmer_mname', 'farmer_meeting_details.farmer_lname')
+            ->leftJoin('farmer_meeting_details', 'farmer_meetings.id', '=', 'farmer_meeting_details.farmer_meeting_table_id')
+            ->where('farmer_meetings.is_deleted', 'no')
+            ->where('farmer_meetings.created_by', $request->user_id)
+            ->orderBy('farmer_meetings.id', 'DESC')
+            ->get();
+
+        // Initialize an array to group farmer details by meeting ID$meetings = [];
+        
+        foreach ($farmerMeetingDataas$data) {
+            $meetingId = $data->id;
+
+            if (!isset($meetings[$meetingId])) {
+                // Initialize meeting data if not already set$meetings[$meetingId] = [
+                    'id' => $data->id,
+                    'date' => $data->date,
+                    'meeting_place' => $data->meeting_place,
+                    'farmer_id' => $data->farmer_id,
+                    'meeting_title' => $data->meeting_title,
+                    'meeting_description' => $data->meeting_description,
+                    'created_by' => $data->created_by,
+                    'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
+                    'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
+                    'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
+                    'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
+                    'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
+                    'presentFarmers' => []
+                ];
+            }
+
+            // Add farmer details to the meeting's presentFarmers arrayif ($data->farmer_id) {
+                $meetings[$meetingId]['presentFarmers'][] = [
+                    'fname' => $data->farmer_fname,
+                    'mname' => $data->farmer_mname,
+                    'lname' => $data->farmer_lname
+                ];
+            }
         }
+
+        // Convert the meetings array to a list$response = array_values($meetings);
+        
+        if (!empty($response))
+        {
+            returnresponse()->json([
+                "data" => $response,
+                "result" => true,
+                "message" => 'Farmer Meeting Get Successfully'
+            ]);
+        }
+        else
+        {
+            returnresponse()->json([
+                "data" => '',
+                "result" => false,
+                "message" => 'Farmer Meeting Not Found'
+            ]);
+        }
+    } 
+    catch (Exception$e) 
+    {
+        returnresponse()->json([
+            "data" => '',
+            "result" => false,
+            "error" => true,
+            "message" => $e->getMessage() . " " . $e->getCode()
+        ]);
     }
-    
-    
+}
+
     
     public function distributormeetingadd_distributorapp(Request $request)
     {
