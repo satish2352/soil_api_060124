@@ -1832,7 +1832,7 @@ info($farmerMeetingData);
                 ->get();
 
             $meetings = [];
-info('$farmerMeetingData ',$farmerMeetingData);
+info('$farmerMeetingData '.$farmerMeetingData);
             foreach ($farmerMeetingData as $data) {
                 $meetingId = $data->id;
 
@@ -1886,7 +1886,7 @@ info('$farmerMeetingData ',$farmerMeetingData);
             //     "error" => true,
             //     "message" => $e->getMessage() . " " . $e->getCode()
             // ]);
-            info( "message.". $e->getMessage());
+            info( "farmermeetinglist_distributorapp message.". $e->getMessage());
         }
     }
 
