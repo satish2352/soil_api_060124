@@ -4,6 +4,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use GuzzleHttp\Client;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+
+
 class AuthController extends Controller {
     public function login(Request $request)
     {
@@ -236,4 +242,87 @@ class AuthController extends Controller {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+
+
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $email = $request->email;
+        $token = Str::random(60);
+
+        try {
+            // Store the token in the database (you might need a separate table for this)
+            \DB::table('password_resets')->updateOrInsert(
+                ['email' => $email],
+                ['token' => $token, 'created_at' => now()]
+            );
+
+            // Send password reset link to the user's email
+            $resetLink = url('/password/reset/' . $token);
+            Mail::send('emails.password_reset', ['resetLink' => $resetLink], function ($message) use ($email) {
+                $message->to($email)
+                    ->subject('Password Reset Request');
+            });
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Password reset link has been sent to your email address.'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to send password reset link. Please try again later.'
+            ]);
+        }
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $token = $request->token;
+        $email = $request->email;
+        $password = $request->password;
+
+        // Verify the token
+        $passwordReset = \DB::table('password_resets')->where('email', $email)->where('token', $token)->first();
+
+        if (!$passwordReset) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid or expired password reset token.'
+            ]);
+        }
+
+        try {
+            // Update the user's password
+            $user = User::where('email', $email)->first();
+            $user->password = Hash::make($password);
+            $user->save();
+
+            // Delete the password reset token
+            \DB::table('password_resets')->where('email', $email)->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Password has been reset successfully.'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to reset password. Please try again later.'
+            ]);
+        }
+    }
+
 }

@@ -28,6 +28,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post("login_mobileapp", "AuthController@login_mobileapp");
     $router->post("register", "AuthController@register");
 
+    $router->post("forgotPassword", "AuthController@forgotPassword");
+    $router->post("resetPassword", "AuthController@resetPassword");
+
     $router->post('statelist', 'CommonController@statelist');
     $router->post('districtlist', 'CommonController@districtlist');
     $router->post('talukalist', 'CommonController@talukalist');
