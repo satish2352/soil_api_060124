@@ -2475,7 +2475,11 @@ class DistributorControllerNandu extends Controller
             
             {
 
-                $farmerlist_record->photo = DISTRIBUTOR_OWN_DOCUMENTS.$farmerlist_record->photo;
+                foreach ($farmerlist_record as $key => $value) {
+                    $value->photo = DISTRIBUTOR_OWN_DOCUMENTS.$value->photo;
+                }
+
+                
                  return response()->json([
                     "data" => $farmerlist_record,
                     "result" => true,
