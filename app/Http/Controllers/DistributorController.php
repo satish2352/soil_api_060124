@@ -1886,7 +1886,7 @@ info('$farmerMeetingData ',$farmerMeetingData);
             //     "error" => true,
             //     "message" => $e->getMessage() . " " . $e->getCode()
             // ]);
-            info( "message", $e->getMessage() . " " . $e->getCode());
+            info( "message.". $e->getMessage());
         }
     }
 
