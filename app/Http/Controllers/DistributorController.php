@@ -605,10 +605,10 @@ class DistributorController extends Controller
                 'usersinfonew.fname as refname',
                 'usersinfonew.mname as remname',
                 'usersinfonew.lname as relname',
-                'stateNew.name as state',
-                'districtNew.name as district',
-                'talukaNew.name as taluka',
-                'cityNew.name as city'
+                'stateNew.name as state_name',
+                'districtNew.name as district_name',
+                'talukaNew.name as taluka_name',
+                'cityNew.name as city_name'
             )
             ->where('usersinfo.user_id', $request->id)->first();
 
