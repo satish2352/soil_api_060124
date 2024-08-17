@@ -2864,12 +2864,13 @@ class DistributorControllerNandu extends Controller
             if ($video_history_watch)
             {
                 $video_total_duration_watch  = $video_history_watch->video_total_duration_watch;
+                $video_total_duration_watch_final  = (int)$video_total_duration_watch + (int)$request->watch_seconds;
                 $video_history_watch_update= VideoWatchHistory::where([
                                                     'user_id' =>$request->dist_id,
                                                     'video_id' =>$request->video_id
                                                     ])
                                                     ->update([
-                                                        'video_total_duration_watch'=>$request->watch_seconds
+                                                        'video_total_duration_watch'=>$video_total_duration_watch_final
                                                     ]);
 
 
