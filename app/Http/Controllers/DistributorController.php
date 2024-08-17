@@ -1854,10 +1854,10 @@ info($farmerMeetingData);
 
 
             foreach ($farmerMeetingData as $data) {
+                $meetingId = $data->id;
 
-
-                if (!isset($meetings[$data->id])) {
-                    $meetings_new = [
+                if (!isset($meetings[$meetingId])) {
+                    $meetings[$meetingId] = [
                         'id' => $data->id,
                         'date' => $data->date,
                         'meeting_place' => $data->meeting_place,
@@ -1870,33 +1870,18 @@ info($farmerMeetingData);
                         'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
                         'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
                         'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
-                        'presentFarmers'=>[]
+                        'presentFarmers' => []
                     ];
-
-                    info('$meetings_new '.json_encode($meetings_new ));
-                    // if ($data->farmer_id) {
-                    //     $meetings_new['presentFarmers'][] = [
-                    //         'fname' => $data->farmer_fname,
-                    //         'mname' => $data->farmer_mname,
-                    //         'lname' => $data->farmer_lname
-                    //     ];
-                    // }
-                    array_push($meetings, $meetings_new);
-                    info('$meetings '.json_encode($meetings ));
-                   
 
                 }
 
                 if ($data->farmer_id) {
-                    $meetings[$data->id]['presentFarmers'][] = [
+                    $meetings[$meetingId]['presentFarmers'][] = [
                         'fname' => $data->farmer_fname,
                         'mname' => $data->farmer_mname,
                         'lname' => $data->farmer_lname
                     ];
                 }
-
-                info('$meetings[$data->id]presentFarmers '.json_encode($meetings[$data->id]['presentFarmers'] ));
-                    
 
             }
 
