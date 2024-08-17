@@ -1819,170 +1819,81 @@ info($farmerMeetingData);
     //     }
     // }
 
-// New Code
-    // public function farmermeetinglist_distributorapp(Request $request)
-    // {
-    //     try {
-    //         $response = "";
-    //         $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
-    //             ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
-    //             ->where('tbl_farmer_meeting.is_deleted', 'no')
-    //             ->where('tbl_farmer_meeting.created_by', $request->user_id)
-    //             ->orderBy('tbl_farmer_meeting.id', 'DESC')
-    //             ->get();
-
-    //         $meetings = [];
-    //         info('$farmerMeetingData '.$farmerMeetingData);
-    //         foreach ($farmerMeetingData as $data) {
-    //             info('in for $data '.$data);
-    //             $meetingId = $data->id;
-
-    //             if (!isset($meetings[$meetingId])) {
-    //                 $meetings[$meetingId] = [
-    //                     'id' => $data->id,
-    //                     'date' => $data->date,
-    //                     'meeting_place' => $data->meeting_place,
-    //                     'farmer_id' => $data->farmer_id,
-    //                     'meeting_title' => $data->meeting_title,
-    //                     'meeting_description' => $data->meeting_description,
-    //                     'created_by' => $data->created_by,
-    //                     'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
-    //                     'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
-    //                     'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
-    //                     'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
-    //                     'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
-    //                     'presentFarmers' => []
-    //                 ];
-
-    //                 info('in if $meetings  $meetings : ' . $meetings  );
-    //             }
-
-    //             info('$meetings  $meetings : ' . $meetings  );
-
-    //             if ($data->farmer_id) {
-    //                 $meetings[$meetingId]['presentFarmers'][] = [
-    //                     'fname' => $data->farmer_fname,
-    //                     'mname' => $data->farmer_mname,
-    //                     'lname' => $data->farmer_lname
-    //                 ];
-
-    //             }
-
-    //             info('$meetings  $meetings 2: ' . $meetings  );
-
-    //         }
-
-    //             $response = $meetings;
-    //             info('$response $response'.$response);
-    //             if (!empty($response)) {
-    //                 return $response()->json([
-    //                     "data" => $response,
-    //                     "result" => true,
-    //                     "message" => 'Farmer Meeting Get Successfully'
-    //                 ]);
-    //             } else {
-    //                 return $response()->json([
-    //                     "data" => '',
-    //                     "result" => false,
-    //                     "message" => 'Farmer Meeting Not Found'
-    //                 ]);
-    //             }
-    //     } catch (Exception $e) {
-    //         // return $response()->json([
-    //         //     "data" => '',
-    //         //     "result" => false,
-    //         //     "error" => true,
-    //         //     "message" => $e->getMessage() . " " . $e->getCode()
-    //         // ]);
-    //         info( "farmermeetinglist_distributorapp message.". $e->getMessage());
-    //     }
-    // }
 
     public function farmermeetinglist_distributorapp(Request $request)
-{
-    try {
-        $response = "";
-        $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
-            ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
-            ->where('tbl_farmer_meeting.is_deleted', 'no')
-            ->where('tbl_farmer_meeting.created_by', $request->user_id)
-            ->orderBy('tbl_farmer_meeting.id', 'DESC')
-            ->get();
+    {
+        try {
+            $response = "";
+            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
+                ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
+                ->where('tbl_farmer_meeting.is_deleted', 'no')
+                ->where('tbl_farmer_meeting.created_by', $request->user_id)
+                ->orderBy('tbl_farmer_meeting.id', 'DESC')
+                ->get();
 
-        $meetings = [];
+            $meetings = [];
 
-        // Log the raw data for debugging
-        info('farmerMeetingData: ' . json_encode($farmerMeetingData));
 
-        foreach ($farmerMeetingData as $data) {
-            $meetingId = $data->id;
+            foreach ($farmerMeetingData as $data) {
+                $meetingId = $data->id;
 
-            if (!isset($meetings[$meetingId])) {
-                $meetings[$meetingId] = [
-                    'id' => $data->id,
-                    'date' => $data->date,
-                    'meeting_place' => $data->meeting_place,
-                    'farmer_id' => $data->farmer_id,
-                    'meeting_title' => $data->meeting_title,
-                    'meeting_description' => $data->meeting_description,
-                    'created_by' => $data->created_by,
-                    'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
-                    'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
-                    'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
-                    'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
-                    'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
-                    'presentFarmers' => []
-                ];
+                if (!isset($meetings[$meetingId])) {
+                    $meetings[$meetingId] = [
+                        'id' => $data->id,
+                        'date' => $data->date,
+                        'meeting_place' => $data->meeting_place,
+                        'farmer_id' => $data->farmer_id,
+                        'meeting_title' => $data->meeting_title,
+                        'meeting_description' => $data->meeting_description,
+                        'created_by' => $data->created_by,
+                        'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
+                        'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
+                        'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
+                        'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
+                        'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
+                        'presentFarmers' => []
+                    ];
 
-                // Log after adding a new meeting
-                info('Meeting added: ' . json_encode($meetings[$meetingId]));
+                }
+
+                if ($data->farmer_id) {
+                    $meetings[$meetingId]['presentFarmers'][] = [
+                        'fname' => $data->farmer_fname,
+                        'mname' => $data->farmer_mname,
+                        'lname' => $data->farmer_lname
+                    ];
+                }
+
             }
 
-            if ($data->farmer_id) {
-                $meetings[$meetingId]['presentFarmers'][] = [
-                    'fname' => $data->farmer_fname,
-                    'mname' => $data->farmer_mname,
-                    'lname' => $data->farmer_lname
-                ];
+            $response = $meetings;
+
+
+            if (!empty($response)) {
+                return response()->json([
+                    "data" => $response,
+                    "result" => true,
+                    "message" => 'Farmer Meeting Get Successfully'
+                ]);
+            } else {
+                return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Farmer Meeting Not Found'
+                ]);
             }
-
-            // Log after adding a farmer to the meeting
-            info('Updated meeting: ' . json_encode($meetings[$meetingId]));
-        }
-
-        $response = $meetings;
-
-        // Log the final response
-        info('Final response: ' . json_encode($response));
-
-        if (!empty($response)) {
-            return response()->json([
-                "data" => $response,
-                "result" => true,
-                "message" => 'Farmer Meeting Get Successfully'
-            ]);
-        } else {
+        } catch (Exception $e) {
             return response()->json([
                 "data" => '',
                 "result" => false,
-                "message" => 'Farmer Meeting Not Found'
+                "error" => true,
+                "message" => $e->getMessage()
             ]);
         }
-    } catch (Exception $e) {
-        // Log the exception message
-        info("farmermeetinglist_distributorapp exception: " . $e->getMessage());
-        
-        return response()->json([
-            "data" => '',
-            "result" => false,
-            "error" => true,
-            "message" => $e->getMessage()
-        ]);
     }
-}
 
 
-    
+
     public function distributormeetingadd_distributorapp(Request $request)
     {
         $distributor = new DistributorMeeting();
