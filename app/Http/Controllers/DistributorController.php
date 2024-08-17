@@ -1855,6 +1855,8 @@ info($farmerMeetingData);
 
             foreach ($farmerMeetingData as $data) {
 
+
+                if (!isset($meetings[$data->id])) {
                     $meetings_new = [
                         'id' => $data->id,
                         'date' => $data->date,
@@ -1870,8 +1872,18 @@ info($farmerMeetingData);
                         'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
                     ];
 
+                    // if ($data->farmer_id) {
+                    //     $meetings_new['presentFarmers'][] = [
+                    //         'fname' => $data->farmer_fname,
+                    //         'mname' => $data->farmer_mname,
+                    //         'lname' => $data->farmer_lname
+                    //     ];
+                    // }
+
+                }
+
                     if ($data->farmer_id) {
-                        $meetings_new['presentFarmers'] = [
+                        $meetings[$data->id]['presentFarmers'][] = [
                             'fname' => $data->farmer_fname,
                             'mname' => $data->farmer_mname,
                             'lname' => $data->farmer_lname
