@@ -3020,6 +3020,8 @@ class DistributorControllerNandu extends Controller
             $targetvideo->transform(function($item) {
                 $item->created_at = Carbon::parse($item->created_at)->setTimezone('Asia/Kolkata')->toDateTimeString();
                 $item->updated_at = Carbon::parse($item->updated_at)->setTimezone('Asia/Kolkata')->toDateTimeString();
+                $item->description = strip_tags($item->description); // Remove HTML tags
+
                 return $item;
             });
             return response()->json([
