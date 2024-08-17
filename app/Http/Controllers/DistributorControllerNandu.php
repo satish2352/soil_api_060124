@@ -282,7 +282,7 @@ class DistributorControllerNandu extends Controller
     public function farmer_meeting_title_search_mobileapp(Request $request)
     {
         try {
-            $response = "";
+            $response = [];
             $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
                 ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
                 ->where('tbl_farmer_meeting.is_deleted', 'no')
@@ -291,60 +291,47 @@ class DistributorControllerNandu extends Controller
                 ->orderBy('tbl_farmer_meeting.id', 'DESC')
                 ->get();
 
-            $meetings = [];
-
-
-            foreach ($farmerMeetingData as $data) {
-                $meetingId = $data->id;
-
-                if (!isset($meetings[$meetingId])) {
-                    $meetings[$meetingId] = [
-                        'id' => $data->id,
-                        'date' => $data->date,
-                        'meeting_place' => $data->meeting_place,
-                        'farmer_id' => $data->farmer_id,
-                        'meeting_title' => $data->meeting_title,
-                        'meeting_description' => $data->meeting_description,
-                        'created_by' => $data->created_by,
-                        'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
-                        'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
-                        'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
-                        'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
-                        'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
-                        'presentFarmers' => []
-                    ];
-
+                foreach ($farmerMeetingData as $data) {
+                    $meetingId = $data->id;
+        
+                    if (!isset($response[$meetingId])) {
+                        $response[$meetingId] = [
+                            'id' => $data->id,
+                            'date' => $data->date,
+                            'meeting_place' => $data->meeting_place,
+                            'farmer_id' => $data->farmer_id,
+                            'meeting_title' => $data->meeting_title,
+                            'meeting_description' => $data->meeting_description,
+                            'created_by' => $data->created_by,
+                            'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
+                            'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
+                            'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
+                            'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
+                            'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
+                            'presentFarmers' => []
+                        ];
+                    }
+        
+                    if ($data->farmer_id) {
+                        $response[$meetingId]['presentFarmers'][] = [
+                            'fname' => $data->farmer_fname,
+                            'mname' => $data->farmer_mname,
+                            'lname' => $data->farmer_lname
+                        ];
+                    }
                 }
-
-                if ($data->farmer_id) {
-                    $meetings[$meetingId]['presentFarmers'][] = [
-                        'fname' => $data->farmer_fname,
-                        'mname' => $data->farmer_mname,
-                        'lname' => $data->farmer_lname
-                    ];
-                }
-
-            }
-
-            $response = $meetings;
-
-
-            if (!empty($response)) {
+        
+                // Convert associative array to indexed array
+                $response = array_values($response);
+        
                 return response()->json([
                     "data" => $response,
                     "result" => true,
                     "message" => 'Farmer Meeting Get Successfully'
                 ]);
-            } else {
-                return response()->json([
-                    "data" => '',
-                    "result" => false,
-                    "message" => 'Farmer Meeting Not Found'
-                ]);
-            }
         } catch (Exception $e) {
             return response()->json([
-                "data" => '',
+                "data" => [],
                 "result" => false,
                 "error" => true,
                 "message" => $e->getMessage()
