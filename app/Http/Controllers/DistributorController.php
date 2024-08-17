@@ -1824,8 +1824,8 @@ info($farmerMeetingData);
     {
         try {
             $response = "";
-            $farmerMeetingData = FarmerMeeting::select('farmer_meetings.*', 'farmer_meeting_details.farmer_id', 'farmer_meeting_details.farmer_fname', 'farmer_meeting_details.farmer_mname', 'farmer_meeting_details.farmer_lname')
-                ->leftJoin('farmer_meeting_details', 'farmer_meetings.id', '=', 'farmer_meeting_details.farmer_meeting_table_id')
+            $farmerMeetingData = FarmerMeeting::select('farmer_meetings.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
+                ->leftJoin('tbl_farmer_meeting_details', 'farmer_meetings.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
                 ->where('farmer_meetings.is_deleted', 'no')
                 ->where('farmer_meetings.created_by', $request->user_id)
                 ->orderBy('farmer_meetings.id', 'DESC')
