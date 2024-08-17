@@ -467,7 +467,7 @@ class DistributorController extends Controller
         $distributorregistration_images_list = UsersInfo::where('user_id',$request->user_id)->get();
         if(!empty($distributorregistration_images_list))
         {
-            $photoName=$idLastInserted."_aadhar_card_image_front";
+            $photoName=$idLastInserted."_aadhar_card_image_front"."_".rand(100000, 999999);
             $inputfilenametoupload='aadhar_card_image_front';
             if (!empty($request->hasFile($inputfilenametoupload)))
             {   
@@ -481,7 +481,7 @@ class DistributorController extends Controller
                 $users=UsersInfo::where('user_id',$request->user_id)->update(['aadhar_card_image_front'=>$filename]);
             }
             
-            $photoName=$idLastInserted."_aadhar_card_image_back";
+            $photoName=$idLastInserted."_aadhar_card_image_back"."_".rand(100000, 999999);
             $inputfilenametoupload='aadhar_card_image_back';
             if (!empty($request->hasFile($inputfilenametoupload)))
             {   
@@ -495,7 +495,7 @@ class DistributorController extends Controller
                 $users=UsersInfo::where('user_id',$request->user_id)->update(['aadhar_card_image_back'=>$filename]);
             }
             
-            $photoName=$idLastInserted."_pan_card";
+            $photoName=$idLastInserted."_pan_card"."_".rand(100000, 999999);
             $inputfilenametoupload='pan_card';
             if (!empty($request->hasFile($inputfilenametoupload)))
             {   
@@ -510,7 +510,7 @@ class DistributorController extends Controller
             }
             
             
-            $photoName=$idLastInserted."_light_bill";
+            $photoName=$idLastInserted."_light_bill"."_".rand(100000, 999999);
             $inputfilenametoupload='light_bill';
             if (!empty($request->hasFile($inputfilenametoupload)))
             {   
@@ -525,7 +525,7 @@ class DistributorController extends Controller
             }
             
             
-            $photoName=$idLastInserted."_shop_act_image";
+            $photoName=$idLastInserted."_shop_act_image"."_".rand(100000, 999999);
             $inputfilenametoupload='shop_act_image';
             if (!empty($request->hasFile($inputfilenametoupload)))
             {   
@@ -540,7 +540,7 @@ class DistributorController extends Controller
                
             }
             
-            $photoName=$idLastInserted."_product_purchase_bill";
+            $photoName=$idLastInserted."_product_purchase_bill"."_".rand(100000, 999999);
             $inputfilenametoupload='product_purchase_bill';
             if (!empty($request->hasFile($inputfilenametoupload)))
             {   
