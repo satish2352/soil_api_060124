@@ -297,6 +297,7 @@ class AuthController extends Controller {
 
             // Send password reset link
             $resetLink = url('/password/reset/' . $token);
+            info('$resetLink = ' . $resetLink);
             Mail::raw('Please use the following link to reset your password: ' . $resetLink, function ($message) use ($email) {
                 $message->to($email)
                     ->subject('Password Reset Request');
