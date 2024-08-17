@@ -33,6 +33,8 @@ use App\Models\ {
     VideoWatchHistory
 };
 use DB;
+use Carbon\Carbon;
+
 use App\Http\Controllers\CommonController As CommonController;
 
 class DistributorControllerNandu extends Controller
@@ -3014,6 +3016,10 @@ class DistributorControllerNandu extends Controller
                 )
                 ->get();
            
+                $targetvideo->each(function($item) {
+                    $item->created_at = Carbon::parse($item->created_at)->setTimezone('Asia/Kolkata');
+                    $item->updated_at = Carbon::parse($item->updated_at)->setTimezone('Asia/Kolkata');
+                });
             return response()->json([
                 "data" => $targetvideo,
                 "result" => true,
