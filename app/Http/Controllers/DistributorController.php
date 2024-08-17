@@ -574,53 +574,75 @@ class DistributorController extends Controller
             
         }
     }
-    
-    
-    
-    
+
+
+
+
     public function distributorinfo(Request $request)
     {
 
-        $userinfo = UsersInfo::leftJoin('usersinfo as usersinfonew', function($join) {
-            $join->on('usersinfo.reference_from', '=', 'usersinfonew.user_id');
-        })
-        ->select('usersinfo.*','usersinfonew.fname as refname','usersinfonew.mname as remname','usersinfonew.lname as relname')
-        ->where('usersinfo.user_id',$request->id)->first();
-        if($userinfo)
-        {
+        $userinfo = UsersInfo::leftJoin('usersinfo as usersinfonew', function ($join) {
+                $join->on('usersinfo.reference_from', '=', 'usersinfonew.user_id');
+            })
+            ->leftJoin('tbl_area as stateNew', function ($join) {
+                $join->on('usersinfo.state', '=', 'stateNew.location_id');
+            })
+
+            ->leftJoin('tbl_area as districtNew', function ($join) {
+                $join->on('usersinfo.district', '=', 'districtNew.location_id');
+            })
 
 
-            $userinfo->aadhar_card_image_front=DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->aadhar_card_image_front;
-            $userinfo->aadhar_card_image_back=DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->aadhar_card_image_back;
-            $userinfo->pan_card=DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->pan_card;
-            $userinfo->light_bill=DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->light_bill;
-            $userinfo->shop_act_image=DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->shop_act_image;
-            $userinfo->product_purchase_bill=DISTRIBUTOR_OWN_DOCUMENTS_VIEW.$userinfo->product_purchase_bill;
-            
+            ->leftJoin('tbl_area as talukaNew', function ($join) {
+                $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+            })
+
+            ->leftJoin('tbl_area as cityNew', function ($join) {
+                $join->on('usersinfo.city', '=', 'cityNew.location_id');
+            })
+            ->select(
+                'usersinfo.*',
+                'usersinfonew.fname as refname',
+                'usersinfonew.mname as remname',
+                'usersinfonew.lname as relname',
+                'stateNew.name as state',
+                'districtNew.name as district',
+                'talukaNew.name as taluka',
+                'cityNew.name as city'
+            )
+            ->where('usersinfo.user_id', $request->id)->first();
+
+        if ($userinfo) {
+
+
+            $userinfo->aadhar_card_image_front = DISTRIBUTOR_OWN_DOCUMENTS_VIEW . $userinfo->aadhar_card_image_front;
+            $userinfo->aadhar_card_image_back = DISTRIBUTOR_OWN_DOCUMENTS_VIEW . $userinfo->aadhar_card_image_back;
+            $userinfo->pan_card = DISTRIBUTOR_OWN_DOCUMENTS_VIEW . $userinfo->pan_card;
+            $userinfo->light_bill = DISTRIBUTOR_OWN_DOCUMENTS_VIEW . $userinfo->light_bill;
+            $userinfo->shop_act_image = DISTRIBUTOR_OWN_DOCUMENTS_VIEW . $userinfo->shop_act_image;
+            $userinfo->product_purchase_bill = DISTRIBUTOR_OWN_DOCUMENTS_VIEW . $userinfo->product_purchase_bill;
+
 
         }
-        
-        if ($userinfo)
-        {
-             return response()->json([
+
+        if ($userinfo) {
+            return response()->json([
                 "data" => $userinfo,
                 "result" => true,
                 "message" => 'Distributor info get successfully',
-               
+
             ]);
-        }
-        else
-        {
-             return response()->json([
+        } else {
+            return response()->json([
                 "data" => array(),
                 "result" => false,
                 "message" => 'Distributor not found '
             ]);
-            
+
         }
 
     }
-    
+
     public function distributordetails(Request $request)
     {
         
@@ -1604,9 +1626,6 @@ class DistributorController extends Controller
     public function farmermeetinglist_distributorweb(Request $request)
     {
         try{
-
-            info('hi 12341241');
-            info($request);
 
             $presentFarmerFormeeting='';
             $farmerMeetingData =FarmerMeeting::where('tbl_farmer_meeting.is_deleted','no')
