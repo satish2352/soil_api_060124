@@ -779,14 +779,17 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $messagesearch= Messages::where('subject', 'like', '%' . $request->search . '%')
-                    ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
-                    ->orWhere('message', 'like', '%' . $request->search . '%')
-                    ->orWhere('msg', 'like', '%' . $request->search . '%')
-                    ->where('message_by',$request->dist_id)
-                    ->where('is_deleted','no')
-                    ->groupBy('id')
-                    ->get();
+            $messagesearch = Messages::where('message_by', $request->dist_id)
+                            ->where('is_deleted', 'no')
+                            ->where(function ($query) use ($request) {
+                                $query->where('subject', 'like', '%' . $request->search . '%')
+                                    ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
+                                    ->orWhere('message', 'like', '%' . $request->search . '%')
+                                    ->orWhere('msg', 'like', '%' . $request->search . '%');
+                            })
+                            ->groupBy('id')
+                            ->get();
+        
             
             $messagesearchcount=sizeof($messagesearch);
             if($messagesearchcount>0)
