@@ -231,48 +231,6 @@ class FarmerController extends Controller
     public function farmerget(Request $request)
     {
         
-        // //DB::enableQueryLog(); 
-        // //dd($request->user_id);
-        // $result = UsersInfo::where('user_type', '=', 'farmer')
-        //                     ->where('is_deleted', '=', 'no')
-        //                     ->where('user_id', '=',$request->user_id )
-        //                     ->get();
-        // //dd(DB::getQueryLog()); 
-        // // dd($result);
-        // foreach($result as $key=>$value)
-        // {
-        //     $stateName=$this->commonController->getAreaNameById($value->state);
-        //     $value->state=$stateName->name;
-            
-        //     $districtName=$this->commonController->getAreaNameById($value->district);
-        //     $value->district=$districtName->name;
-            
-        //     $talukaName=$this->commonController->getAreaNameById($value->taluka);
-        //     $value->taluka=$talukaName->name;
-            
-        //     $cityName=$this->commonController->getAreaNameById($value->city);
-        //     $value->city=$cityName->name;
-            
-        //     $value->photo=FARMER_PHOTO_VIEW.$value->photo;
-        // }
-        // if (count($result) > 0)
-        // {
-        //     $response = array();
-        //     $response['data'] = $result;
-        //     $response['code'] = 200;
-        //     $response['message'] = 'Farmer List Get Successfully';
-        //     $response['result'] = true;
-        //     return response()->json($response);
-        // }
-        // else
-        // {
-        //     $response = array();
-        //     $response['code'] = 400;
-        //     $response['message'] = 'Farmer List Not Found';
-        //     $response['result'] = false;
-        //     return response()->json($response);
-        // }
-        
          $result = UsersInfo::where('user_type', '=', 'farmer')->where('is_deleted', '=', 'no')->where('user_id', '=',$request->user_id )
              ->select('user_id','fname','mname','lname','aadharcard','email','phone','state','district','taluka','city','address','pincode','crop','acre','password','photo')
             ->get();
@@ -314,13 +272,6 @@ class FarmerController extends Controller
 
 
     }
-    
-    
-    
-    
-    
-    
-    
     
     public function farmerdetails(Request $request)
     {
@@ -449,7 +400,7 @@ class FarmerController extends Controller
 
     public function farmerupdate(Request $request)
     {
-        $farmerupdatedata = ['fname' => $request->fname, 'mname' => $request->mname, 'lname' => $request->lname, 'aadharcard' => $request->aadharcard, 'email' => $request->email, 'phone' => $request->phone, 'state' => $request->state, 'district' => $request->district, 'taluka' => $request->taluka, 'city' => $request->city, 'address' => $request->address, 'pincode' => $request->pincode, 'crop' => $request->crop, 'acre' => $request->acre, 'photo' => $request->photo, 'password' => $request->password, 'remember_token' => $request->token, ];
+        $farmerupdatedata = ['fname' => $request->fname, 'mname' => $request->mname, 'lname' => $request->lname, 'aadharcard' => $request->aadharcard, 'email' => $request->email, 'phone' => $request->phone, 'state' => $request->state, 'district' => $request->district, 'taluka' => $request->taluka, 'city' => $request->city, 'address' => $request->address, 'pincode' => $request->pincode, 'crop' => $request->crop, 'acre' => $request->acre];
         $result = UsersInfo::where('user_id', '=', $request->user_id)->update($farmerupdatedata);
         $farmerupdatedataNew = ['name' => $request->fname." ".$request->mname." ".$request->lname." "];
         $result = User::where('id', '=', $request->user_id)->update($farmerupdatedataNew);
