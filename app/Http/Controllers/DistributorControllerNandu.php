@@ -1239,14 +1239,18 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $complaintsearch= Complaint::where('subject', 'like', '%' . $request->search . '%')
-             ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
-             ->orWhere('complaint', 'like', '%' . $request->search . '%')
-             ->orWhere('msg', 'like', '%' . $request->search . '%')
-                    ->where('complaint_by' ,$request->dist_id)
-                    ->where('is_deleted','no')
+
+            $complaintsearch = Complaint::where('complaint_by', $request->dist_id)
+                    ->where('is_deleted', 'no')
+                    ->where(function ($query) use ($request) {
+                        $query->where('subject', 'like', '%' . $request->search . '%')
+                            ->orWhere('recipient_name', 'like', '%' . $request->search . '%')
+                            ->orWhere('complaint', 'like', '%' . $request->search . '%')
+                            ->orWhere('msg', 'like', '%' . $request->search . '%');
+                    })
                     ->groupBy('id')
                     ->get();
+
             $Complaintcount=sizeof($complaintsearch);
             if ($Complaintcount>0)
             {
