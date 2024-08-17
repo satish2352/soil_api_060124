@@ -43,7 +43,7 @@ class AuthController extends Controller {
                     "data" => '',
                     "result" => false,
                     "error" => true,
-                    "message" =>"User Not Foutnd or Invalid Credentials ".$e->getMessage()." ".$e->getCode()
+                    "message" =>"User Not Foutnd or Invalid Credentials "
                 ]);
            
             }
@@ -98,19 +98,32 @@ class AuthController extends Controller {
         if (empty($email) or empty($password)) {
             return response()->json(['status' => 'error', 'message' => 'You must fill all fields']);
         }
-        $client = new Client();
-        try 
-        {
+        try{
+        
+            try 
+            {
+                $client = new Client();
+                $response =  $client->post(config('service.passport.login_endpoint'), [
+                    "form_params" => [
+                        "client_secret" => config('service.passport.client_secret'),
+                        "grant_type" => "password",
+                        "client_id" => config('service.passport.client_id'),
+                        "username" => $request->email,
+                        "password" => $request->password
+                    ]
+                ]);
 
-            $response =  $client->post(config('service.passport.login_endpoint'), [
-                "form_params" => [
-                    "client_secret" => config('service.passport.client_secret'),
-                    "grant_type" => "password",
-                    "client_id" => config('service.passport.client_id'),
-                    "username" => $request->email,
-                    "password" => $request->password
-                ]
-            ]);
+            } catch (Exception $e) {
+
+                return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>"User Not Foutnd or Invalid Credentials "
+                ]);
+        
+            }
+
             $result  = json_decode((string) $response->getBody(), true);
             if($result) {
 
