@@ -1834,6 +1834,7 @@ info($farmerMeetingData);
             $meetings = [];
             info('$farmerMeetingData '.$farmerMeetingData);
             foreach ($farmerMeetingData as $data) {
+                info('in for $data '.$data);
                 $meetingId = $data->id;
 
                 if (!isset($meetings[$meetingId])) {
@@ -1852,6 +1853,8 @@ info($farmerMeetingData);
                         'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
                         'presentFarmers' => []
                     ];
+
+                    info('in if $meetings  $meetings : ' . $meetings  );
                 }
 
                 info('$meetings  $meetings : ' . $meetings  );
