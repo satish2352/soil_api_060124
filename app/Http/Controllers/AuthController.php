@@ -64,7 +64,8 @@ class AuthController extends Controller {
                 return response()->json([
                     "status" => true,
                     "token" => $result['access_token'],
-                    "data" => $userinfo
+                    "data" => $userinfo,
+                    "result" => true,
                     ]);
             } else {
                 return response()->json([
@@ -140,7 +141,8 @@ class AuthController extends Controller {
                         return response()->json([
                         "status" => true,
                         "token" => $result['access_token'],
-                        "data" => $userinfo
+                        "data" => $userinfo,
+                        "result" => true,
                         ]);
                         
                     }
