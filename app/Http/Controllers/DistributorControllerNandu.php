@@ -214,41 +214,74 @@ class DistributorControllerNandu extends Controller
     // Farmers Meeting Search
     public function farmer_meeting_search_mobileapp(Request $request)
     {
-        try
-        {
-            
-             $farmer_meering_record= FarmerMeeting::where('created_by',$request->created_by)
-                    ->whereBetween('date', [$request->fromdate,$request->todate])
-                    ->where('is_deleted','no')
-                    ->get();
-                    
-            $farmer_meering_recordcount=sizeof($farmer_meering_record);
-            if($farmer_meering_recordcount>0)
-            
-            {
-                 return response()->json([
-                    "data" => $farmer_meering_record,
+        try {
+            $response = "";
+            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
+                ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
+                ->where('tbl_farmer_meeting.is_deleted', 'no')
+                ->where('tbl_farmer_meeting.created_by', $request->user_id)
+                ->whereBetween('tbl_farmer_meeting.date', [$request->fromdate,$request->todate])
+                ->orderBy('tbl_farmer_meeting.id', 'DESC')
+                ->get();
+
+            $meetings = [];
+
+
+            foreach ($farmerMeetingData as $data) {
+                $meetingId = $data->id;
+
+                if (!isset($meetings[$meetingId])) {
+                    $meetings[$meetingId] = [
+                        'id' => $data->id,
+                        'date' => $data->date,
+                        'meeting_place' => $data->meeting_place,
+                        'farmer_id' => $data->farmer_id,
+                        'meeting_title' => $data->meeting_title,
+                        'meeting_description' => $data->meeting_description,
+                        'created_by' => $data->created_by,
+                        'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
+                        'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
+                        'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
+                        'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
+                        'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
+                        'presentFarmers' => []
+                    ];
+
+                }
+
+                if ($data->farmer_id) {
+                    $meetings[$meetingId]['presentFarmers'][] = [
+                        'fname' => $data->farmer_fname,
+                        'mname' => $data->farmer_mname,
+                        'lname' => $data->farmer_lname
+                    ];
+                }
+
+            }
+
+            $response = $meetings;
+
+
+            if (!empty($response)) {
+                return response()->json([
+                    "data" => $response,
                     "result" => true,
-                    "message" => 'Farmers Meeting Record Get Successfully'
+                    "message" => 'Farmer Meeting Get Successfully'
                 ]);
-            }
-            else
-            {
-                 return response()->json([
-                    "data" => array(),
+            } else {
+                return response()->json([
+                    "data" => '',
                     "result" => false,
-                    "message" => 'Farmers Meeting Record Not Found'
+                    "message" => 'Farmer Meeting Not Found'
                 ]);
-                
             }
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
-                    "data" => array(),
-                    "result" => false,
-                    "error" => true,
-                    "message" =>$e->getMessage()." ".$e->getCode()
-                ]);
-           
+                "data" => '',
+                "result" => false,
+                "error" => true,
+                "message" => $e->getMessage()
+            ]);
         }
     }
     
