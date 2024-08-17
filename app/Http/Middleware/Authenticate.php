@@ -37,8 +37,15 @@ class Authenticate
     {
         \Log::info($request);
         if ($this->auth->guard($guard)->guest()) {
-            //return response('Unauthorized API Gateway Middleware.', 401);
-            return response()->json(['status' => 'error', 'message' => 'Token invalid','data'=>'','error_code'=>'401']);
+          
+            // return response()->json(['status' => 'error', 'message' => 'Token invalid','data'=>'','error_code'=>'401']);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Token invalid',
+                'data' => '',
+                'error_code' => '401'
+            ], 401);
+            
         }
 
         return $next($request);
