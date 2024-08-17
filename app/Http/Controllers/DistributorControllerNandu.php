@@ -1215,7 +1215,15 @@ class DistributorControllerNandu extends Controller
             'msg_read' => 'y',
           ];
         $complaintupdate = Complaint::where('id',$request->id)->update($data);
-
+        $messageupdateData = Complaint::where('id',$request->id)->first();
+      
+        $dataToInsert = [
+            "distributor_id"=>$messageupdateData->complaint_by,
+            "message"=>$request->msg,
+            "is_read"=>"no",
+        ];
+        $notification = Notification::insert($dataToInsert);
+        
       
         if ($complaintupdate)
         {
