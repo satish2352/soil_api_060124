@@ -274,7 +274,8 @@ class AuthController extends Controller {
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to send password reset link. Please try again later.'
+                'message' => 'Failed to send password reset link. Please try again later.',
+                'error' => $e->getMessage()
             ]);
         }
     }
