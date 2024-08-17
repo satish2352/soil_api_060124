@@ -247,32 +247,30 @@ class AuthController extends Controller {
 
     public function forgotPassword(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ]);
-
-        $email = $request->email;
+        $this->validateForgotPasswordRequest($request);
+    
+        $email = $request->input('email');
         $token = Str::random(60);
-
+    
         try {
-            // Store the token in the database (you might need a separate table for this)
+            // Store the token in the database
             \DB::table('password_resets')->updateOrInsert(
                 ['email' => $email],
                 ['token' => $token, 'created_at' => now()]
             );
-
-            // Send password reset link to the user's email
+    
+            // Send password reset link
             $resetLink = url('/password/reset/' . $token);
             Mail::send('emails.password_reset', ['resetLink' => $resetLink], function ($message) use ($email) {
                 $message->to($email)
                     ->subject('Password Reset Request');
             });
-
+    
             return response()->json([
                 'status' => 'success',
                 'message' => 'Password reset link has been sent to your email address.'
             ]);
-
+    
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -280,43 +278,53 @@ class AuthController extends Controller {
             ]);
         }
     }
+    
+    private function validateForgotPasswordRequest($request)
+    {
+        $email = $request->input('email');
+    
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \Exception('Invalid email address.');
+        }
+    
+        if (!\DB::table('users')->where('email', $email)->exists()) {
+            throw new \Exception('Email address not found.');
+        }
+    }
+    
 
     public function resetPassword(Request $request)
     {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        $token = $request->token;
-        $email = $request->email;
-        $password = $request->password;
-
+        $this->validateResetPasswordRequest($request);
+    
+        $token = $request->input('token');
+        $email = $request->input('email');
+        $password = $request->input('password');
+    
         // Verify the token
         $passwordReset = \DB::table('password_resets')->where('email', $email)->where('token', $token)->first();
-
+    
         if (!$passwordReset) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid or expired password reset token.'
             ]);
         }
-
+    
         try {
             // Update the user's password
             $user = User::where('email', $email)->first();
-            $user->password = Hash::make($password);
+            $user->password = app('hash')->make($password);
             $user->save();
-
+    
             // Delete the password reset token
             \DB::table('password_resets')->where('email', $email)->delete();
-
+    
             return response()->json([
                 'status' => 'success',
                 'message' => 'Password has been reset successfully.'
             ]);
-
+    
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -324,5 +332,34 @@ class AuthController extends Controller {
             ]);
         }
     }
+    
+    private function validateResetPasswordRequest($request)
+    {
+        $token = $request->input('token');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $passwordConfirmation = $request->input('password_confirmation');
+    
+        if (empty($token) || empty($email) || empty($password) || empty($passwordConfirmation)) {
+            throw new \Exception('All fields are required.');
+        }
+    
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new \Exception('Invalid email address.');
+        }
+    
+        if ($password !== $passwordConfirmation) {
+            throw new \Exception('Passwords do not match.');
+        }
+    
+        if (strlen($password) < 6) {
+            throw new \Exception('Password must be at least 6 characters.');
+        }
+    
+        if (!\DB::table('users')->where('email', $email)->exists()) {
+            throw new \Exception('Email address not found.');
+        }
+    }
+    
 
 }
