@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
-
 class AuthController extends Controller {
     public function login(Request $request)
     {
@@ -245,40 +244,77 @@ class AuthController extends Controller {
 
 
 
+    // public function forgotPassword(Request $request)
+    // {
+    //     $this->validateForgotPasswordRequest($request);
+    
+    //     $email = $request->input('email');
+    //     $token = Str::random(60);
+    
+    //     try {
+    //         // Store the token in the database
+    //         \DB::table('password_resets')->updateOrInsert(
+    //             ['email' => $email],
+    //             ['token' => $token]
+    //         );
+    
+    //         // Send password reset link
+    //         $resetLink = url('/password/reset/' . $token);
+    //         Mail::send('emails.password_reset', ['resetLink' => $resetLink], function ($message) use ($email) {
+    //             $message->to($email)
+    //                 ->subject('Password Reset Request');
+    //         });
+    
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'message' => 'Password reset link has been sent to your email address.'
+    //         ]);
+    
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => 'Failed to send password reset link. Please try again later.',
+    //             'error' => $e->getMessage()
+    //         ]);
+    //     }
+    // }
+
+    
+
     public function forgotPassword(Request $request)
     {
         $this->validateForgotPasswordRequest($request);
-    
+
         $email = $request->input('email');
         $token = Str::random(60);
-    
+
         try {
             // Store the token in the database
             \DB::table('password_resets')->updateOrInsert(
                 ['email' => $email],
-                ['token' => $token]
+                ['token' => $token, 'created_at' => now()]
             );
-    
+
             // Send password reset link
             $resetLink = url('/password/reset/' . $token);
-            Mail::send('emails.password_reset', ['resetLink' => $resetLink], function ($message) use ($email) {
+            Mail::raw('Please use the following link to reset your password: ' . $resetLink, function ($message) use ($email) {
                 $message->to($email)
                     ->subject('Password Reset Request');
             });
-    
+
             return response()->json([
                 'status' => 'success',
                 'message' => 'Password reset link has been sent to your email address.'
             ]);
-    
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Failed to send password reset link. Please try again later.',
-                'error' => $e->getMessage()
+                'message' => 'Failed to send password reset link. Please try again later.'
             ]);
         }
     }
+
     
     private function validateForgotPasswordRequest($request)
     {

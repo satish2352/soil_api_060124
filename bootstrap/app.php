@@ -48,6 +48,12 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(Illuminate\Contracts\Mail\MailManager::class, Illuminate\Mail\MailManager::class);
+$app->singleton(Illuminate\Contracts\Mail\Mailer::class, function ($app) {
+    return $app->make(Illuminate\Mail\MailManager::class)->mailer();
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
@@ -62,6 +68,8 @@ $app->singleton(
 $app->configure('auth');
 $app->configure('service');
 $app->configure('cors');
+$app->configure('mail');
+
 
 /*
 |--------------------------------------------------------------------------
