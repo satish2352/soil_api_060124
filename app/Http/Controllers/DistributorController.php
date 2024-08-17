@@ -1824,7 +1824,7 @@ info($farmerMeetingData);
     {
         try
         {
-            // Retrieve meetings with joined farmer details$farmerMeetingData = FarmerMeeting::select('farmer_meetings.*', 'farmer_meeting_details.farmer_id', 'farmer_meeting_details.farmer_fname', 'farmer_meeting_details.farmer_mname', 'farmer_meeting_details.farmer_lname')
+            $farmerMeetingData = FarmerMeeting::select('farmer_meetings.*', 'farmer_meeting_details.farmer_id', 'farmer_meeting_details.farmer_fname', 'farmer_meeting_details.farmer_mname', 'farmer_meeting_details.farmer_lname')
                 ->leftJoin('farmer_meeting_details', 'farmer_meetings.id', '=', 'farmer_meeting_details.farmer_meeting_table_id')
                 ->where('farmer_meetings.is_deleted', 'no')
                 ->where('farmer_meetings.created_by', $request->user_id)
@@ -1833,11 +1833,11 @@ info($farmerMeetingData);
 
             // Initialize an array to group farmer details by meeting ID$meetings = [];
             
-            foreach ($farmerMeetingDataas$data) {
+            foreach ($farmerMeetingData as $data) {
                 $meetingId = $data->id;
 
                 if (!isset($meetings[$meetingId])) {
-                    // Initialize meeting data if not already set$meetings[$meetingId] = [
+                    $meetings[$meetingId] = [
                         'id' => $data->id,
                         'date' => $data->date,
                         'meeting_place' => $data->meeting_place,
@@ -1860,14 +1860,14 @@ info($farmerMeetingData);
                         'mname' => $data->farmer_mname,
                         'lname' => $data->farmer_lname
                     ];
-                }
+                
             }
 
-            // Convert the meetings array to a list$response = array_values($meetings);
+            $response = array_values($meetings);
             
             if (!empty($response))
             {
-                returnresponse()->json([
+                return $response()->json([
                     "data" => $response,
                     "result" => true,
                     "message" => 'Farmer Meeting Get Successfully'
@@ -1875,7 +1875,7 @@ info($farmerMeetingData);
             }
             else
             {
-                returnresponse()->json([
+                return $response()->json([
                     "data" => '',
                     "result" => false,
                     "message" => 'Farmer Meeting Not Found'
@@ -1884,7 +1884,7 @@ info($farmerMeetingData);
         } 
         catch (Exception$e) 
         {
-            returnresponse()->json([
+            return $response()->json([
                 "data" => '',
                 "result" => false,
                 "error" => true,
