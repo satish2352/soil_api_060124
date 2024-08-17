@@ -1832,7 +1832,7 @@ info($farmerMeetingData);
                 ->orderBy('farmer_meetings.id', 'DESC')
                 ->get();
 
-            // Initialize an array to group farmer details by meeting ID$meetings = [];
+            $meetings = [];
             
             foreach ($farmerMeetingData as $data) {
                 $meetingId = $data->id;
@@ -1855,7 +1855,7 @@ info($farmerMeetingData);
                     ];
                 }
 
-                // Add farmer details to the meeting's presentFarmers arrayif ($data->farmer_id) {
+                if ($data->farmer_id) {
                     $meetings[$meetingId]['presentFarmers'][] = [
                         'fname' => $data->farmer_fname,
                         'mname' => $data->farmer_mname,
