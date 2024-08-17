@@ -1857,7 +1857,7 @@ info($farmerMeetingData);
                 $meetingId = $data->id;
 
                 if (!isset($meetings[$meetingId])) {
-                    $meetings[$meetingId] = [
+                    $meetings['meeting'] = [
                         'id' => $data->id,
                         'date' => $data->date,
                         'meeting_place' => $data->meeting_place,
@@ -1870,13 +1870,13 @@ info($farmerMeetingData);
                         'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
                         'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
                         'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
-                        'presentFarmers' => []
+                        'presentFarmerFormeeting' => []
                     ];
 
                 }
 
                 if ($data->farmer_id) {
-                    $meetings[$meetingId]['presentFarmers'][] = [
+                    $meetings["meeting_present_farmer"]['presentFarmerFormeeting'][] = [
                         'fname' => $data->farmer_fname,
                         'mname' => $data->farmer_mname,
                         'lname' => $data->farmer_lname
