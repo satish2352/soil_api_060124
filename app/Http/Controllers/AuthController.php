@@ -385,7 +385,7 @@ class AuthController extends Controller {
 
         // Return a view or form for the user to reset their password
         // For example, you might render a Blade view or return a JSON response
-        return view('auth.reset_password', ['token' => $token]);
+        return view('reset_password', ['token' => $token]);
     }
 
 }
