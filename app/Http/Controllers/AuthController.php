@@ -256,7 +256,7 @@ class AuthController extends Controller {
             // Store the token in the database
             \DB::table('password_resets')->updateOrInsert(
                 ['email' => $email],
-                ['token' => $token, 'created_at' => now()]
+                ['token' => $token]
             );
     
             // Send password reset link
