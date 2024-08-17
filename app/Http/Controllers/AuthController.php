@@ -261,10 +261,19 @@ class AuthController extends Controller {
     
             // Send password reset link
             $resetLink = url('/password/reset/' . $token);
-            Mail::send('emails.password_reset', ['resetLink' => $resetLink], function ($message) use ($email) {
-                $message->to($email)
-                    ->subject('Password Reset Request');
-            });
+           
+
+            $to = $email;
+            $subject = 'Password Reset Link '.$resetLink;
+            $message = 'Password Reset Request'; // Email body
+            $headers = 'From: admin@soilchargertechnology.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion(); // Headers
+
+            if (mail($to, $subject, $message, $headers)) {
+                echo 'Email sent successfully';
+            } else {
+                echo 'Failed to send email';
+            }
     
             return response()->json([
                 'status' => 'success',
