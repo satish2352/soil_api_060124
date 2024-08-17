@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\User;
 use GuzzleHttp\Client;
@@ -22,16 +23,30 @@ class AuthController extends Controller {
         
         try 
         {
-            $client = new Client([]);
-            $response =  $client->post(config('service.passport.login_endpoint'), [
-                "form_params" => [
-                    "client_secret" => config('service.passport.client_secret'),
-                    "grant_type" => "password",
-                    "client_id" => config('service.passport.client_id'),
-                    "username" => $request->email,
-                    "password" => $request->password
-                ]
-            ]);
+
+            try 
+            {
+                $client = new Client([]);
+                $response =  $client->post(config('service.passport.login_endpoint'), [
+                    "form_params" => [
+                        "client_secret" => config('service.passport.client_secret'),
+                        "grant_type" => "password",
+                        "client_id" => config('service.passport.client_id'),
+                        "username" => $request->email,
+                        "password" => $request->password
+                    ]
+                ]);
+
+            } catch (Exception $e) {
+
+                return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "error" => true,
+                    "message" =>"User Not Foutnd or Invalid Credentials ".$e->getMessage()." ".$e->getCode()
+                ]);
+           
+            }
 
             if($response) {
                 $result  = json_decode((string) $response->getBody(), true);
@@ -71,6 +86,7 @@ class AuthController extends Controller {
             //     "message" => "Unauthorized"
             // ]);
         }
+        
     }
 
 
