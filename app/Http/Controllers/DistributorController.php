@@ -1322,16 +1322,15 @@ class DistributorController extends Controller
             $meetingFarmerID = explode(",",$request->farmer_id);
             foreach ($meetingFarmerID as $key => $value) {
                 try{ 
-                $farmerdetails=$this->commonController->getFarmerNameById($value);
-                info('$farmerdetails: ' . $farmerdetails  );
-                info('$farmerdetails->fname: ' . $farmerdetails->fname  );
-                $farmerMeetingDetails = new FarmerMeetingDetails();
-                $farmerMeetingDetails->farmer_meeting_table_id = $farmerMeetingTableID;
-                $farmerMeetingDetails->farmer_id = $request->farmer_id;
-                $farmerMeetingDetails->farmer_fname = $farmerdetails->fname;
-                $farmerMeetingDetails->farmer_mname = $farmerdetails->mname;
-                $farmerMeetingDetails->farmer_lname = $farmerdetails->lname;
-                $farmerMeetingDetails->save();
+                    $farmerdetails=$this->commonController->getFarmerNameById($value);
+                    $farmerMeetingDetails = new FarmerMeetingDetails();
+                    $farmerMeetingDetails->farmer_meeting_table_id = $farmerMeetingTableID;
+                    $farmerMeetingDetails->farmer_id = $request->farmer_id;
+                    $farmerMeetingDetails->farmer_fname = $farmerdetails->fname;
+                    $farmerMeetingDetails->farmer_mname = $farmerdetails->mname;
+                    $farmerMeetingDetails->farmer_lname = $farmerdetails->lname;
+                    $farmerMeetingDetails->save();
+                }
                 catch(Exception $e) {
                     info("Farmer meeting :".$e->getMessage());
                 }
