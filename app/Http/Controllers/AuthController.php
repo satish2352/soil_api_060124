@@ -264,8 +264,8 @@ class AuthController extends Controller {
            
 
             $to = $email;
-            $subject = 'Password Reset Link '.$resetLink;
-            $message = 'Password Reset Request'; // Email body
+            $subject = 'Password Reset Link ';
+            $message = 'Password Reset Request  '.$resetLink; // Email body
             $headers = 'From: admin@soilchargertechnology.com' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion(); // Headers
 
@@ -311,14 +311,14 @@ class AuthController extends Controller {
         $email = $request->input('email');
         $password = $request->input('password');
     
-        // $passwordReset = \DB::table('password_resets')->where('email', $email)->where('token', $token)->first();
+        $passwordReset = \DB::table('password_resets')->where('email', $email)->where('token', $token)->first();
     
-        // if (!$passwordReset) {
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'Invalid or expired password reset token.'
-        //     ]);
-        // }
+        if (!$passwordReset) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid or expired password reset token.'
+            ]);
+        }
     
         try {
             // Update the user's password
@@ -326,7 +326,7 @@ class AuthController extends Controller {
             $user->password = app('hash')->make($password);
             $user->save();
     
-            // \DB::table('password_resets')->where('email', $email)->delete();
+            \DB::table('password_resets')->where('email', $email)->delete();
     
             return response()->json([
                 'status' => 'success',
@@ -369,5 +369,23 @@ class AuthController extends Controller {
         }
     }
     
+
+
+    public function resetPasswordPage($token)
+    {
+        // Validate the token
+        $passwordReset = \DB::table('password_resets')->where('token', $token)->first();
+
+        if (!$passwordReset) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid or expired password reset token.'
+            ]);
+        }
+
+        // Return a view or form for the user to reset their password
+        // For example, you might render a Blade view or return a JSON response
+        return view('auth.reset_password', ['token' => $token]);
+    }
 
 }
