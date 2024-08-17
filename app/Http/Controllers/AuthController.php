@@ -43,7 +43,7 @@ class AuthController extends Controller {
                     "data" => '',
                     "result" => false,
                     "error" => true,
-                    "message" =>"User Not Foutnd or Invalid Credentials "
+                    "message" =>"User Not Found or Invalid Credentials "
                 ]);
            
             }
@@ -119,7 +119,7 @@ class AuthController extends Controller {
                     "data" => '',
                     "result" => false,
                     "error" => true,
-                    "message" =>"User Not Foutnd or Invalid Credentials "
+                    "message" =>"User Not Found or Invalid Credentials "
                 ]);
         
             }
