@@ -3017,8 +3017,8 @@ class DistributorControllerNandu extends Controller
                 ->get();
            
                 $targetvideo->each(function($item) {
-                    $item->created_at = Carbon::parse($item->created_at)->setTimezone('Asia/Kolkata');
-                    $item->updated_at = Carbon::parse($item->updated_at)->setTimezone('Asia/Kolkata');
+                    $item->created_at_new = Carbon::parse($item->created_at)->setTimezone('Asia/Kolkata');
+                    $item->updated_at_new = Carbon::parse($item->updated_at)->setTimezone('Asia/Kolkata');
                 });
             return response()->json([
                 "data" => $targetvideo,
