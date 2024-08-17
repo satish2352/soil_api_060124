@@ -247,7 +247,6 @@ class AuthController extends Controller {
 
     public function forgotPassword(Request $request)
     {
-        // $this->validateForgotPasswordRequest($request);
     
         $email = $request->input('email');
         $token = Str::random(60);
@@ -271,7 +270,7 @@ class AuthController extends Controller {
                 'message' => "Email address not found."
             ]);
         }
-        
+
     
         try {
             // Store the token in the database
@@ -310,11 +309,7 @@ class AuthController extends Controller {
             ]);
         }
     }
-    
-    private function validateForgotPasswordRequest($request)
-    {
-        
-    }
+
     
 
     public function resetPassword(Request $request)
