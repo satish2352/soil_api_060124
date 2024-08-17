@@ -1880,12 +1880,13 @@ info('$farmerMeetingData ',$farmerMeetingData);
                 }
             }
         } catch (Exception $e) {
-            return $response()->json([
-                "data" => '',
-                "result" => false,
-                "error" => true,
-                "message" => $e->getMessage() . " " . $e->getCode()
-            ]);
+            // return $response()->json([
+            //     "data" => '',
+            //     "result" => false,
+            //     "error" => true,
+            //     "message" => $e->getMessage() . " " . $e->getCode()
+            // ]);
+            info( "message", $e->getMessage() . " " . $e->getCode());
         }
     }
 
