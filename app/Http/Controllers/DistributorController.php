@@ -1832,7 +1832,7 @@ info($farmerMeetingData);
                 ->get();
 
             $meetings = [];
-
+info('$farmerMeetingData ',$farmerMeetingData);
             foreach ($farmerMeetingData as $data) {
                 $meetingId = $data->id;
 
