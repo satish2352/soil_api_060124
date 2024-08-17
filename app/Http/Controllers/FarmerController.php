@@ -238,16 +238,16 @@ class FarmerController extends Controller
         foreach($result as $key=>$value)
         {
             $stateName=$this->commonController->getAreaNameById($value->state);
-            $value->state=$stateName->name;
+            $value->state_name=$stateName->name;
             
             $districtName=$this->commonController->getAreaNameById($value->district);
-            $value->district=$districtName->name;
+            $value->district_name=$districtName->name;
             
             $talukaName=$this->commonController->getAreaNameById($value->taluka);
-            $value->taluka=$talukaName->name;
+            $value->taluka_name=$talukaName->name;
             
             $cityName=$this->commonController->getAreaNameById($value->city);
-            $value->city=$cityName->name;
+            $value->city_name=$cityName->name;
             
             $value->photo_new=FARMER_PHOTO_VIEW.$value->photo;
         }
