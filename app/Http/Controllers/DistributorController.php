@@ -1880,7 +1880,6 @@ info($farmerMeetingData);
 
                     $meetings.push($meetings_new);
 
-                }
 
                 
 
