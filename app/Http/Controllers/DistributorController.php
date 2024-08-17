@@ -1873,7 +1873,7 @@ info($farmerMeetingData);
                         'presentFarmers'=>[]
                     ];
 
-                    info('$meetings_new '.$meetings_new );
+                    info('$meetings_new '.json_encode($meetings_new ));
                     // if ($data->farmer_id) {
                     //     $meetings_new['presentFarmers'][] = [
                     //         'fname' => $data->farmer_fname,
@@ -1882,7 +1882,7 @@ info($farmerMeetingData);
                     //     ];
                     // }
                     array_push($meetings, $meetings_new);
-                    info('$meetings '.$meetings );
+                    info('$meetings '.json_encode($meetings ));
                    
 
                 }
@@ -1895,7 +1895,7 @@ info($farmerMeetingData);
                     ];
                 }
 
-                info('$meetings[$data->id]presentFarmers '.$meetings[$data->id]['presentFarmers'] );
+                info('$meetings[$data->id]presentFarmers '.json_encode($meetings[$data->id]['presentFarmers'] ));
                     
 
             }
