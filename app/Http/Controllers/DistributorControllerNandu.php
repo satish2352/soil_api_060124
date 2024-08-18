@@ -2672,7 +2672,7 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $myvisit_search_by_visitno= FarmerVistByDistributor::where(['visit_no'=>$request->visit_no,"created_by"=>$request->created_by ])
+             $myvisit_search_by_visitno= FarmerVistByDistributor::where(['id'=>$request->id,"created_by"=>$request->created_by ])
                      ->where('status',0)
                      ->orderBy('id', 'DESC')
                     ->get();
