@@ -39,6 +39,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('checkemailexist', 'CommonController@checkemailexist');
 
 
+    $router->post('address_list_web', 'DistributorController@address_list');
+
     // Front Website API
         $router->get('firstmethodlist', 'FrontController@firstmethodlist');
         $router->get('secondrulelist', 'FrontController@secondrulelist');
