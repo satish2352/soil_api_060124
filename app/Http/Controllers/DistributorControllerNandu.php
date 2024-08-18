@@ -2793,9 +2793,18 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-            $result = SaleSummary::where('is_deleted','no')
+            $result = SaleSummary::
+            leftJoin('usersinfo as newuser_table_order_for', function($join) {
+                $join->on('newuser_table_order_for.user_id', '=','tbl_sale_summary.order_created_for');
+            })
+            ->where('tbl_sale_summary.is_deleted','no')
             ->where('tbl_sale_summary.order_no','like','%'.$request->order_no.'%')
-            ->where('created_disctributor_id',$request->disctributor_id)
+            ->where('tbl_sale_summary.created_disctributor_id',$request->disctributor_id)
+            ->select(
+                        'tbl_sale_summary.*',
+                        'newuser_table_order_for.fname as order_for_fname',
+                        'newuser_table_order_for.mname as order_for_mname',
+                        'newuser_table_order_for.lname as order_for_lname')
             ->get();
                 foreach($result as $key=>$resultnew)
                 {
