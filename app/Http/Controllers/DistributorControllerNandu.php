@@ -1710,11 +1710,21 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-             $salelist_by_date_record= SaleSummary::where('created_disctributor_id',$request->disctributor_id)
-                    ->whereBetween('order_date', [$request->fromdate,$request->todate])
-                    ->where('is_deleted','no')
-                    ->where('entry_by','distributor')
-                    ->get();
+             $salelist_by_date_record= SaleSummary::
+                leftJoin('usersinfo as newuser_table_order_for', function($join) {
+                    $join->on('newuser_table_order_for.user_id', '=','tbl_sale_summary.order_created_for');
+                })
+                ->where('tbl_sale_summary.created_disctributor_id',$request->disctributor_id)
+                ->whereBetween('tbl_sale_summary.order_date', [$request->fromdate,$request->todate])
+                ->where('tbl_sale_summary.is_deleted','no')
+                ->where('tbl_sale_summary.entry_by','distributor')
+                ->select(
+                    'tbl_sale_summary.*',
+                    'newuser_table_order_for.fname as order_for_fname',
+                    'newuser_table_order_for.mname as order_for_mname',
+                    'newuser_table_order_for.lname as order_for_lname',
+                )
+                ->get();
                     
             $salelist_by_date_recordcount=sizeof($salelist_by_date_record);
             foreach($salelist_by_date_record as $key=>$resultnew)
