@@ -1255,7 +1255,7 @@ class FrontController extends Controller
                  return response()->json([
                     "data" => $users,
                     "result" => true,
-                    "message" => 'Distributor Added Successfully'
+                    "message" => 'Data Submited Successfully'
                 ]);
             }
             else
