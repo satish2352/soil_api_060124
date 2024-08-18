@@ -8799,11 +8799,11 @@ class WebAPIController extends Controller
           
           
           ->leftJoin('tbl_area as talukaNew', function($join) {
-            $join->on('front_usersinfo.business_tuluka', '=', 'talukaNew.location_id');
+            $join->on('front_usersinfo.taluka', '=', 'talukaNew.location_id');
           })
           
           ->leftJoin('tbl_area as cityNew', function($join) {
-            $join->on('front_usersinfo.business_village', '=', 'cityNew.location_id');
+            $join->on('front_usersinfo.city', '=', 'cityNew.location_id');
           })
 
 
