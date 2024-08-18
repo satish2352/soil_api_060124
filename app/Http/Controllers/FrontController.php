@@ -1189,7 +1189,8 @@ class FrontController extends Controller
             
             
             $idLastInserted=$users->id;
-        $imagedataPath=FRONT_DISTRIBUTOR_OWN_DOCUMENTS;
+        $imagedataPath=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_WITHOUTDOMAIN;
+        // $imagedataPath="public/uploads/distributor/frontdistributorown";
         $photoName=$idLastInserted."_aadhar_card_image_front";
         $inputfilenametoupload='aadhar_card_image_front';
         
