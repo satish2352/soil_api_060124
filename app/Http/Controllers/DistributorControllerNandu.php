@@ -2500,11 +2500,22 @@ class DistributorControllerNandu extends Controller
             })
              
                 ->where('added_by',$request->disctributor_id)
-                    ->when($request->get('farmer_name'), function($query) use ($request) {
-                        $query->where('fname', 'like', '%' . $request->farmer_name . '%')
-                              ->orWhere('mname', 'like', '%' . $request->farmer_name . '%')
-                              ->orWhere('lname', 'like', '%' . $request->farmer_name . '%');
-                    }) 
+                    // ->when($request->get('farmer_name'), function($query) use ($request) {
+                    //     $query->where('fname', 'like', '%' . $request->farmer_name . '%')
+                    //           ->orWhere('mname', 'like', '%' . $request->farmer_name . '%')
+                    //           ->orWhere('lname', 'like', '%' . $request->farmer_name . '%');
+                    // }) 
+                 
+
+                    ->when($request->get('farmer_name'), function($queryNew) use ($request) {
+                        $queryNew->where(function ($query) use ($request) {
+                            $query->where('fname', 'like', '%' . $request->farmer_name . '%')
+                                  ->orWhere('mname', 'like', '%' . $request->farmer_name . '%')
+                                  ->orWhere('lname', 'like', '%' . $request->farmer_name . '%');
+                        });
+                    })
+
+                    
                     ->where('is_deleted','no')
                     ->where('active','yes')
                     ->where('user_type','farmer')
