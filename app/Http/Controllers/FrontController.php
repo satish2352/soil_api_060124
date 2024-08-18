@@ -1189,65 +1189,62 @@ class FrontController extends Controller
             
             
             $idLastInserted=$users->id;
-        $imagedataPath=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_WITHOUTDOMAIN;
-        // $imagedataPath="public/uploads/distributor/frontdistributorown";
-        $photoName=$idLastInserted."_aadhar_card_image_front";
-        $inputfilenametoupload='aadhar_card_image_front';
+            $imagedataPath=FRONT_DISTRIBUTOR_OWN_DOCUMENTS_WITHOUTDOMAIN;
+            // $imagedataPath="public/uploads/distributor/frontdistributorown";
+            $photoName=$idLastInserted."_".random_int(100000, 999999)."_aadhar_card_image_front";
+            $inputfilenametoupload='aadhar_card_image_front';
+            
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $users=FrontUsers::where('id',$idLastInserted)->update(['aadhar_card_image_front'=>$filename]);
+            }
+            
+            $photoName=$idLastInserted."_".random_int(100000, 999999)."_aadhar_card_image_back";
+            $inputfilenametoupload='aadhar_card_image_back';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $users=FrontUsers::where('id',$idLastInserted)->update(['aadhar_card_image_back'=>$filename]);
+            }
+            
+            $photoName=$idLastInserted."_".random_int(100000, 999999)."_pan_card";
+            $inputfilenametoupload='pan_card';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $users=FrontUsers::where('id',$idLastInserted)->update(['pan_card'=>$filename]);
+            }
+            
+            
+            $photoName=$idLastInserted."_".random_int(100000, 999999)."_light_bill";
+            $inputfilenametoupload='light_bill';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $users=FrontUsers::where('id',$idLastInserted)->update(['light_bill'=>$filename]);
+            }
+            
+            
+            $photoName=$idLastInserted."_".random_int(100000, 999999)."_shop_act_image";
+            $inputfilenametoupload='shop_act_image';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+            
+                $users = FrontUsers::where('id',$idLastInserted)->update(['shop_act_image'=>$filename]);
+            
+            }
+            
+            $photoName=$idLastInserted."_".random_int(100000, 999999)."_product_purchase_bill";
+            $inputfilenametoupload='product_purchase_bill';
+            if (!empty($request->hasFile($inputfilenametoupload)))
+            {     
+                $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
+                $users=FrontUsers::where('id',$idLastInserted)->update(['product_purchase_bill'=>$filename]);
+            
+            }
         
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $users=FrontUsers::where('id',$idLastInserted)->update(['aadhar_card_image_front'=>$filename]);
-        }
-        
-        $photoName=$idLastInserted."_aadhar_card_image_back";
-        $inputfilenametoupload='aadhar_card_image_back';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $users=FrontUsers::where('id',$idLastInserted)->update(['aadhar_card_image_back'=>$filename]);
-        }
-        
-        $photoName=$idLastInserted."_pan_card";
-        $inputfilenametoupload='pan_card';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $users=FrontUsers::where('id',$idLastInserted)->update(['pan_card'=>$filename]);
-        }
-        
-        
-        $photoName=$idLastInserted."_light_bill";
-        $inputfilenametoupload='light_bill';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $users=FrontUsers::where('id',$idLastInserted)->update(['light_bill'=>$filename]);
-        }
-        
-        
-        $photoName=$idLastInserted."_shop_act_image";
-        $inputfilenametoupload='shop_act_image';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-           
-            $users = FrontUsers::where('id',$idLastInserted)->update(['shop_act_image'=>$filename]);
-           
-        }
-        
-        $photoName=$idLastInserted."_product_purchase_bill";
-        $inputfilenametoupload='product_purchase_bill';
-        if (!empty($request->hasFile($inputfilenametoupload)))
-        {     
-            $filename=$this->processUpload($request, $inputfilenametoupload,$imagedataPath,$photoName);
-            $users=FrontUsers::where('id',$idLastInserted)->update(['product_purchase_bill'=>$filename]);
-           
-        }
-        
-        
-        
-                
             if($request->created_by){
                 $this->checkLevelofDistributor($request->created_by);
             }
