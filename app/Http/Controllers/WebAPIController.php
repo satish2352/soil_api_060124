@@ -5433,7 +5433,7 @@ class WebAPIController extends Controller
         $result= Notification::leftJoin('usersinfo', function($join) {
                 $join->on('notification.distributor_id', '=', 'usersinfo.user_id');
             })
-            ->select('notification.*', 'usersinfo.fname as dfname','usersinfo.mname as dmname','usersinfo.lname as dlname')
+            ->select('notification.*', 'usersinfo.fname as dfname','usersinfo.mname as dmname','usersinfo.lname as dlname','usersinfo.user_type')
             ->where('notification.is_read','no')
             ->get();
         // foreach ($result as $key=>$distInfo)
