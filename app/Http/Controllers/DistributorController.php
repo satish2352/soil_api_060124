@@ -4279,22 +4279,118 @@ info($farmerMeetingData);
         }
     }
     
+    //old date commented 18.08.24
+    // public function distributorproductsearch_distributorapp(Request $request)
+    // {
+    //     try
+    //     {
+         
+    //         $result = DB::table('tbl_product')
+    //                 ->select('title','photo_one','id')
+    //                 ->where('title','like', '%' . $request->text_to_search . '%' )
+    //                 ->distinct('title')
+    //                 ->get();
+
+            
+    //             foreach ($result as $key => $value) {
+
+    //                 $front_product_details = FrontProduct::where('product_id',$value->id)->select('short_description','long_description')->first();
+
+    //                 $value->product_id = $value->id;
+    //                 $value->short_description = $front_product_details ? $front_product_details->short_description  : '';
+    //                 $value->long_description = $front_product_details ? $front_product_details->long_description : '';
+    //                 $value->photopath=PRODUCT_CONTENT_VIEW.$value->photo_one;
+    //                 $data_count = ProductDetails::join('tbl_product','tbl_product_details.product_id','=','tbl_product.id')
+    //                                                 ->where('tbl_product_details.is_deleted','no')
+    //                                                 ->where('tbl_product.title',$value->title)
+    //                                                 ->where('tbl_product.is_deleted','no')
+    //                                                 ->orderBy('tbl_product.id', 'DESC')
+    //                                                 //->select('tbl_product_details.*','tbl_product.title','tbl_product.content','tbl_product.link','tbl_product.photo_one')
+    //                                                 ->get();
+    //                                                 // ->count();
+                    
+    //                 $value->product_details = $data_count;
+    //             }
+
+          
+    //         if ($result)
+    //         {
+    //              return response()->json([
+    //                 "data" => $result,
+    //                 "result" => true,
+    //                 "message" => 'Information get Successfully'
+    //             ]);
+    //         }
+    //         else
+    //         {
+    //              return response()->json([
+    //                 "data" => '',
+    //                 "result" => false,
+    //                 "message" => 'Information not found'
+    //             ]);
+                
+    //         }
+    //     }
+    //     catch(Exception $e) {
+    //       return  'Message: ' .$e->getMessage();
+    //     }
+        
+    //     //  try
+    //     // {
+    //     //     $result = ProductDetails::join('tbl_product','tbl_product_details.product_id','=','tbl_product.id')
+    //     //         ->where('tbl_product_details.is_deleted','no')
+    //     //         ->select('tbl_product_details.*','tbl_product.title','tbl_product.content','tbl_product.link')
+    //     //         ->get();
+
+    //     //     //dd($result);
+    //     //     foreach($result as $key=>$value)
+    //     //     {
+    //     //         $value->photopath=PRODUCT_CONTENT_VIEW.$value->photo_one;
+    //     //     }
+    //     //     if ($result)
+    //     //     {
+    //     //          return response()->json([
+    //     //             "data" => $result,
+    //     //             "result" => true,
+    //     //             "message" => 'Information get Successfully'
+    //     //         ]);
+    //     //     }
+    //     //     else
+    //     //     {
+    //     //          return response()->json([
+    //     //             "data" => '',
+    //     //             "result" => false,
+    //     //             "message" => 'Information not found'
+    //     //         ]);
+                
+    //     //     }
+    //     // }
+    //     // catch(Exception $e) {
+    //     //   return  'Message: ' .$e->getMessage();
+    //     // }
+    // }
+
+
     public function distributorproductsearch_distributorapp(Request $request)
     {
         try
         {
-         
-            $result = DB::table('tbl_product')
-                    ->select('title','photo_one','id')
-                    ->where('title','like', '%' . $request->text_to_search . '%' )
-                    ->distinct('title')
+            
+            
+               $result = ProductDetails::leftJoin('tbl_product','tbl_product_details.product_id','=','tbl_product.id')
+                    ->leftJoin('front_product','tbl_product.id','=','front_product.product_id')
+                    ->distinct('tbl_product.title')
+                    ->where('tbl_product_details.is_deleted','no')
+                    ->where('tbl_product.is_deleted','no')
+                    ->where('tbl_product.title','like', '%' . $request->text_to_search . '%' )
+                    ->distinct('tbl_product.title')
+                    ->select('tbl_product_details.*','tbl_product.*','front_product.*')
+                    ->orderBy('tbl_product.id', 'DESC')
                     ->get();
 
-            
                 foreach ($result as $key => $value) {
-
                     $front_product_details = FrontProduct::where('product_id',$value->id)->select('short_description','long_description')->first();
-
+                    // info($front_product_details);
                     $value->product_id = $value->id;
                     $value->short_description = $front_product_details ? $front_product_details->short_description  : '';
                     $value->long_description = $front_product_details ? $front_product_details->long_description : '';
@@ -4304,14 +4400,20 @@ info($farmerMeetingData);
                                                     ->where('tbl_product.title',$value->title)
                                                     ->where('tbl_product.is_deleted','no')
                                                     ->orderBy('tbl_product.id', 'DESC')
-                                                    //->select('tbl_product_details.*','tbl_product.title','tbl_product.content','tbl_product.link','tbl_product.photo_one')
                                                     ->get();
-                                                    // ->count();
                     
                     $value->product_details = $data_count;
                 }
+            
+            
+           
+            
+            foreach($result as $key=>$value)
+            {
+                $value->photopath=PRODUCT_CONTENT_VIEW.$value->photo_one;
+            }
 
-          
+
             if ($result)
             {
                  return response()->json([
@@ -4333,41 +4435,9 @@ info($farmerMeetingData);
         catch(Exception $e) {
           return  'Message: ' .$e->getMessage();
         }
-        
-        //  try
-        // {
-        //     $result = ProductDetails::join('tbl_product','tbl_product_details.product_id','=','tbl_product.id')
-        //         ->where('tbl_product_details.is_deleted','no')
-        //         ->select('tbl_product_details.*','tbl_product.title','tbl_product.content','tbl_product.link')
-        //         ->get();
-
-        //     //dd($result);
-        //     foreach($result as $key=>$value)
-        //     {
-        //         $value->photopath=PRODUCT_CONTENT_VIEW.$value->photo_one;
-        //     }
-        //     if ($result)
-        //     {
-        //          return response()->json([
-        //             "data" => $result,
-        //             "result" => true,
-        //             "message" => 'Information get Successfully'
-        //         ]);
-        //     }
-        //     else
-        //     {
-        //          return response()->json([
-        //             "data" => '',
-        //             "result" => false,
-        //             "message" => 'Information not found'
-        //         ]);
-                
-        //     }
-        // }
-        // catch(Exception $e) {
-        //   return  'Message: ' .$e->getMessage();
-        // }
+       
     }
+    
     
     public function distributorlistundercount_distributor(Request $request)
     {

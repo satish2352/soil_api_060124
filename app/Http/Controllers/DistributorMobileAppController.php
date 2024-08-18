@@ -41,15 +41,15 @@ class DistributorMobileAppController extends Controller
         try
         {
             
-              $result = ProductDetails::leftJoin('tbl_product','tbl_product_details.product_id','=','tbl_product.id')
-              ->leftJoin('front_product','tbl_product.id','=','front_product.product_id')
-          ->distinct('tbl_product.title')
-            ->where('tbl_product_details.is_deleted','no')
-            ->where('tbl_product.is_deleted','no')
-             ->distinct('tbl_product.title')
-            ->select('tbl_product_details.*','tbl_product.*','front_product.*')
-            ->orderBy('tbl_product.id', 'DESC')
-            ->get();
+        //       $result = ProductDetails::leftJoin('tbl_product','tbl_product_details.product_id','=','tbl_product.id')
+        //       ->leftJoin('front_product','tbl_product.id','=','front_product.product_id')
+        //   ->distinct('tbl_product.title')
+        //     ->where('tbl_product_details.is_deleted','no')
+        //     ->where('tbl_product.is_deleted','no')
+        //      ->distinct('tbl_product.title')
+        //     ->select('tbl_product_details.*','tbl_product.*','front_product.*')
+        //     ->orderBy('tbl_product.id', 'DESC')
+        //     ->get();
             
         
             // $result = DB::table('tbl_product')
@@ -71,7 +71,7 @@ class DistributorMobileAppController extends Controller
 
                 foreach ($result as $key => $value) {
                     $front_product_details = FrontProduct::where('product_id',$value->id)->select('short_description','long_description')->first();
-                    info($front_product_details);
+                    // info($front_product_details);
                     $value->product_id = $value->id;
                     $value->short_description = $front_product_details ? $front_product_details->short_description  : '';
                     $value->long_description = $front_product_details ? $front_product_details->long_description : '';
