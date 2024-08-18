@@ -24,7 +24,7 @@ define('FARMER_UPLOADS', UPLOADS_WITHOUT_DOAMIN.'farmer/');
 define('FARMER_VIEW', UPLOADS_VIEW_WITH_DOMAIN.'farmer/');
 
 //Distributor Setting 
-define('DISTRIBUTOR_UPLOADS', UPLOADS_WITHOUT_DOAMIN.'distributor/');
+define('DISTRIBUTOR_UPLOADS', UPLOADS_VIEW_WITH_DOMAIN.'distributor/');
 define('DISTRIBUTOR_VIEW', UPLOADS_VIEW_WITH_DOMAIN.'distributor/');
 define('DISTRIBUTOR_OWN_DOCUMENTS', DISTRIBUTOR_UPLOADS.'distributorown/');
 
