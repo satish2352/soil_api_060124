@@ -1664,9 +1664,6 @@ class DistributorController extends Controller
     //           if($request->dist_id !='') {
     //             $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
     //           }
-    //         //   ->when($request->get('dist_id'), function($farmerMeetingData) use ($request) {
-    //         //     $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
-    //         //   })
     //         $farmerMeetingData = $farmerMeetingData->select(
     //             'tbl_farmer_meeting.id',
     //             'tbl_farmer_meeting.id as tbl_farmer_meeting_id', 'tbl_farmer_meeting.date', 'tbl_farmer_meeting.meeting_place', 'tbl_farmer_meeting.farmer_id', 'tbl_farmer_meeting.meeting_title', 'tbl_farmer_meeting.meeting_description', 
@@ -1775,7 +1772,29 @@ class DistributorController extends Controller
             $response = [];
             $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
                 ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
-                ->where('tbl_farmer_meeting.is_deleted', 'no')
+                ->leftJoin('usersinfo','tbl_farmer_meeting.created_by','=','usersinfo.user_id')
+                ->when($request->get('state'), function($farmerMeetingData) use ($request) {
+                    $farmerMeetingData->where('usersinfo.state',$request->state);
+                  })
+                  
+                  ->when($request->get('district'), function($farmerMeetingData) use ($request) {
+                    $farmerMeetingData->where('usersinfo.district',$request->district);
+                  })
+                  
+                  ->when($request->get('taluka'), function($farmerMeetingData) use ($request) {
+                    $farmerMeetingData->where('usersinfo.taluka',$request->taluka);
+                  })
+                  
+                  ->when($request->get('city'), function($farmerMeetingData) use ($request) {
+                    $farmerMeetingData->where('usersinfo.city',$request->city);
+                  });
+    
+    
+                  if($request->dist_id !='') {
+                    $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
+                  }
+
+                $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.is_deleted', 'no')
                 ->where('tbl_farmer_meeting.created_by', $request->user_id)
                 ->orderBy('tbl_farmer_meeting.id', 'DESC')
                 ->get();
