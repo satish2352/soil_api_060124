@@ -51,6 +51,12 @@ class FarmerController extends Controller
                 {
                     mkdir( $imagedataPath );       
                 }
+
+                $unlink_one_file_path=UsersInfo::where('user_id',$request->user_id)->first();;
+                if($unlink_one_file_path->photo)
+                {
+                    unlink($imagedataPath.$unlink_one_file_path->photo);
+                }
                 
                 $farmerPhotoName=$request->user_id."_farmerphoto"."_".rand(100000, 999999);
                 if (!empty($request->farmerphoto))
