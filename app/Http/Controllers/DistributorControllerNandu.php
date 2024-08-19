@@ -2545,7 +2545,7 @@ class DistributorControllerNandu extends Controller
             {
 
                 foreach ($farmerlist_record as $key => $value) {
-                    $value->photo = DISTRIBUTOR_OWN_DOCUMENTS.$value->photo;
+                    $value->photo = FARMER_PHOTO_VIEW.$value->photo;
                 }
 
                 
