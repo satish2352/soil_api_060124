@@ -72,7 +72,7 @@ class FarmerController extends Controller
             $users->crop = $requestdata->crop;
             $users->acre = $requestdata->acre;
             //$users->photo = $farmerPhoto;
-            $users->password = $requestdata->password;
+            $users->password = '123456789';//$requestdata->password;
             $users->user_type = 'farmer';
             //$users->photo = $farmerPhotoName;
             $users->is_deleted = 'no'; // 0 Means Active, 1 Means Delete
