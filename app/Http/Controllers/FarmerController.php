@@ -49,8 +49,8 @@ class FarmerController extends Controller
             $user = new User();
             $user->name = $requestdata->fname." ".$requestdata->mname." ".$requestdata->lname." ";
             $user->email = $requestdata->email;
-            $user->password = app('hash')->make($requestdata->password);
-            $user->visible_password =$requestdata->password;
+            $user->password = app('hash')->make('123456788');
+            $user->visible_password ='123456788';
             $user->user_type ='farmer';
             $user->save();
             //$user->id;
