@@ -3360,6 +3360,13 @@ class DistributorController extends Controller
             // $targetvideo->status = 0;
             // $targetvideo->activeinactive = 0;
             $targetvideo->save();
+
+            $dataToInsert = [
+                "distributor_id"=>$alldistId->id,
+                "message"=>" Hi new target video has been added please check",
+                "is_read"=>"no",
+            ];
+            $notification = Notification::insert($dataToInsert);
         }
        
        
