@@ -251,7 +251,7 @@ class FarmerController extends Controller
             
             // $value->photo_new=FARMER_PHOTO_VIEW.$value->photo;
 
-            $value->photo = DISTRIBUTOR_OWN_DOCUMENTS.$value->photo;
+            $value->photo = FARMER_PHOTO_VIEW.$value->photo;
         }
         //dd($result);
         if ($result)
