@@ -1635,137 +1635,196 @@ class DistributorController extends Controller
     
     
     
-    public function farmermeetinglist_distributorweb(Request $request)
-    {
-        try{
+    // public function farmermeetinglist_distributorweb(Request $request)
+    // {
+    //     try{
 
-            $presentFarmerFormeeting='';
-            $farmerMeetingData =FarmerMeeting::where('tbl_farmer_meeting.is_deleted','no')
-                ->leftJoin('usersinfo','tbl_farmer_meeting.created_by','=','usersinfo.user_id')
+    //         $presentFarmerFormeeting='';
+    //         $farmerMeetingData =FarmerMeeting::where('tbl_farmer_meeting.is_deleted','no')
+    //             ->leftJoin('usersinfo','tbl_farmer_meeting.created_by','=','usersinfo.user_id')
             
             
-            ->when($request->get('state'), function($farmerMeetingData) use ($request) {
-                $farmerMeetingData->where('usersinfo.state',$request->state);
-              })
+    //         ->when($request->get('state'), function($farmerMeetingData) use ($request) {
+    //             $farmerMeetingData->where('usersinfo.state',$request->state);
+    //           })
               
-              ->when($request->get('district'), function($farmerMeetingData) use ($request) {
-                $farmerMeetingData->where('usersinfo.district',$request->district);
-              })
+    //           ->when($request->get('district'), function($farmerMeetingData) use ($request) {
+    //             $farmerMeetingData->where('usersinfo.district',$request->district);
+    //           })
               
-              ->when($request->get('taluka'), function($farmerMeetingData) use ($request) {
-                $farmerMeetingData->where('usersinfo.taluka',$request->taluka);
-              })
+    //           ->when($request->get('taluka'), function($farmerMeetingData) use ($request) {
+    //             $farmerMeetingData->where('usersinfo.taluka',$request->taluka);
+    //           })
               
-              ->when($request->get('city'), function($farmerMeetingData) use ($request) {
-                $farmerMeetingData->where('usersinfo.city',$request->city);
-              });
+    //           ->when($request->get('city'), function($farmerMeetingData) use ($request) {
+    //             $farmerMeetingData->where('usersinfo.city',$request->city);
+    //           });
 
 
-              if($request->dist_id !='') {
-                $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
-              }
-            //   ->when($request->get('dist_id'), function($farmerMeetingData) use ($request) {
-            //     $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
-            //   })
-            $farmerMeetingData = $farmerMeetingData->select(
-                'tbl_farmer_meeting.id',
-                'tbl_farmer_meeting.id as tbl_farmer_meeting_id', 'tbl_farmer_meeting.date', 'tbl_farmer_meeting.meeting_place', 'tbl_farmer_meeting.farmer_id', 'tbl_farmer_meeting.meeting_title', 'tbl_farmer_meeting.meeting_description', 
-                'tbl_farmer_meeting.created_by', 'tbl_farmer_meeting.photo_one', 'tbl_farmer_meeting.photo_one_lat', 'tbl_farmer_meeting.photo_one_long', 'tbl_farmer_meeting.photo_two', 'tbl_farmer_meeting.photo_two_lat', 
-                'tbl_farmer_meeting.photo_two_long', 'tbl_farmer_meeting.photo_three', 'tbl_farmer_meeting.photo_three_lat', 'tbl_farmer_meeting.photo_three_long', 'tbl_farmer_meeting.photo_four', 
-                'tbl_farmer_meeting.photo_four_lat', 'tbl_farmer_meeting.photo_four_long', 'tbl_farmer_meeting.photo_five', 'tbl_farmer_meeting.photo_five_lat', 
-                'tbl_farmer_meeting.photo_five_long', 'tbl_farmer_meeting.latitude', 'tbl_farmer_meeting.longitude', 'tbl_farmer_meeting.is_deleted', 'tbl_farmer_meeting.created_at', 'tbl_farmer_meeting.updated_at',
-                'usersinfo.fname as dfname',
-                'usersinfo.mname as dmname',
-                'usersinfo.lname as dlname'
+    //           if($request->dist_id !='') {
+    //             $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
+    //           }
+    //         //   ->when($request->get('dist_id'), function($farmerMeetingData) use ($request) {
+    //         //     $farmerMeetingData->where('tbl_farmer_meeting.created_by',$request->dist_id);
+    //         //   })
+    //         $farmerMeetingData = $farmerMeetingData->select(
+    //             'tbl_farmer_meeting.id',
+    //             'tbl_farmer_meeting.id as tbl_farmer_meeting_id', 'tbl_farmer_meeting.date', 'tbl_farmer_meeting.meeting_place', 'tbl_farmer_meeting.farmer_id', 'tbl_farmer_meeting.meeting_title', 'tbl_farmer_meeting.meeting_description', 
+    //             'tbl_farmer_meeting.created_by', 'tbl_farmer_meeting.photo_one', 'tbl_farmer_meeting.photo_one_lat', 'tbl_farmer_meeting.photo_one_long', 'tbl_farmer_meeting.photo_two', 'tbl_farmer_meeting.photo_two_lat', 
+    //             'tbl_farmer_meeting.photo_two_long', 'tbl_farmer_meeting.photo_three', 'tbl_farmer_meeting.photo_three_lat', 'tbl_farmer_meeting.photo_three_long', 'tbl_farmer_meeting.photo_four', 
+    //             'tbl_farmer_meeting.photo_four_lat', 'tbl_farmer_meeting.photo_four_long', 'tbl_farmer_meeting.photo_five', 'tbl_farmer_meeting.photo_five_lat', 
+    //             'tbl_farmer_meeting.photo_five_long', 'tbl_farmer_meeting.latitude', 'tbl_farmer_meeting.longitude', 'tbl_farmer_meeting.is_deleted', 'tbl_farmer_meeting.created_at', 'tbl_farmer_meeting.updated_at',
+    //             'usersinfo.fname as dfname',
+    //             'usersinfo.mname as dmname',
+    //             'usersinfo.lname as dlname'
                 
-              )
-              ->orderBy('id','desc')
-              ->get();
-info($farmerMeetingData);
-            foreach($farmerMeetingData as $key=>$farmermeeting)
-            {
-                try
-                {
-                     $presentFarmer = null;
-                     $presentFarmerFormeeting = null;
-                     $presentFarmer=explode(",",$farmermeeting->farmer_id);
-                    //  if (str_contains(",", $farmermeeting->farmer_id)) {
+    //           )
+    //           ->orderBy('id','desc')
+    //           ->get();
+    //         info($farmerMeetingData);
+    //         foreach($farmerMeetingData as $key=>$farmermeeting)
+    //         {
+    //             try
+    //             {
+    //                  $presentFarmer = null;
+    //                  $presentFarmerFormeeting = null;
+    //                  $presentFarmer=explode(",",$farmermeeting->farmer_id);
+    //                 //  if (str_contains(",", $farmermeeting->farmer_id)) {
                         
-                    // } else {
-                    //     $presentFarmer= array($farmermeeting->farmer_id);
-                    // }
+    //                 // } else {
+    //                 //     $presentFarmer= array($farmermeeting->farmer_id);
+    //                 // }
                     
-                    $presentFarmer= array_unique($presentFarmer);
+    //                 $presentFarmer= array_unique($presentFarmer);
 
-                    // $distributordetails=$this->commonController->getDistributorNameById($farmermeeting->created_by);  
+    //                 // $distributordetails=$this->commonController->getDistributorNameById($farmermeeting->created_by);  
                     
-                    // $farmermeeting->dfname=$distributordetails->fname;
-                    // $farmermeeting->dmname=$distributordetails->mname;
-                    // $farmermeeting->dlname=$distributordetails->lname;
+    //                 // $farmermeeting->dfname=$distributordetails->fname;
+    //                 // $farmermeeting->dmname=$distributordetails->mname;
+    //                 // $farmermeeting->dlname=$distributordetails->lname;
 
-                    $farmermeeting->photo_one=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_one;
-                    $farmermeeting->photo_two=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_two;
-                    $farmermeeting->photo_three=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_three;
-                    $farmermeeting->photo_four=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_four;
+    //                 $farmermeeting->photo_one=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_one;
+    //                 $farmermeeting->photo_two=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_two;
+    //                 $farmermeeting->photo_three=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_three;
+    //                 $farmermeeting->photo_four=FARMER_MEETING_PHOTO_VIEW.$farmermeeting->photo_four;
                     
                     
                   
-                    foreach($presentFarmer as $key=>$farmermeetingPresentDist)
-                    {
-                        if($farmermeetingPresentDist!=''|| $farmermeetingPresentDist!=NULL || $farmermeetingPresentDist!=null)
-                        {
-                            $farmerdetails=$this->commonController->getFarmerNameById($farmermeetingPresentDist); 
+    //                 foreach($presentFarmer as $key=>$farmermeetingPresentDist)
+    //                 {
+    //                     if($farmermeetingPresentDist!=''|| $farmermeetingPresentDist!=NULL || $farmermeetingPresentDist!=null)
+    //                     {
+    //                         $farmerdetails=$this->commonController->getFarmerNameById($farmermeetingPresentDist); 
                               
-                           if(!$farmerdetails) {
-                                throw new Exception("Farmer Details Not Found");
-                            }
-                            $presentFarmerFormeeting .=++$key.")".$farmerdetails->fname;//." ".$farmerdetails->mname." ".$farmerdetails->lname;
-                            $presentFarmerFormeeting .=",";
+    //                        if(!$farmerdetails) {
+    //                             throw new Exception("Farmer Details Not Found");
+    //                         }
+    //                         $presentFarmerFormeeting .=++$key.")".$farmerdetails->fname;//." ".$farmerdetails->mname." ".$farmerdetails->lname;
+    //                         $presentFarmerFormeeting .=",";
                             
-                        }
-                         //$farmermeetingPresentDist->presentFarmerFormeeting= 
-                    }
-                    if(count($presentFarmer) > 0 ) {
-                        $farmermeeting->presentFarmerFormeeting = rtrim($presentFarmerFormeeting, ',');
-                    }
+    //                     }
+    //                      //$farmermeetingPresentDist->presentFarmerFormeeting= 
+    //                 }
+    //                 if(count($presentFarmer) > 0 ) {
+    //                     $farmermeeting->presentFarmerFormeeting = rtrim($presentFarmerFormeeting, ',');
+    //                 }
                    
 
-                } catch(Exception $e) {
-                    return response()->json([
-                            "data" => '',
-                            "result" => false,
-                            "error" => true,
-                            "message" =>$e->getMessage()." ".$e->getCode()
-                        ]);
+    //             } catch(Exception $e) {
+    //                 return response()->json([
+    //                         "data" => '',
+    //                         "result" => false,
+    //                         "error" => true,
+    //                         "message" =>$e->getMessage()." ".$e->getCode()
+    //                     ]);
                    
-                 }
-            }
+    //              }
+    //         }
 
-            if (sizeof($farmerMeetingData))
-            {
-                 return response()->json([
-                    "data" => $farmerMeetingData,
-                    "result" => true,
-                    "message" => 'Farmer Meeting Get Successfully'
-                ]);
-            }
-            else
-            {
-                 return response()->json([
-                    "data" => '',
-                    "result" => false,
-                    "message" => 'Farmer Meeting Not Found'
-                ]);
+    //         if (sizeof($farmerMeetingData))
+    //         {
+    //              return response()->json([
+    //                 "data" => $farmerMeetingData,
+    //                 "result" => true,
+    //                 "message" => 'Farmer Meeting Get Successfully'
+    //             ]);
+    //         }
+    //         else
+    //         {
+    //              return response()->json([
+    //                 "data" => '',
+    //                 "result" => false,
+    //                 "message" => 'Farmer Meeting Not Found'
+    //             ]);
                 
-            }
-        } catch(Exception $e) {
-                return response()->json([
-                        "data" => '',
-                        "result" => false,
-                        "error" => true,
-                        "message" =>$e->getMessage()." ".$e->getCode()
-                    ]);
+    //         }
+    //     } catch(Exception $e) {
+    //             return response()->json([
+    //                     "data" => '',
+    //                     "result" => false,
+    //                     "error" => true,
+    //                     "message" =>$e->getMessage()." ".$e->getCode()
+    //                 ]);
                
+    //     }
+    // }
+
+    public function farmermeetinglist_distributorweb(Request $request)
+    {
+        try {
+            $response = [];
+            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
+                ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
+                ->where('tbl_farmer_meeting.is_deleted', 'no')
+                ->where('tbl_farmer_meeting.created_by', $request->user_id)
+                ->orderBy('tbl_farmer_meeting.id', 'DESC')
+                ->get();
+    
+            foreach ($farmerMeetingData as $data) {
+                $meetingId = $data->id;
+    
+                if (!isset($response[$meetingId])) {
+                    $response[$meetingId] = [
+                        'id' => $data->id,
+                        'date' => $data->date,
+                        'meeting_place' => $data->meeting_place,
+                        'farmer_id' => $data->farmer_id,
+                        'meeting_title' => $data->meeting_title,
+                        'meeting_description' => $data->meeting_description,
+                        'created_by' => $data->created_by,
+                        'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
+                        'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
+                        'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
+                        'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
+                        'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
+                        'presentFarmers' => []
+                    ];
+                }
+    
+                if ($data->farmer_id) {
+                    $response[$meetingId]['presentFarmers'][] = [
+                        'fname' => $data->farmer_fname,
+                        'mname' => $data->farmer_mname,
+                        'lname' => $data->farmer_lname
+                    ];
+                }
+            }
+    
+            // Convert associative array to indexed array
+            $response = array_values($response);
+    
+            return response()->json([
+                "data" => $response,
+                "result" => true,
+                "message" => 'Farmer Meeting Get Successfully'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                "data" => [],
+                "result" => false,
+                "error" => true,
+                "message" => $e->getMessage()
+            ]);
         }
     }
     
