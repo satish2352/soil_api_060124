@@ -1221,7 +1221,7 @@ class DistributorController extends Controller
         $users->remember_token = $request->token;
         $users->save();
         
-        $imagedataPath=DISTRIBUTOR_OWN_DOCUMENTS;
+        $imagedataPath=FARMER_PHOTO_UPLOAD;
         // dd($imagedataPath);
         if (!$imagedataPath) 
         {
