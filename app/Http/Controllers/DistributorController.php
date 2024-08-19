@@ -1770,7 +1770,14 @@ class DistributorController extends Controller
     {
         try {
             $response = [];
-            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
+            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 
+                            'tbl_farmer_meeting_details.farmer_id', 
+                            'tbl_farmer_meeting_details.farmer_fname', 
+                            'tbl_farmer_meeting_details.farmer_mname', 
+                            'tbl_farmer_meeting_details.farmer_lname',
+                            'usersinfo.fname as dfname',
+                            'usersinfo.mname as dmname',
+                            'usersinfo.lname as dlname')
                 ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
                 ->leftJoin('usersinfo','tbl_farmer_meeting.created_by','=','usersinfo.user_id')
                 ->when($request->get('state'), function($farmerMeetingData) use ($request) {
