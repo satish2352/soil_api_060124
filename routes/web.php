@@ -89,6 +89,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('farmerregistration', 'FarmerController@farmerregistration');
             $router->post('farmerlist', 'FarmerController@farmerlist');
             $router->post('farmerget', 'FarmerController@farmerget');
+            $router->post('farmerregistration_photo_update', 'FarmerController@farmerregistration_photo_update');
+            
             $router->post('farmerdelete', 'FarmerController@farmerdelete');
             $router->post('farmerupdate', 'FarmerController@farmerupdate');
             $router->post('farmeractiveinactive', 'FarmerController@farmeractiveinactive');

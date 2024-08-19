@@ -36,6 +36,58 @@ class FarmerController extends Controller
         File::delete($files);
     }
 
+
+    public function farmerregistration_photo_update(Request $request)
+    {
+        try
+        {
+
+            $users ='';
+            if ($request->farmerphoto)
+            {
+    
+                $imagedataPath=FARMER_PHOTO_UPLOAD;
+                if ( !is_dir( $imagedataPath) ) 
+                {
+                    mkdir( $imagedataPath );       
+                }
+                
+                $farmerPhotoName=$request->user_id."_farmerphoto"."_".rand(100000, 999999);
+                if (!empty($request->farmerphoto))
+                {     
+                    $applpic_ext = $request->file('farmerphoto')->getClientOriginalExtension();
+                    $fileUploadAttachmentOne = base64_encode(file_get_contents($request->file('farmerphoto'))); 
+                    $applicantAttachmentOne = base64_decode($fileUploadAttachmentOne);
+                    $path2 = $imagedataPath.$farmerPhotoName.".".$applpic_ext;
+                    file_put_contents($path2, $applicantAttachmentOne);           
+                   
+                }
+                $users=UsersInfo::where('user_id',$request->user_id)->update(['photo'=>$farmerPhotoName.".".$applpic_ext]);
+            }
+            
+            if ($users)
+            {
+                 return response()->json([
+                    "data" => $users,
+                    "result" => true,
+                    "message" => 'Farmer Photo Updated Successfully'
+                ]);
+            }
+            else
+            {
+                 return response()->json([
+                    "data" => '',
+                    "result" => false,
+                    "message" => 'Farmer Photo Not Updated'
+                ]);
+                
+            }
+        }
+        catch(Exception $e) {
+          return  'Message: ' .$e->getMessage();
+        }
+
+    }
    
     public function farmerregistration(Request $request)
     {
