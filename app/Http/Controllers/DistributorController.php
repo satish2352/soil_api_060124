@@ -1795,7 +1795,6 @@ class DistributorController extends Controller
                   }
 
                 $farmerMeetingData = $farmerMeetingData->where('tbl_farmer_meeting.is_deleted', 'no')
-                ->where('tbl_farmer_meeting.created_by', $request->user_id)
                 ->orderBy('tbl_farmer_meeting.id', 'DESC')
                 ->get();
     
