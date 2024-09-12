@@ -36,7 +36,8 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         \Log::info($request);
-        info($this->auth->guard($guard)->guest());
+        info('$this->auth->guard($guard)->guest() '.$this->auth->guard($guard)->guest());
+        return $next($request);
         if ($this->auth->guard($guard)->guest()) {
           
             // return response()->json(['status' => 'error', 'message' => 'Token invalid','data'=>'','error_code'=>'401']);
