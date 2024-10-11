@@ -1020,7 +1020,7 @@ class DistributorController extends Controller
         //$distdeletes = ['is_deleted' => 'yes'];
 
         $id = $request->id;
-        $result = UsersInfo::where('user_id', '=', $id)->update($distdelete);
+        $result = UsersInfo::where('id', '=', $id)->update($distdelete);
         //$result = Users::where('id', '=', $id)->update($distdeletes);
 
         if($result)
