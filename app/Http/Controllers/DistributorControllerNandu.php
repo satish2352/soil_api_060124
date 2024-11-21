@@ -309,16 +309,16 @@ class DistributorControllerNandu extends Controller
             $response = [];
             $farmerMeetingData = FarmerMeeting::leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
                 ->leftJoin('tbl_area as stateNew', function ($join) {
-                    $join->on(' tbl_farmer_meeting.state', '=', 'stateNew.location_id');
+                    $join->on('tbl_farmer_meeting.state', '=', 'stateNew.location_id');
                 })
                 ->leftJoin('tbl_area as districtNew', function ($join) {
-                    $join->on(' tbl_farmer_meeting.district', '=', 'districtNew.location_id');
+                    $join->on('tbl_farmer_meeting.district', '=', 'districtNew.location_id');
                 })
                 ->leftJoin('tbl_area as talukaNew', function ($join) {
-                    $join->on(' tbl_farmer_meeting.taluka', '=', 'talukaNew.location_id');
+                    $join->on('tbl_farmer_meeting.taluka', '=', 'talukaNew.location_id');
                 })
                 ->leftJoin('tbl_area as cityNew', function ($join) {
-                    $join->on(' tbl_farmer_meeting.city', '=', 'cityNew.location_id');
+                    $join->on('tbl_farmer_meeting.city', '=', 'cityNew.location_id');
                 })
                 ->where('tbl_farmer_meeting.is_deleted', 'no')
                 ->where('tbl_farmer_meeting.created_by', $request->user_id)
