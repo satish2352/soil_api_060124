@@ -1949,6 +1949,7 @@ class DistributorController extends Controller
         $response = [];
         $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname', 'stateNew.name as state_name',
         'districtNew.name as district_name',
+        
         'talukaNew.name as taluka_name',
         'cityNew.name as city_name')
             ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
