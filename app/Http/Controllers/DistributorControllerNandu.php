@@ -219,12 +219,8 @@ class DistributorControllerNandu extends Controller
     {
         try {
             $response = [];
-            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname',
-            'stateNew.name as state_name',
-            'districtNew.name as district_name',
-            'talukaNew.name as taluka_name',
-            'cityNew.name as city_name')
-                ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
+            $farmerMeetingData = FarmerMeeting::
+                leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
 
                 ->leftJoin('tbl_area as stateNew', function ($join) {
                     $join->on(' tbl_farmer_meeting.state', '=', 'stateNew.location_id');
@@ -242,7 +238,11 @@ class DistributorControllerNandu extends Controller
                 ->where('tbl_farmer_meeting.is_deleted', 'no')
                 ->where('tbl_farmer_meeting.created_by', $request->user_id)
                 ->whereBetween('tbl_farmer_meeting.date', [$request->fromdate,$request->todate])
-
+                ->select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname',
+                'stateNew.name as state_name',
+                'districtNew.name as district_name',
+                'talukaNew.name as taluka_name',
+                'cityNew.name as city_name')
                 ->orderBy('tbl_farmer_meeting.id', 'DESC')
                 ->get();
 
@@ -307,12 +307,7 @@ class DistributorControllerNandu extends Controller
     {
         try {
             $response = [];
-            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname',
-            'stateNew.name as state_name',
-            'districtNew.name as district_name',
-            'talukaNew.name as taluka_name',
-            'cityNew.name as city_name')
-                ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
+            $farmerMeetingData = FarmerMeeting::leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
                 ->leftJoin('tbl_area as stateNew', function ($join) {
                     $join->on(' tbl_farmer_meeting.state', '=', 'stateNew.location_id');
                 })
@@ -329,7 +324,11 @@ class DistributorControllerNandu extends Controller
                 ->where('tbl_farmer_meeting.created_by', $request->user_id)
                 ->where('tbl_farmer_meeting.meeting_title', 'like', '%' . $request->search . '%')
                 ->orderBy('tbl_farmer_meeting.id', 'DESC')
-
+                ->select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname',
+                'stateNew.name as state_name',
+                'districtNew.name as district_name',
+                'talukaNew.name as taluka_name',
+                'cityNew.name as city_name')
                 ->get();
 
                 foreach ($farmerMeetingData as $data) {
