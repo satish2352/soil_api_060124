@@ -307,30 +307,27 @@ class DistributorControllerNandu extends Controller
     {
         try {
             $response = [];
-            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
+            $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname',
+            'stateNew.name as state_name',
+            'districtNew.name as district_name',
+            'talukaNew.name as taluka_name',
+            'cityNew.name as city_name')
                 ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
                 ->leftJoin('tbl_area as stateNew', function ($join) {
-                    $join->on('tbl_farmer_meeting_details.state', '=', 'stateNew.location_id');
+                    $join->on(' tbl_farmer_meeting.state', '=', 'stateNew.location_id');
                 })
                 ->leftJoin('tbl_area as districtNew', function ($join) {
-                    $join->on('tbl_farmer_meeting_details.district', '=', 'districtNew.location_id');
+                    $join->on(' tbl_farmer_meeting.district', '=', 'districtNew.location_id');
                 })
                 ->leftJoin('tbl_area as talukaNew', function ($join) {
-                    $join->on('tbl_farmer_meeting_details.taluka', '=', 'talukaNew.location_id');
+                    $join->on(' tbl_farmer_meeting.taluka', '=', 'talukaNew.location_id');
                 })
                 ->leftJoin('tbl_area as cityNew', function ($join) {
-                    $join->on('tbl_farmer_meeting_details.city', '=', 'cityNew.location_id');
+                    $join->on(' tbl_farmer_meeting.city', '=', 'cityNew.location_id');
                 })
                 ->where('tbl_farmer_meeting.is_deleted', 'no')
                 ->where('tbl_farmer_meeting.created_by', $request->user_id)
                 ->where('tbl_farmer_meeting.meeting_title', 'like', '%' . $request->search . '%')
-                ->select(
-                    'tbl_farmer_meeting_details.*',
-                    'stateNew.name as state_name',
-                    'districtNew.name as district_name',
-                    'talukaNew.name as taluka_name',
-                    'cityNew.name as city_name'
-                )
                 ->orderBy('tbl_farmer_meeting.id', 'DESC')
 
                 ->get();
@@ -347,6 +344,10 @@ class DistributorControllerNandu extends Controller
                             'meeting_title' => $data->meeting_title,
                             'meeting_description' => $data->meeting_description,
                             'created_by' => $data->created_by,
+                            'district_name' => $data->district_name,
+                            'state_name' => $data->state_name,
+                            'taluka_name' => $data->taluka_name,
+                            'city_name' => $data->city_name,
                             'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
                             'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
                             'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
