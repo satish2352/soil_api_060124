@@ -322,7 +322,9 @@ class DistributorControllerNandu extends Controller
                 })
                 ->where('tbl_farmer_meeting.is_deleted', 'no')
                 ->where('tbl_farmer_meeting.created_by', $request->user_id)
-                ->where('tbl_farmer_meeting.meeting_title', 'like', '%' . $request->search . '%')
+                // ->where('tbl_farmer_meeting.meeting_title', 'like', '%' . $request->search . '%')
+                ->whereRaw('LOWER(tbl_farmer_meeting.meeting_title) LIKE ?', ['%' . strtolower($request->search) . '%'])
+
                 ->orderBy('tbl_farmer_meeting.id', 'DESC')
                 ->select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname',
                 'stateNew.name as state_name',
