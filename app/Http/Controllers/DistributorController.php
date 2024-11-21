@@ -1947,7 +1947,25 @@ class DistributorController extends Controller
 {
     try {
         $response = [];
-        $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
+        $farmerMeetingData = FarmerMeeting::select( 'tbl_farmer_meeting.id',
+        'tbl_farmer_meeting.date',
+        'tbl_farmer_meeting.meeting_place',
+        'tbl_farmer_meeting.meeting_title',
+        'tbl_farmer_meeting.meeting_description',
+        'tbl_farmer_meeting.created_by',
+        'tbl_farmer_meeting.photo_one',
+        'tbl_farmer_meeting.photo_two',
+        'tbl_farmer_meeting.photo_three',
+        'tbl_farmer_meeting.photo_four',
+        'tbl_farmer_meeting.photo_five',
+        'tbl_farmer_meeting_details.farmer_id',
+        'tbl_farmer_meeting_details.farmer_fname',
+        'tbl_farmer_meeting_details.farmer_mname',
+        'tbl_farmer_meeting_details.farmer_lname',
+        'stateNew.name as state_name',
+        'districtNew.name as district_name',
+        'talukaNew.name as taluka_name',
+        'cityNew.name as city_name')
             ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
 
             ->leftJoin('tbl_area as stateNew', function ($join) {
