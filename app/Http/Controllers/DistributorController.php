@@ -1968,7 +1968,7 @@ class DistributorController extends Controller
             ->leftJoin('tbl_area as talukaNew', 'tbl_farmer_meeting.taluka', '=', 'talukaNew.location_id')
             ->leftJoin('tbl_area as cityNew', 'tbl_farmer_meeting.city', '=', 'cityNew.location_id')
             ->where('tbl_farmer_meeting.is_deleted', 'no')
-            ->where('tbl_farmer_meeting.created_by', $request->user_id)
+            // ->where('tbl_farmer_meeting.created_by', $request->user_id)
            
             ->orderBy('tbl_farmer_meeting.id', 'DESC')
             ->get();
