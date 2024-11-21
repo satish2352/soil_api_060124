@@ -1345,6 +1345,11 @@ class DistributorController extends Controller
             $farmer->farmer_id = $request->farmer_id;
             $farmer->meeting_title = $request->meeting_title;
             $farmer->meeting_description = $request->meeting_description;
+
+            $farmer->state = $request->state;
+            $farmer->district = $request->district;
+            $farmer->taluka = $request->taluka;
+            $farmer->city = $request->city;
             
             $farmer->created_by = $request->created_by;
             $farmer->longitude = $request->longitude;
@@ -1944,8 +1949,28 @@ class DistributorController extends Controller
         $response = [];
         $farmerMeetingData = FarmerMeeting::select('tbl_farmer_meeting.*', 'tbl_farmer_meeting_details.farmer_id', 'tbl_farmer_meeting_details.farmer_fname', 'tbl_farmer_meeting_details.farmer_mname', 'tbl_farmer_meeting_details.farmer_lname')
             ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
+
+            ->leftJoin('tbl_area as stateNew', function ($join) {
+                $join->on('tbl_farmer_meeting_details.state', '=', 'stateNew.location_id');
+            })
+            ->leftJoin('tbl_area as districtNew', function ($join) {
+                $join->on('tbl_farmer_meeting_details.district', '=', 'districtNew.location_id');
+            })
+            ->leftJoin('tbl_area as talukaNew', function ($join) {
+                $join->on('tbl_farmer_meeting_details.taluka', '=', 'talukaNew.location_id');
+            })
+            ->leftJoin('tbl_area as cityNew', function ($join) {
+                $join->on('tbl_farmer_meeting_details.city', '=', 'cityNew.location_id');
+            })
             ->where('tbl_farmer_meeting.is_deleted', 'no')
             ->where('tbl_farmer_meeting.created_by', $request->user_id)
+            ->select(
+                'tbl_farmer_meeting_details.*',
+                'stateNew.name as state_name',
+                'districtNew.name as district_name',
+                'talukaNew.name as taluka_name',
+                'cityNew.name as city_name'
+            )
             ->orderBy('tbl_farmer_meeting.id', 'DESC')
             ->get();
 
