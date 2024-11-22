@@ -3474,10 +3474,10 @@ class DistributorController extends Controller
             $sctresult->farmer_name = $request->farmer_name;
             $sctresult->contact_number = $request->contact_number;
             $sctresult->address = $request->address;
-            $farmer->state = $request->state;
-            $farmer->district = $request->district;
-            $farmer->taluka = $request->taluka;
-            $farmer->city = $request->city;
+            $sctresult->state = $request->state;
+            $sctresult->district = $request->district;
+            $sctresult->taluka = $request->taluka;
+            $sctresult->city = $request->city;
             $sctresult->area_in_acres = $request->area_in_acres;
             $sctresult->crop = $request->crop;
             $sctresult->utpadan = $request->utpadan;
