@@ -1320,16 +1320,16 @@ class DistributorMobileAppController extends Controller
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
           ->leftJoin('tbl_area as shopState', function ($join) {
-            $join->on('users_info_for_structures.shop_state', '=', 'shopState.location_id');
+            $join->on('usersinfo.shop_state', '=', 'shopState.location_id');
         })
         ->leftJoin('tbl_area as shopDistrict', function ($join) {
-            $join->on('users_info_for_structures.shop_district', '=', 'shopDistrict.location_id');
+            $join->on('usersinfo.shop_district', '=', 'shopDistrict.location_id');
         })
         ->leftJoin('tbl_area as shopTaluka', function ($join) {
-            $join->on('users_info_for_structures.shop_taluka', '=', 'shopTaluka.location_id');
+            $join->on('usersinfo.shop_taluka', '=', 'shopTaluka.location_id');
         })
         ->leftJoin('tbl_area as shopCity', function ($join) {
-            $join->on('users_info_for_structures.shop_village', '=', 'shopCity.location_id');
+            $join->on('usersinfo.shop_village', '=', 'shopCity.location_id');
         })
           ->join('users','users.id','=','usersinfo.user_id')
           ->where('users_info_for_structures.added_by',$request->dist_id)
@@ -1396,10 +1396,15 @@ class DistributorMobileAppController extends Controller
         'usersinfo.logintime',
         'usersinfo.created_by',
         'usersinfo.created_on',
-        'shopState.name as shop_state',
-         'shopDistrict.name as shop_district',
-         'shopTaluka.name as shop_taluka',
-         'shopCity.name as shop_city',
+        'usersinfo.shop_address',
+        'usersinfo.shop_state',
+        'shopState.name as shop_state_name',
+        'usersinfo.shop_district',
+        'shopDistrict.name as shop_district_name',
+        'usersinfo.shop_taluka',
+        'shopTaluka.name as shop_taluka_name',
+        'usersinfo.shop_village',
+        'shopCity.name as shop_city_name',
          )
           ->get();
 
