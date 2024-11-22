@@ -1258,10 +1258,17 @@ class DistributorMobileAppController extends Controller
         'usersinfo.logintime',
         'usersinfo.created_by',
         'usersinfo.created_on',
+
+        'usersinfo.shop_address',
+        'usersinfo.shop_state',
         'shopState.name as shop_state',
+        'usersinfo.shop_district',
         'shopDistrict.name as shop_district',
+        'usersinfo.shop_taluka',
         'shopTaluka.name as shop_taluka',
+        'usersinfo.shop_village',
         'shopCity.name as shop_city',
+              
          )
           ->get();
       
