@@ -545,6 +545,11 @@ class DistributorControllerNandu extends Controller
                 $join->on('tbl_sct_result.city', '=', 'cityNew.location_id');
             })
             ->select('tbl_sct_result.*',
+            DB::raw("CONCAT('" . SCT_RESULT_PHOTO_VIEW . "', tbl_sct_result.photo_one) as photo_one"),
+                DB::raw("CONCAT('" . SCT_RESULT_PHOTO_VIEW . "', tbl_sct_result.photo_two) as photo_two"),
+                DB::raw("CONCAT('" . SCT_RESULT_PHOTO_VIEW . "', tbl_sct_result.photo_three) as photo_three"),
+                DB::raw("CONCAT('" . SCT_RESULT_PHOTO_VIEW . "', tbl_sct_result.photo_four) as photo_four"),
+                DB::raw("CONCAT('" . SCT_RESULT_PHOTO_VIEW . "', tbl_sct_result.photo_five) as photo_five"),
             'stateNew.name as state_name',
             'districtNew.name as district_name',
             'talukaNew.name as taluka_name',
