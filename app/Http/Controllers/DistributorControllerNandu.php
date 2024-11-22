@@ -533,16 +533,16 @@ class DistributorControllerNandu extends Controller
         try
         {
              $sct_result_search_by_date= SCTResult::leftJoin('tbl_area as stateNew', function ($join) {
-                $join->on('tbl_sct_result .state', '=', 'stateNew.location_id');
+                $join->on('tbl_sct_result.state', '=', 'stateNew.location_id');
             })
             ->leftJoin('tbl_area as districtNew', function ($join) {
-                $join->on('tbl_sct_result .district', '=', 'districtNew.location_id');
+                $join->on('tbl_sct_result.district', '=', 'districtNew.location_id');
             })
             ->leftJoin('tbl_area as talukaNew', function ($join) {
-                $join->on('tbl_sct_result .taluka', '=', 'talukaNew.location_id');
+                $join->on('tbl_sct_result.taluka', '=', 'talukaNew.location_id');
             })
             ->leftJoin('tbl_area as cityNew', function ($join) {
-                $join->on('tbl_sct_result .city', '=', 'cityNew.location_id');
+                $join->on('tbl_sct_result.city', '=', 'cityNew.location_id');
             })
             ->select('tbl_sct_result.*',
             'stateNew.name as state_name',
