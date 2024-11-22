@@ -1162,16 +1162,29 @@ class DistributorMobileAppController extends Controller
 
     public function distributor_added_by_me(Request $request)
     {
-
-       
-        $result = UsersInfoForStructures::
-            join('usersinfo', function($join) {
+        $result = UsersInfoForStructures::leftJoin('tbl_area as stateNew', function ($join) {
+            $join->on('users_info_for_structures.shop_state', '=', 'stateNew.location_id');
+        })
+        ->leftJoin('tbl_area as districtNew', function ($join) {
+            $join->on('users_info_for_structures.shop_district', '=', 'districtNew.location_id');
+        })
+        ->leftJoin('tbl_area as talukaNew', function ($join) {
+            $join->on('users_info_for_structures.shop_taluka', '=', 'talukaNew.location_id');
+        })
+        ->leftJoin('tbl_area as cityNew', function ($join) {
+            $join->on('users_info_for_structures.shop_village', '=', 'cityNew.location_id');
+        })
+        ->select('users_info_for_structures.*',
+        'stateNew.name as state_name',
+        'districtNew.name as district_name',
+        'talukaNew.name as taluka_name',
+        'cityNew.name as city_name')
+            ->join('usersinfo', function($join) {
                 $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
             })
             ->join('tbl_area as stateNew', function($join) {
                 $join->on('usersinfo.state', '=', 'stateNew.location_id');
             })
-          
           ->join('tbl_area as districtNew', function($join) {
             $join->on('usersinfo.district', '=', 'districtNew.location_id');
           })
