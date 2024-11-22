@@ -1320,7 +1320,7 @@ class DistributorMobileAppController extends Controller
           ->join('users','users.id','=','usersinfo.user_id')
           ->where('users_info_for_structures.added_by',$request->dist_id)
           ->where('users_info_for_structures.user_id',$request->user_id)
-         ->select(   'stateNew.name as state',
+         ->select('stateNew.name as state',
          'districtNew.name as district',
          'talukaNew.name as taluka',
          'cityNew.name as city',
