@@ -3844,25 +3844,24 @@ class DistributorController extends Controller
     {
         try
         {
-            $sctresult =SCTResult::
-            // leftJoin('tbl_area as stateNew', function ($join) {
-            //     $join->on('tbl_sct_result.state', '=', 'stateNew.location_id');
-            // })
-            // ->leftJoin('tbl_area as districtNew', function ($join) {
-            //     $join->on('tbl_sct_result.district', '=', 'districtNew.location_id');
-            // })
-            // ->leftJoin('tbl_area as talukaNew', function ($join) {
-            //     $join->on('tbl_sct_result.taluka', '=', 'talukaNew.location_id');
-            // })
-            // ->leftJoin('tbl_area as cityNew', function ($join) {
-            //     $join->on('tbl_sct_result.city', '=', 'cityNew.location_id');
-            // })
-            // ->select('tbl_sct_result.*',  'stateNew.name as state_name',
-            // 'districtNew.name as district_name',
-            // 'talukaNew.name as taluka_name',
-            // 'cityNew.name as city_name')
+            $sctresult =SCTResult::leftJoin('tbl_area as stateNew', function ($join) {
+                $join->on('tbl_sct_result.state', '=', 'stateNew.location_id');
+            })
+            ->leftJoin('tbl_area as districtNew', function ($join) {
+                $join->on('tbl_sct_result.district', '=', 'districtNew.location_id');
+            })
+            ->leftJoin('tbl_area as talukaNew', function ($join) {
+                $join->on('tbl_sct_result.taluka', '=', 'talukaNew.location_id');
+            })
+            ->leftJoin('tbl_area as cityNew', function ($join) {
+                $join->on('tbl_sct_result.city', '=', 'cityNew.location_id');
+            })
+            ->select('tbl_sct_result.*',  'stateNew.name as state_name',
+            'districtNew.name as district_name',
+            'talukaNew.name as taluka_name',
+            'cityNew.name as city_name')
             
-            where('is_deleted','no')->where('created_by',$request->created_by)->orderBy('id','DESC')->get();
+            ->where('is_deleted','no')->where('created_by',$request->created_by)->orderBy('id','DESC')->get();
             
             foreach($sctresult as $key=>$sctresults)
             {
