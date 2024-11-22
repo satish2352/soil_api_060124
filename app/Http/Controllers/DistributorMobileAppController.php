@@ -1196,7 +1196,7 @@ class DistributorMobileAppController extends Controller
           ->join('users','users.id','=','usersinfo.user_id')
          
           ->where('users_info_for_structures.added_by',$request->dist_id)
-         ->select(   'stateNew.name as state',
+         ->select('stateNew.name as state',
          'districtNew.name as district',
          'talukaNew.name as taluka',
          'cityNew.name as city',
@@ -1252,10 +1252,10 @@ class DistributorMobileAppController extends Controller
         'usersinfo.logintime',
         'usersinfo.created_by',
         'usersinfo.created_on',
-        'stateNew.name as state_name',
-        'districtNew.name as district_name',
-        'talukaNew.name as taluka_name',
-        'cityNew.name as city_name'
+        'shopState.name as shop_state',
+        'shopDistrict.name as shop_district',
+        'shopTaluka.name as shop_taluka',
+        'shopCity.name as shop_city',
          )
           ->get();
       
@@ -1305,6 +1305,18 @@ class DistributorMobileAppController extends Controller
           ->join('tbl_area as cityNew', function($join) {
             $join->on('usersinfo.city', '=', 'cityNew.location_id');
           })
+          ->leftJoin('tbl_area as shopState', function ($join) {
+            $join->on('users_info_for_structures.shop_state', '=', 'shopState.location_id');
+        })
+        ->leftJoin('tbl_area as shopDistrict', function ($join) {
+            $join->on('users_info_for_structures.shop_district', '=', 'shopDistrict.location_id');
+        })
+        ->leftJoin('tbl_area as shopTaluka', function ($join) {
+            $join->on('users_info_for_structures.shop_taluka', '=', 'shopTaluka.location_id');
+        })
+        ->leftJoin('tbl_area as shopCity', function ($join) {
+            $join->on('users_info_for_structures.shop_village', '=', 'shopCity.location_id');
+        })
           ->join('users','users.id','=','usersinfo.user_id')
           ->where('users_info_for_structures.added_by',$request->dist_id)
           ->where('users_info_for_structures.user_id',$request->user_id)
@@ -1363,7 +1375,11 @@ class DistributorMobileAppController extends Controller
         'usersinfo.deviceid',
         'usersinfo.logintime',
         'usersinfo.created_by',
-        'usersinfo.created_on'
+        'usersinfo.created_on',
+        'shopState.name as shop_state',
+         'shopDistrict.name as shop_district',
+         'shopTaluka.name as shop_taluka',
+         'shopCity.name as shop_city',
          )
           ->get();
 
