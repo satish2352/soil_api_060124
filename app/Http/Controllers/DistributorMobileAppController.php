@@ -1162,7 +1162,10 @@ class DistributorMobileAppController extends Controller
 
     public function distributor_added_by_me(Request $request)
     {
-        $result = UsersInfoForStructures::leftJoin('tbl_area as shopState', function ($join) {
+        $result = UsersInfoForStructures::join('usersinfo', function($join) {
+            $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+        })
+        ->leftJoin('tbl_area as shopState', function ($join) {
             $join->on('usersinfo.shop_state', '=', 'shopState.location_id');
         })
         ->leftJoin('tbl_area as shopDistrict', function ($join) {
@@ -1175,9 +1178,7 @@ class DistributorMobileAppController extends Controller
             $join->on('usersinfo.shop_village', '=', 'shopCity.location_id');
         })
       
-            ->join('usersinfo', function($join) {
-                $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
-            })
+           
             ->join('tbl_area as stateNew', function($join) {
                 $join->on('usersinfo.state', '=', 'stateNew.location_id');
             })
