@@ -145,6 +145,12 @@ class DistributorController extends Controller
             $users->active = 'yes'; // 0 Means Active, 1 Means Inactive
             $users->added_by =  ($request->created_by) ? $request->created_by: 'superadmin'; // 0- from Superadmin 1- Distributor
             //$users->added_by =  '130'; // 0- from Superadmin 1- Distributor
+
+            $users->shop_address = $request->shop_address;
+            $users->shop_state = $request->shop_state;
+            $users->shop_district = $request->shop_district;
+            $users->shop_taluka = $request->shop_taluka;
+            $users->shop_village = $request->shop_village;
             $users->save();
 
             UsersInfoForStructures::insert([
@@ -1044,11 +1050,17 @@ class DistributorController extends Controller
 
     public function distributorupdate(Request $request)
     {
-        $farmerupdatedata = ['fname' => ucwords($request->fname), 'mname' => ucwords($request->mname), 'lname' => ucwords($request->lname), 'aadharcard' => $request->aadharcard, 'email' => $request->email, 'phone' => $request->phone, 'state' => $request->state, 'district' => $request->district, 'taluka' => $request->taluka, 'city' => $request->city, 'address' => $request->address, 'pincode' => $request->pincode, 'crop' => $request->crop, 'acre' => $request->acre, 'photo' => $request->photo, 'password' => $request->password, 'remember_token' => $request->token];
+        $farmerupdatedata = ['fname' => ucwords($request->fname), 'mname' => ucwords($request->mname), 'lname' => ucwords($request->lname), 'aadharcard' => $request->aadharcard, 'email' => $request->email, 'phone' => $request->phone, 'state' => $request->state, 'district' => $request->district, 'taluka' => $request->taluka, 'city' => $request->city, 'address' => $request->address,
+         'pincode' => $request->pincode, 'crop' => $request->crop, 'acre' => $request->acre, 'photo' => $request->photo,
+        'shop_address' => $request->shop_address, 
+        'shop_state' => $request->shop_state,
+        'shop_district' => $request->shop_district,
+        'shop_taluka' => $request->shop_taluka,
+        'shop_village' => $request->shop_village, 'password' => $request->password, 'remember_token' => $request->token];
 
         $id = $request->user_id;
         $result = UsersInfo::where('user_id', '=', $id)->update($farmerupdatedata);
-
+      
         if($result)
         {
             $response = array();
@@ -3832,24 +3844,25 @@ class DistributorController extends Controller
     {
         try
         {
-            $sctresult =SCTResult::leftJoin('tbl_area as stateNew', function ($join) {
-                $join->on('tbl_sct_result.state', '=', 'stateNew.location_id');
-            })
-            ->leftJoin('tbl_area as districtNew', function ($join) {
-                $join->on('tbl_sct_result.district', '=', 'districtNew.location_id');
-            })
-            ->leftJoin('tbl_area as talukaNew', function ($join) {
-                $join->on('tbl_sct_result.taluka', '=', 'talukaNew.location_id');
-            })
-            ->leftJoin('tbl_area as cityNew', function ($join) {
-                $join->on('tbl_sct_result.city', '=', 'cityNew.location_id');
-            })
-            ->select('tbl_sct_result.*',  'stateNew.name as state_name',
-            'districtNew.name as district_name',
-            'talukaNew.name as taluka_name',
-            'cityNew.name as city_name')
+            $sctresult =SCTResult::
+            // leftJoin('tbl_area as stateNew', function ($join) {
+            //     $join->on('tbl_sct_result.state', '=', 'stateNew.location_id');
+            // })
+            // ->leftJoin('tbl_area as districtNew', function ($join) {
+            //     $join->on('tbl_sct_result.district', '=', 'districtNew.location_id');
+            // })
+            // ->leftJoin('tbl_area as talukaNew', function ($join) {
+            //     $join->on('tbl_sct_result.taluka', '=', 'talukaNew.location_id');
+            // })
+            // ->leftJoin('tbl_area as cityNew', function ($join) {
+            //     $join->on('tbl_sct_result.city', '=', 'cityNew.location_id');
+            // })
+            // ->select('tbl_sct_result.*',  'stateNew.name as state_name',
+            // 'districtNew.name as district_name',
+            // 'talukaNew.name as taluka_name',
+            // 'cityNew.name as city_name')
             
-            ->where('is_deleted','no')->where('created_by',$request->created_by)->orderBy('id','DESC')->get();
+            where('is_deleted','no')->where('created_by',$request->created_by)->orderBy('id','DESC')->get();
             
             foreach($sctresult as $key=>$sctresults)
             {
