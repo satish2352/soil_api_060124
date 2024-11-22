@@ -1285,46 +1285,41 @@ class DistributorMobileAppController extends Controller
     {
 
        
-        $result = UsersInfoForStructures::
-            join('usersinfo', function($join) {
-                $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
-            })
-            ->join('tbl_area as stateNew', function($join) {
-                $join->on('usersinfo.state', '=', 'stateNew.location_id');
-            })
-          
-          ->join('tbl_area as districtNew', function($join) {
-            $join->on('usersinfo.district', '=', 'districtNew.location_id');
-          })
-          
-          
-          ->join('tbl_area as talukaNew', function($join) {
-            $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
-          })
-          
-          ->join('tbl_area as cityNew', function($join) {
-            $join->on('usersinfo.city', '=', 'cityNew.location_id');
-          })
-          ->leftJoin('tbl_area as shopState', function ($join) {
-            $join->on('users_info_for_structures.shop_state', '=', 'shopState.location_id');
-        })
-        ->leftJoin('tbl_area as shopDistrict', function ($join) {
-            $join->on('users_info_for_structures.shop_district', '=', 'shopDistrict.location_id');
-        })
-        ->leftJoin('tbl_area as shopTaluka', function ($join) {
-            $join->on('users_info_for_structures.shop_taluka', '=', 'shopTaluka.location_id');
-        })
-        ->leftJoin('tbl_area as shopCity', function ($join) {
-            $join->on('users_info_for_structures.shop_village', '=', 'shopCity.location_id');
-        })
-          ->join('users','users.id','=','usersinfo.user_id')
-          ->where('users_info_for_structures.added_by',$request->dist_id)
-          ->where('users_info_for_structures.user_id',$request->user_id)
-         ->select('stateNew.name as state',
-         'districtNew.name as district',
-         'talukaNew.name as taluka',
-         'cityNew.name as city',
-         'usersinfo.id as id',
+        $result = UsersInfoForStructures::join('usersinfo', function($join) {
+        $join->on('users_info_for_structures.user_id', '=', 'usersinfo.user_id');
+    })
+    ->join('tbl_area as stateNew', function($join) {
+        $join->on('usersinfo.state', '=', 'stateNew.location_id');
+    })
+    ->join('tbl_area as districtNew', function($join) {
+        $join->on('usersinfo.district', '=', 'districtNew.location_id');
+    })
+    ->join('tbl_area as talukaNew', function($join) {
+        $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+    })
+    ->join('tbl_area as cityNew', function($join) {
+        $join->on('usersinfo.city', '=', 'cityNew.location_id');
+    })
+    ->leftJoin('tbl_area as shopState', function ($join) {
+        $join->on('users_info_for_structures.shop_state', '=', 'shopState.location_id');
+    })
+    ->leftJoin('tbl_area as shopDistrict', function ($join) {
+        $join->on('users_info_for_structures.shop_district', '=', 'shopDistrict.location_id');
+    })
+    ->leftJoin('tbl_area as shopTaluka', function ($join) {
+        $join->on('users_info_for_structures.shop_taluka', '=', 'shopTaluka.location_id');
+    })
+    ->leftJoin('tbl_area as shopCity', function ($join) {
+        $join->on('users_info_for_structures.shop_village', '=', 'shopCity.location_id');
+    })
+    ->join('users', 'users.id', '=', 'usersinfo.user_id')
+    ->where('users_info_for_structures.added_by', $request->dist_id)
+    ->where('users_info_for_structures.user_id', $request->user_id)
+    ->select('stateNew.name as state',
+        'districtNew.name as district',
+        'talukaNew.name as taluka',
+        'cityNew.name as city',
+        'usersinfo.id as id',
         'usersinfo.user_id',
         'usersinfo.name',
         'usersinfo.fname',
@@ -1377,11 +1372,11 @@ class DistributorMobileAppController extends Controller
         'usersinfo.created_by',
         'usersinfo.created_on',
         'shopState.name as shop_state',
-         'shopDistrict.name as shop_district',
-         'shopTaluka.name as shop_taluka',
-         'shopCity.name as shop_city',
-         )->toSql();
-        //   ->get();
+        'shopDistrict.name as shop_district',
+        'shopTaluka.name as shop_taluka',
+        'shopCity.name as shop_city')
+    ->get();
+
 
 
           foreach( $result as $key => $value ) {
