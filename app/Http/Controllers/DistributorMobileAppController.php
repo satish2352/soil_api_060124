@@ -1380,8 +1380,8 @@ class DistributorMobileAppController extends Controller
          'shopDistrict.name as shop_district',
          'shopTaluka.name as shop_taluka',
          'shopCity.name as shop_city',
-         )->toSql()
-          ->get();
+         )->toSql();
+        //   ->get();
 
 
           foreach( $result as $key => $value ) {
