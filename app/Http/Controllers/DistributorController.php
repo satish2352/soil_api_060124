@@ -187,8 +187,9 @@ class DistributorController extends Controller
                 return response()->json([
                         "data" => '',
                         "result" => false,
+                        "message" => $e->getMessage(), 
                         // "message" =>$e->getMessage()." ".$e->getCode()
-                        "message" => "Some data missing or duplicate 183"
+                        // "message" => "Some data missing or duplicate 183"
                     ]);
                
         }
