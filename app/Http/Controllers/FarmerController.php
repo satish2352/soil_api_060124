@@ -240,15 +240,10 @@ class FarmerController extends Controller
                 });
                 
                 if($request->added_by == 'superadmin') {
-                    $result =  $result->when($request->get('added_by'), function($query) use ($request) {
-                            $query->where('usersinfo.added_by', $request->added_by);
-                    });
+                    $result =  $result->where('usersinfo.added_by','=', 'superadmin');
 
                 } else {
-                    info("i m in else");
-                    $result =  $result->when($request->get('added_by'), function($query) use ($request) {
-                        $query->where('usersinfo.added_by','<>','speradmin');
-                    });
+                        $result =  $result->where('usersinfo.added_by','<>','speradmin');
                 }
                 
           
