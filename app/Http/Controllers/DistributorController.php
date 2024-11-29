@@ -1795,7 +1795,14 @@ class DistributorController extends Controller
                             'tbl_farmer_meeting_details.farmer_lname',
                             'usersinfo.fname as dfname',
                             'usersinfo.mname as dmname',
-                            'usersinfo.lname as dlname')
+                            'usersinfo.lname as dlname',
+
+                            'stateNew.name as state_name',
+                            'districtNew.name as district_name',
+                            'talukaNew.name as taluka_name',
+                            'cityNew.name as city_name'
+                            
+                            )
                 ->leftJoin('tbl_farmer_meeting_details', 'tbl_farmer_meeting.id', '=', 'tbl_farmer_meeting_details.farmer_meeting_table_id')
                 ->leftJoin('usersinfo','tbl_farmer_meeting.created_by','=','usersinfo.user_id')
                 ->when($request->get('state'), function($farmerMeetingData) use ($request) {
@@ -1812,7 +1819,22 @@ class DistributorController extends Controller
                   
                   ->when($request->get('city'), function($farmerMeetingData) use ($request) {
                     $farmerMeetingData->where('usersinfo.city',$request->city);
-                  });
+                  })
+                  
+                  
+                  ->leftJoin('tbl_area as stateNew', function ($join) {
+                    $join->on('usersinfo.state', '=', 'stateNew.location_id');
+                })
+                ->leftJoin('tbl_area as districtNew', function ($join) {
+                    $join->on('usersinfo.district', '=', 'districtNew.location_id');
+                })
+                ->leftJoin('tbl_area as talukaNew', function ($join) {
+                    $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+                })
+                ->leftJoin('tbl_area as cityNew', function ($join) {
+                    $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                })
+                ;
     
     
                   if($request->dist_id !='') {
@@ -1843,7 +1865,11 @@ class DistributorController extends Controller
                         'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
                         'photo_four' => FARMER_MEETING_PHOTO_VIEW . $data->photo_four,
                         'photo_five' => FARMER_MEETING_PHOTO_VIEW . $data->photo_five,
-                        'presentFarmers' => []
+                        'presentFarmers' => [],
+                        'state_name' => $data->state_name,
+                        'district_name' => $data->district_name,
+                        'taluka_name' => $data->taluka_name,
+                        'city_name'=> $data->city_name
                     ];
                 }
     
