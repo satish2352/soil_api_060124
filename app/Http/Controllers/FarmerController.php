@@ -240,9 +240,11 @@ class FarmerController extends Controller
                 });
                 
                 if($request->added_by == 'superadmin') {
+                    info("Super Admin");
                     $result =  $result->where('usersinfo.added_by','=', 'superadmin');
 
                 } else {
+                    info("in else Super Admin");
                         $result =  $result->where('usersinfo.added_by','!=','speradmin');
                 }
                 
