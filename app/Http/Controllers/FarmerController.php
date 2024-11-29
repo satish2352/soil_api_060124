@@ -212,10 +212,21 @@ class FarmerController extends Controller
                   
                   ->leftJoin('tbl_area as cityNew', function($join) {
                     $join->on('usersinfo.city', '=', 'cityNew.location_id');
-                  })
+                  });
+
+                  if($request->added_by == 'superadmin') {
+                    info("Super Admin");
+                    $result =  $result->where('usersinfo.added_by','=', 'superadmin');
+
+                } else {
+                    info($request->added_by );
+                        info("in else Super Admin");
+                        $result = $result->where('usersinfo.added_by', '!=', 'speradmin');
+
+                }
 
 
-                  ->when($request->get('state'), function($query) use ($request) {
+                $result =  $result->when($request->get('state'), function($query) use ($request) {
                     $query->where('usersinfo.state',$request->state);
                   })
                   
@@ -239,16 +250,7 @@ class FarmerController extends Controller
                    $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
                 });
                 
-                if($request->added_by == 'superadmin') {
-                    info("Super Admin");
-                    $result =  $result->where('usersinfo.added_by','=', 'superadmin');
-
-                } else {
-                    info($request->added_by );
-                        info("in else Super Admin");
-                        $result = $result->where('usersinfo.added_by', '!=', 'speradmin');
-
-                }
+                
                 
           
                 $result =  $result->select('usersinfo.user_id',
