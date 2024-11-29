@@ -239,7 +239,7 @@ class FarmerController extends Controller
                    $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
                 });
                 
-                if($request->added_by === 'superadmin') {
+                if($request->added_by == 'superadmin') {
                     $result =  $result->when($request->get('added_by'), function($query) use ($request) {
                             $query->where('usersinfo.added_by', $request->added_by);
                     });
