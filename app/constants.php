@@ -120,11 +120,11 @@ define('TESTIMONIALS_CONTENT_VIEW', WEB_VIEW.'testimonials/');
 
 //INTERNSHIP_CONTENT
 define('INTERNSHIP_CONTENT_UPLOAD', WEB_UPLOADS.'internship/');
-define('INTERNSHIP_CONTENT_VIEW','https://web.soilchargertechnology.com//public/uploads/web/internship/');
+define('INTERNSHIP_CONTENT_VIEW','https://finalapi.soilchargertechnology.com/public/uploads/web/internship/');
 
 //JOBPOSTING_CONTENT
 define('JOBPOSTING_CONTENT_UPLOAD', WEB_UPLOADS.'jobposting/');
-define('JOBPOSTING_CONTENT_VIEW', 'https://web.soilchargertechnology.com//public/uploads/web/jobposting/');
+define('JOBPOSTING_CONTENT_VIEW', 'https://finalapi.soilchargertechnology.com/public/uploads/web/jobposting/');
 
 
 //AUDIO_CONTENT
