@@ -310,7 +310,8 @@ class FarmerController extends Controller
             $result->where('usersinfo.added_by', '=', 'superadmin');
         } else {
             info("Added by: " . $request->added_by);
-            $result->where('usersinfo.added_by', '!=', 'superadmin');
+            $result->whereIn('usersinfo.added_by', ['superadmin', 'dist']);
+
         }
 
         // Dynamic filters
