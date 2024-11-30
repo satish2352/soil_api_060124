@@ -52,6 +52,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof NotFoundHttpException) {
             // For JSON response (e.g., for APIs)
+            info("in exception ");
             return response()->view('404', [], 404);
         }
     
