@@ -258,9 +258,9 @@ class FarmerController extends Controller
                     $query->where('usersinfo.city',$request->city);
                   })
                   
-                  ->when($request->get('added_by'), function($query) use ($request) {
-                    $query->where('usersinfo.added_by',$request->added_by);
-                  })
+                //   ->when($request->get('added_by'), function($query) use ($request) {
+                //     $query->where('usersinfo.added_by',$request->added_by);
+                //   })
 
                 ->when($request->get('datefrom'), function($query) use ($request) {
                    $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
