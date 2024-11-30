@@ -51,6 +51,7 @@ class Handler extends ExceptionHandler
     {
 
         if ($exception instanceof NotFoundHttpException) {
+            info("NotFoundHttpException");
             // Customize the response for a 404 error
             return response()->view('404', [], 404);
         }
