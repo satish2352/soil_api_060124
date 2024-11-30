@@ -187,200 +187,211 @@ class FarmerController extends Controller
     }
     
     
-    // public function farmerlist(Request $request)
-    // {
-    //     $result = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
-    //                         ->where('usersinfo.is_deleted', '=', 'no')
+    public function farmerlist(Request $request)
+    {
+        $result = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
+                            ->where('usersinfo.is_deleted', '=', 'no')
         
                 
-    //             // ->join('users','users.id','=','usersinfo.user_id')
-    //             ->leftJoin('usersinfo AS sct_farmer','sct_farmer.user_id','=','usersinfo.user_id')
-    //             ->leftJoin('usersinfo AS sct_dist','sct_dist.user_id','=','usersinfo.added_by')
+                // ->join('users','users.id','=','usersinfo.user_id')
+                ->leftJoin('usersinfo AS sct_farmer','sct_farmer.user_id','=','usersinfo.user_id')
+                ->leftJoin('usersinfo AS sct_dist','sct_dist.user_id','=','usersinfo.added_by')
                 
-    //             ->leftJoin('tbl_area as stateNew', function($join) {
-    //                 $join->on('usersinfo.state', '=', 'stateNew.location_id');
-    //               })
+                ->leftJoin('tbl_area as stateNew', function($join) {
+                    $join->on('usersinfo.state', '=', 'stateNew.location_id');
+                  })
                   
-    //               ->leftJoin('tbl_area as districtNew', function($join) {
-    //                 $join->on('usersinfo.district', '=', 'districtNew.location_id');
-    //               })
+                  ->leftJoin('tbl_area as districtNew', function($join) {
+                    $join->on('usersinfo.district', '=', 'districtNew.location_id');
+                  })
                   
                   
-    //               ->leftJoin('tbl_area as talukaNew', function($join) {
-    //                 $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
-    //               })
+                  ->leftJoin('tbl_area as talukaNew', function($join) {
+                    $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
+                  })
                   
-    //               ->leftJoin('tbl_area as cityNew', function($join) {
-    //                 $join->on('usersinfo.city', '=', 'cityNew.location_id');
-    //               });
+                  ->leftJoin('tbl_area as cityNew', function($join) {
+                    $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                  });
 
-    //               if($request->added_by == 'superadmin') {
-    //                 info("Super Admin");
-    //                 $result =  $result->where('usersinfo.added_by','=', 'superadmin');
+                //   if($request->added_by == 'superadmin') {
+                //     info("Super Admin");
+                //     $result =  $result->where('usersinfo.added_by','=', 'superadmin');
 
-    //             } else {
-    //                 info($request->added_by );
-    //                     info("in else Super Admin");
-    //                     $result = $result->where('usersinfo.added_by', '!=', 'speradmin');
-    //                     info('$result');
-    //                     info($result);
+                // } else {
+                //     info($request->added_by );
+                //         info("in else Super Admin");
+                //         $result = $result->where('usersinfo.added_by', '!=', 'speradmin');
+                //         info('$result');
+                //         info($result);
 
-    //             }
+                // }
 
 
-    //             $result =  $result->when($request->get('state'), function($query) use ($request) {
-    //                 $query->where('usersinfo.state',$request->state);
-    //               })
+                if ($request->added_by == 'superadmin') {
+                    info("Super Admin");
+                    $result = $result->where('usersinfo.added_by', '=', 'superadmin');
+                } else {
+                    info("Added by: " . $request->added_by);
+                    $result =$result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+                    
+        
+                }
+
+
+                $result =  $result->when($request->get('state'), function($query) use ($request) {
+                    $query->where('usersinfo.state',$request->state);
+                  })
                   
-    //               ->when($request->get('district'), function($query) use ($request) {
-    //                 $query->where('usersinfo.district',$request->district);
-    //               })
+                  ->when($request->get('district'), function($query) use ($request) {
+                    $query->where('usersinfo.district',$request->district);
+                  })
                   
-    //               ->when($request->get('taluka'), function($query) use ($request) {
-    //                 $query->where('usersinfo.taluka',$request->taluka);
-    //               })
+                  ->when($request->get('taluka'), function($query) use ($request) {
+                    $query->where('usersinfo.taluka',$request->taluka);
+                  })
                   
-    //               ->when($request->get('city'), function($query) use ($request) {
-    //                 $query->where('usersinfo.city',$request->city);
-    //               })
+                  ->when($request->get('city'), function($query) use ($request) {
+                    $query->where('usersinfo.city',$request->city);
+                  })
                   
-    //               ->when($request->get('added_by'), function($query) use ($request) {
-    //                 $query->where('usersinfo.added_by',$request->added_by);
-    //               })
+                  ->when($request->get('added_by'), function($query) use ($request) {
+                    $query->where('usersinfo.added_by',$request->added_by);
+                  })
 
-    //             ->when($request->get('datefrom'), function($query) use ($request) {
-    //                $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
-    //             });
+                ->when($request->get('datefrom'), function($query) use ($request) {
+                   $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
+                });
                 
                 
                 
           
-    //             $result =  $result->select('usersinfo.user_id',
-    //          'sct_farmer.fname as sct_farmer_fname','sct_farmer.mname as as sct_farmer_mname','sct_farmer.lname as sct_farmer_lname',
-    //          'sct_dist.fname as sct_dist_fname','sct_dist.mname as sct_dist_mname','sct_dist.lname as sct_dist_lname',
-    //          'usersinfo.aadharcard','usersinfo.email','usersinfo.phone',
-    //          'usersinfo.state','usersinfo.district','usersinfo.taluka','usersinfo.city',
-    //          'usersinfo.address','usersinfo.pincode','usersinfo.crop','usersinfo.acre',
-    //          'usersinfo.password','usersinfo.photo',
-    //          'stateNew.name as state',
-    //          'districtNew.name as district',
-    //          'talukaNew.name as taluka',
-    //          'cityNew.name as city'
-    //          )->orderBy('usersinfo.id', 'DESC')
-    //         ->get();
+                $result =  $result->select('usersinfo.user_id',
+             'sct_farmer.fname as sct_farmer_fname','sct_farmer.mname as as sct_farmer_mname','sct_farmer.lname as sct_farmer_lname',
+             'sct_dist.fname as sct_dist_fname','sct_dist.mname as sct_dist_mname','sct_dist.lname as sct_dist_lname',
+             'usersinfo.aadharcard','usersinfo.email','usersinfo.phone',
+             'usersinfo.state','usersinfo.district','usersinfo.taluka','usersinfo.city',
+             'usersinfo.address','usersinfo.pincode','usersinfo.crop','usersinfo.acre',
+             'usersinfo.password','usersinfo.photo',
+             'stateNew.name as state',
+             'districtNew.name as district',
+             'talukaNew.name as taluka',
+             'cityNew.name as city'
+             )->orderBy('usersinfo.id', 'DESC')
+            ->get();
      
-    //     if ($result)
-    //     {
-    //         $response = array();
-    //         $response['data'] = $result;
-    //         $response['code'] = 200;
-    //         $response['message'] = 'Farmer List Get Successfully';
-    //         $response['result'] = true;
-    //         return response()->json($response);
-    //     }
-    //     else
-    //     {
-    //         $response = array();
-    //         $response['code'] = 400;
-    //         $response['message'] = 'Farmer List Not Found';
-    //         $response['result'] = false;
-    //         return response()->json($response);
-    //     }
+        if ($result)
+        {
+            $response = array();
+            $response['data'] = $result;
+            $response['code'] = 200;
+            $response['message'] = 'Farmer List Get Successfully';
+            $response['result'] = true;
+            return response()->json($response);
+        }
+        else
+        {
+            $response = array();
+            $response['code'] = 400;
+            $response['message'] = 'Farmer List Not Found';
+            $response['result'] = false;
+            return response()->json($response);
+        }
 
-    // }
+    }
 
     
     
     
-    public function farmerList(Request $request)
-    {
-        // Base query
-        $result = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
-            ->where('usersinfo.is_deleted', '=', 'no')
-            ->leftJoin('usersinfo AS sct_farmer', 'sct_farmer.user_id', '=', 'usersinfo.user_id')
-            ->leftJoin('usersinfo AS sct_dist', 'sct_dist.user_id', '=', 'usersinfo.added_by')
-            ->leftJoin('tbl_area as stateNew', 'usersinfo.state', '=', 'stateNew.location_id')
-            ->leftJoin('tbl_area as districtNew', 'usersinfo.district', '=', 'districtNew.location_id')
-            ->leftJoin('tbl_area as talukaNew', 'usersinfo.taluka', '=', 'talukaNew.location_id')
-            ->leftJoin('tbl_area as cityNew', 'usersinfo.city', '=', 'cityNew.location_id');
+    // public function farmerList(Request $request)
+    // {
+    //     // Base query
+    //     $result = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
+    //         ->where('usersinfo.is_deleted', '=', 'no')
+    //         ->leftJoin('usersinfo AS sct_farmer', 'sct_farmer.user_id', '=', 'usersinfo.user_id')
+    //         ->leftJoin('usersinfo AS sct_dist', 'sct_dist.user_id', '=', 'usersinfo.added_by')
+    //         ->leftJoin('tbl_area as stateNew', 'usersinfo.state', '=', 'stateNew.location_id')
+    //         ->leftJoin('tbl_area as districtNew', 'usersinfo.district', '=', 'districtNew.location_id')
+    //         ->leftJoin('tbl_area as talukaNew', 'usersinfo.taluka', '=', 'talukaNew.location_id')
+    //         ->leftJoin('tbl_area as cityNew', 'usersinfo.city', '=', 'cityNew.location_id');
 
-        // Handling added_by filter
-        if ($request->added_by == 'superadmin') {
-            info("Super Admin");
-            $result = $result->where('usersinfo.added_by', '=', 'superadmin');
-        } else {
-            info("Added by: " . $request->added_by);
-            $result =$result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+    //     // Handling added_by filter
+    //     if ($request->added_by == 'superadmin') {
+    //         info("Super Admin");
+    //         $result = $result->where('usersinfo.added_by', '=', 'superadmin');
+    //     } else {
+    //         info("Added by: " . $request->added_by);
+    //         $result =$result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
             
 
-        }
+    //     }
 
-        // Dynamic filters
-        $result =$result->when($request->get('state'), function ($query) use ($request) {
-                $query->where('usersinfo.state', $request->state);
-            })
-            ->when($request->get('district'), function ($query) use ($request) {
-                $query->where('usersinfo.district', $request->district);
-            })
-            ->when($request->get('taluka'), function ($query) use ($request) {
-                $query->where('usersinfo.taluka', $request->taluka);
-            })
-            ->when($request->get('city'), function ($query) use ($request) {
-                $query->where('usersinfo.city', $request->city);
-            })
-            ->when($request->get('added_by'), function ($query) use ($request) {
-                $query->where('usersinfo.added_by', $request->added_by);
-            })
-            ->when($request->get('datefrom') && $request->get('dateto'), function ($query) use ($request) {
-                $query->whereBetween('usersinfo.created_on', [$request->datefrom . ' 00:00:00', $request->dateto . ' 23:59:59']);
-            });
+    //     // Dynamic filters
+    //     $result =$result->when($request->get('state'), function ($query) use ($request) {
+    //             $query->where('usersinfo.state', $request->state);
+    //         })
+    //         ->when($request->get('district'), function ($query) use ($request) {
+    //             $query->where('usersinfo.district', $request->district);
+    //         })
+    //         ->when($request->get('taluka'), function ($query) use ($request) {
+    //             $query->where('usersinfo.taluka', $request->taluka);
+    //         })
+    //         ->when($request->get('city'), function ($query) use ($request) {
+    //             $query->where('usersinfo.city', $request->city);
+    //         })
+    //         ->when($request->get('added_by'), function ($query) use ($request) {
+    //             $query->where('usersinfo.added_by', $request->added_by);
+    //         })
+    //         ->when($request->get('datefrom') && $request->get('dateto'), function ($query) use ($request) {
+    //             $query->whereBetween('usersinfo.created_on', [$request->datefrom . ' 00:00:00', $request->dateto . ' 23:59:59']);
+    //         });
 
-        // Select statement
-        $result = $result->select(
-            'usersinfo.user_id',
-            'sct_farmer.fname as sct_farmer_fname',
-            'sct_farmer.mname as sct_farmer_mname',
-            'sct_farmer.lname as sct_farmer_lname',
-            'sct_dist.fname as sct_dist_fname',
-            'sct_dist.mname as sct_dist_mname',
-            'sct_dist.lname as sct_dist_lname',
-            'usersinfo.aadharcard',
-            'usersinfo.email',
-            'usersinfo.phone',
-            'usersinfo.state',
-            'usersinfo.district',
-            'usersinfo.taluka',
-            'usersinfo.city',
-            'usersinfo.address',
-            'usersinfo.pincode',
-            'usersinfo.crop',
-            'usersinfo.acre',
-            'usersinfo.password',
-            'usersinfo.photo',
-            'stateNew.name as state',
-            'districtNew.name as district',
-            'talukaNew.name as taluka',
-            'cityNew.name as city'
-        )
-            ->orderBy('usersinfo.id', 'DESC')
-            ->get();
+    //     // Select statement
+    //     $result = $result->select(
+    //         'usersinfo.user_id',
+    //         'sct_farmer.fname as sct_farmer_fname',
+    //         'sct_farmer.mname as sct_farmer_mname',
+    //         'sct_farmer.lname as sct_farmer_lname',
+    //         'sct_dist.fname as sct_dist_fname',
+    //         'sct_dist.mname as sct_dist_mname',
+    //         'sct_dist.lname as sct_dist_lname',
+    //         'usersinfo.aadharcard',
+    //         'usersinfo.email',
+    //         'usersinfo.phone',
+    //         'usersinfo.state',
+    //         'usersinfo.district',
+    //         'usersinfo.taluka',
+    //         'usersinfo.city',
+    //         'usersinfo.address',
+    //         'usersinfo.pincode',
+    //         'usersinfo.crop',
+    //         'usersinfo.acre',
+    //         'usersinfo.password',
+    //         'usersinfo.photo',
+    //         'stateNew.name as state',
+    //         'districtNew.name as district',
+    //         'talukaNew.name as taluka',
+    //         'cityNew.name as city'
+    //     )
+    //         ->orderBy('usersinfo.id', 'DESC')
+    //         ->get();
 
-        // Return response
-        if ($result->isNotEmpty()) {
-            return response()->json([
-                'data' => $result,
-                'code' => 200,
-                'message' => 'Farmer List retrieved successfully',
-                'result' => true,
-            ]);
-        } else {
-            return response()->json([
-                'code' => 400,
-                'message' => 'Farmer List not found',
-                'result' => false,
-            ]);
-        }
-    }
+    //     // Return response
+    //     if ($result->isNotEmpty()) {
+    //         return response()->json([
+    //             'data' => $result,
+    //             'code' => 200,
+    //             'message' => 'Farmer List retrieved successfully',
+    //             'result' => true,
+    //         ]);
+    //     } else {
+    //         return response()->json([
+    //             'code' => 400,
+    //             'message' => 'Farmer List not found',
+    //             'result' => false,
+    //         ]);
+    //     }
+    // }
 
     public function farmerget(Request $request)
     {
