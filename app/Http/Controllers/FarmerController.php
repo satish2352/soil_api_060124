@@ -310,7 +310,7 @@ class FarmerController extends Controller
             $result->where('usersinfo.added_by', '=', 'superadmin');
         } else {
             info("Added by: " . $request->added_by);
-            $result->whereIn('usersinfo.added_by', ['superadmin', 'dist']);
+            $result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
 
         }
 
