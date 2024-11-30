@@ -237,7 +237,6 @@ class FarmerController extends Controller
                     info("Added by: " . $request->added_by);
                     $result = $result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
                     info("Added by");
-                    info($result);
                     
         
                 }
