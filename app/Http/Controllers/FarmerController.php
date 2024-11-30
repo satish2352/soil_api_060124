@@ -307,15 +307,16 @@ class FarmerController extends Controller
         // Handling added_by filter
         if ($request->added_by == 'superadmin') {
             info("Super Admin");
-            $result->where('usersinfo.added_by', '=', 'superadmin');
+            $result = $result->where('usersinfo.added_by', '=', 'superadmin');
         } else {
             info("Added by: " . $request->added_by);
-            $result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+            $result =$result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+            
 
         }
 
         // Dynamic filters
-        $result->when($request->get('state'), function ($query) use ($request) {
+        $result =$result->when($request->get('state'), function ($query) use ($request) {
                 $query->where('usersinfo.state', $request->state);
             })
             ->when($request->get('district'), function ($query) use ($request) {
