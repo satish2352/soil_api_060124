@@ -234,6 +234,7 @@ class FarmerController extends Controller
                 } else {
                     info("Added by: " . $request->added_by);
                     $result =$result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+                    info("Added by",$result);
                     
         
                 }
