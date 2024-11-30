@@ -768,27 +768,16 @@ class DistributorControllerNandu extends Controller
     {
         try
         {
-            // $messageview= Messages::where('is_deleted', 'no');
-            //                         if($request->msg_status) {
-            //                             if($request->msg_status == '1') {
-            //                                 $messageview=  $messageview->whereIn('msg_status',array('0','1'));
-            //                             } else {
-            //                                 $messageview=  $messageview->where('msg_status', $request->msg_status);
-            //                             } 
-            //                         }
-            //                         $messageview=  $messageview->orderBy('msg_status', 'asc')
-            //                         ->get();
-
-
-            if($request->msg_status) {
-                if($request->msg_status == '1') {
-                    $messageview= Messages::whereIn('msg_status',array('0','1'));
-                } else {
-                    $messageview= Messages::where('msg_status', $request->msg_status);
-                } 
-            }
-            $messageview=  $messageview->orderBy('msg_status', 'asc')
-            ->get();
+            $messageview= Messages::where('date', '<>','');
+                                    if($request->msg_status) {
+                                        if($request->msg_status == '1') {
+                                            $messageview=  $messageview->whereIn('msg_status',array('0','1'));
+                                        } else {
+                                            $messageview=  $messageview->where('msg_status', $request->msg_status);
+                                        } 
+                                    }
+                                    $messageview=  $messageview->orderBy('msg_status', 'asc')
+                                    ->get();
             
             if ($messageview)
             {
