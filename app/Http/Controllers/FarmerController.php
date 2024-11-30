@@ -189,6 +189,8 @@ class FarmerController extends Controller
     
     public function farmerlist(Request $request)
     {
+        DB::enableQueryLog();
+
         $result = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
                             ->where('usersinfo.is_deleted', '=', 'no')
         
@@ -233,7 +235,7 @@ class FarmerController extends Controller
                     $result = $result->where('usersinfo.added_by', '=', 'superadmin');
                 } else {
                     info("Added by: " . $request->added_by);
-                    $result =$result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+                    $result = $result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
                     info("Added by");
                     info($result);
                     
@@ -281,7 +283,8 @@ class FarmerController extends Controller
              'cityNew.name as city'
              )->orderBy('usersinfo.id', 'DESC')
             ->get();
-     
+            info(DB::getQueryLog());
+
         if ($result)
         {
             $response = array();
