@@ -1793,6 +1793,10 @@ class DistributorController extends Controller
                             'tbl_farmer_meeting_details.farmer_fname', 
                             'tbl_farmer_meeting_details.farmer_mname', 
                             'tbl_farmer_meeting_details.farmer_lname',
+                            'tbl_farmer_meeting_details.photo_one_lat',
+                            'tbl_farmer_meeting_details.photo_one_long',
+                            
+                            
                             'usersinfo.fname as dfname',
                             'usersinfo.mname as dmname',
                             'usersinfo.lname as dlname',
@@ -1860,6 +1864,8 @@ class DistributorController extends Controller
                         'dmname' => $data->dmname,
                         'dlname' => $data->dlname,
                         'created_by' => $data->created_by,
+                        'photo_one_lat' => $data->photo_one_lat,
+                        'photo_one_long' => $data->photo_one_long,
                         'photo_one' => FARMER_MEETING_PHOTO_VIEW . $data->photo_one,
                         'photo_two' => FARMER_MEETING_PHOTO_VIEW . $data->photo_two,
                         'photo_three' => FARMER_MEETING_PHOTO_VIEW . $data->photo_three,
