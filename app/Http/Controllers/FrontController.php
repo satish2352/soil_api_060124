@@ -1173,8 +1173,8 @@ class FrontController extends Controller
             $users->business_address = $request->business_address;
             $users->business_state = $request->business_state;
             $users->business_district = $request->business_district;
-            $users->business_tuluka = $request->business_tuluka;
-            $users->business_village = $request->business_village;
+            $users->business_tuluka = $request->business_taluka; 
+            $users->business_village = $request->business_city; 
             $users->where_open_shop = $request->where_open_shop;
             $users->used_sct = $request->used_sct;
             $users->why_want_take_distributorship = $request->why_want_take_distributorship;
