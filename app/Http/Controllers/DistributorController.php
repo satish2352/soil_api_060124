@@ -1793,8 +1793,8 @@ class DistributorController extends Controller
                             'tbl_farmer_meeting_details.farmer_fname', 
                             'tbl_farmer_meeting_details.farmer_mname', 
                             'tbl_farmer_meeting_details.farmer_lname',
-                            'tbl_farmer_meeting_details.photo_one_lat',
-                            'tbl_farmer_meeting_details.photo_one_long',
+                            'tbl_farmer_meeting.photo_one_lat',
+                            'tbl_farmer_meeting.photo_one_long',
                             
                             
                             'usersinfo.fname as dfname',
