@@ -461,9 +461,9 @@ class FarmerController extends Controller
 
 
                 if ($request->added_by == 'superadmin') {
-                    $result = $result->where('usersinfo.added_by', '=', 'superadmin');
+                    $resultNew = $resultNew->where('usersinfo.added_by', '=', 'superadmin');
                 } else {
-                    $result = $result->where('usersinfo.added_by', '=', 'superadmin');
+                    $resultNew = $resultNew->where('usersinfo.added_by', '=', 'superadmin');
                 }
 
 
@@ -471,7 +471,7 @@ class FarmerController extends Controller
                 
 
 
-                $result =  $result->when($request->get('state'), function($query) use ($request) {
+                $resultNew =  $resultNew->when($request->get('state'), function($query) use ($request) {
                     $query->where('usersinfo.state',$request->state);
                 })
                 
@@ -498,7 +498,7 @@ class FarmerController extends Controller
 
 
 
-                $result =  $result->select('usersinfo.user_id',
+                $resultNew =  $resultNew->select('usersinfo.user_id',
                 'sct_farmer.fname as sct_farmer_fname','sct_farmer.mname as as sct_farmer_mname','sct_farmer.lname as sct_farmer_lname',
                 'sct_dist.fname as sct_dist_fname','sct_dist.mname as sct_dist_mname','sct_dist.lname as sct_dist_lname',
                 'usersinfo.aadharcard','usersinfo.email','usersinfo.phone',
