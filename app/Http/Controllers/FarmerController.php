@@ -359,71 +359,78 @@ class FarmerController extends Controller
     {
         // Define the initial query for $result
         $result = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
-            ->where('usersinfo.is_deleted', '=', 'no')
-            ->leftJoin('usersinfo AS sct_farmer', 'sct_farmer.user_id', '=', 'usersinfo.user_id')
-            ->leftJoin('usersinfo AS sct_dist', 'sct_dist.user_id', '=', 'usersinfo.added_by')
-            ->leftJoin('tbl_area as stateNew', function ($join) {
+                        ->where('usersinfo.is_deleted', '=', 'no')
+    
+            
+            // ->join('users','users.id','=','usersinfo.user_id')
+            ->leftJoin('usersinfo AS sct_farmer','sct_farmer.user_id','=','usersinfo.user_id')
+            ->leftJoin('usersinfo AS sct_dist','sct_dist.user_id','=','usersinfo.added_by')
+            
+            ->leftJoin('tbl_area as stateNew', function($join) {
                 $join->on('usersinfo.state', '=', 'stateNew.location_id');
-            })
-            ->leftJoin('tbl_area as districtNew', function ($join) {
+                })
+                
+                ->leftJoin('tbl_area as districtNew', function($join) {
                 $join->on('usersinfo.district', '=', 'districtNew.location_id');
-            })
-            ->leftJoin('tbl_area as talukaNew', function ($join) {
+                })
+                
+                
+                ->leftJoin('tbl_area as talukaNew', function($join) {
                 $join->on('usersinfo.taluka', '=', 'talukaNew.location_id');
-            })
-            ->leftJoin('tbl_area as cityNew', function ($join) {
+                })
+                
+                ->leftJoin('tbl_area as cityNew', function($join) {
                 $join->on('usersinfo.city', '=', 'cityNew.location_id');
+                });
+
+
+            if ($request->added_by == 'superadmin') {
+                $result = $result->where('usersinfo.added_by', '=', 'superadmin');
+            } else {
+                $result = $result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+            }
+
+
+            $result =  $result->when($request->get('state'), function($query) use ($request) {
+                $query->where('usersinfo.state',$request->state);
+                })
+                
+                ->when($request->get('district'), function($query) use ($request) {
+                $query->where('usersinfo.district',$request->district);
+                })
+                
+                ->when($request->get('taluka'), function($query) use ($request) {
+                $query->where('usersinfo.taluka',$request->taluka);
+                })
+                
+                ->when($request->get('city'), function($query) use ($request) {
+                $query->where('usersinfo.city',$request->city);
+                })
+                
+            //   ->when($request->get('added_by'), function($query) use ($request) {
+            //     $query->where('usersinfo.added_by',$request->added_by);
+            //   })
+
+            ->when($request->get('datefrom'), function($query) use ($request) {
+                $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
             });
-
-        if ($request->added_by == 'superadmin') {
-            $result = $result->where('usersinfo.added_by', '=', 'superadmin');
-        } else {
-            $result = $result->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
-        }
-
-        $result = $result->when($request->get('state'), function ($query) use ($request) {
-                $query->where('usersinfo.state', $request->state);
-            })
-            ->when($request->get('district'), function ($query) use ($request) {
-                $query->where('usersinfo.district', $request->district);
-            })
-            ->when($request->get('taluka'), function ($query) use ($request) {
-                $query->where('usersinfo.taluka', $request->taluka);
-            })
-            ->when($request->get('city'), function ($query) use ($request) {
-                $query->where('usersinfo.city', $request->city);
-            })
-            ->when($request->get('datefrom'), function ($query) use ($request) {
-                $query->whereBetween('usersinfo.created_on', [$request->datefrom . ' 00:00:00', $request->dateto . ' 23:59:59']);
-            })
-            ->select(
-                'usersinfo.user_id',
-                'sct_farmer.fname as sct_farmer_fname',
-                'sct_farmer.mname as sct_farmer_mname',
-                'sct_farmer.lname as sct_farmer_lname',
-                'sct_dist.fname as sct_dist_fname',
-                'sct_dist.mname as sct_dist_mname',
-                'sct_dist.lname as sct_dist_lname',
-                'usersinfo.aadharcard',
-                'usersinfo.email',
-                'usersinfo.phone',
-                'usersinfo.state',
-                'usersinfo.district',
-                'usersinfo.taluka',
-                'usersinfo.city',
-                'usersinfo.address',
-                'usersinfo.pincode',
-                'usersinfo.crop',
-                'usersinfo.acre',
-                'usersinfo.password',
-                'usersinfo.photo',
-                'stateNew.name as state',
-                'districtNew.name as district',
-                'talukaNew.name as taluka',
-                'cityNew.name as city'
-            )
-            ->orderBy('usersinfo.id', 'DESC')
-            ->get();
+            
+            
+            
+        
+            $result =  $result->select('usersinfo.user_id',
+            'sct_farmer.fname as sct_farmer_fname','sct_farmer.mname as as sct_farmer_mname','sct_farmer.lname as sct_farmer_lname',
+            'sct_dist.fname as sct_dist_fname','sct_dist.mname as sct_dist_mname','sct_dist.lname as sct_dist_lname',
+            'usersinfo.aadharcard','usersinfo.email','usersinfo.phone',
+            'usersinfo.state','usersinfo.district','usersinfo.taluka','usersinfo.city',
+            'usersinfo.address','usersinfo.pincode','usersinfo.crop','usersinfo.acre',
+            'usersinfo.password','usersinfo.photo',
+            'stateNew.name as state',
+            'districtNew.name as district',
+            'talukaNew.name as taluka',
+            'cityNew.name as city'
+            )->orderBy('usersinfo.id', 'DESC')
+        ->get();
 
         // Define the second query for $resultNew
         $resultNew = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
@@ -443,6 +450,7 @@ class FarmerController extends Controller
                 $join->on('usersinfo.city', '=', 'cityNew.location_id');
             })
             ->where('usersinfo.added_by', '=', 'superadmin')
+
             ->when($request->get('state'), function ($query) use ($request) {
                 $query->where('usersinfo.state', $request->state);
             })
@@ -457,8 +465,14 @@ class FarmerController extends Controller
             })
             ->when($request->get('datefrom'), function ($query) use ($request) {
                 $query->whereBetween('usersinfo.created_on', [$request->datefrom . ' 00:00:00', $request->dateto . ' 23:59:59']);
-            })
-            ->select(
+            });
+
+            if ($request->added_by == 'superadmin') {
+                $resultNew = $resultNew->where('usersinfo.added_by', '=', 'superadmin');
+            } else {
+                $resultNew = $resultNew->whereNotIn('usersinfo.added_by', ['superadmin', 'dist']);
+            }
+            $resultNew =  $resultNew->select(
                 'usersinfo.user_id',
                 'sct_farmer.fname as sct_farmer_fname',
                 'sct_farmer.mname as sct_farmer_mname',
