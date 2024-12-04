@@ -520,22 +520,35 @@ class FarmerController extends Controller
             info($resultNew);
 
         // Merge both results
+        // Convert $result and $resultNew to collections (if not already)
+        $result = collect($result);
+        $resultNew = collect($resultNew);
+
+        // Merge the two collections
         $mergedResults = $result->merge($resultNew);
 
-        if ($mergedResults->isNotEmpty()) {
+        // Convert the merged results to an array if needed
+        $mergedResultsArray = $mergedResults->toArray();
+
+        // Log for debugging
+        info('Merged Results:', $mergedResultsArray);
+
+        // Check if merged results are not empty
+        if (!empty($mergedResultsArray)) {
             return response()->json([
-                'data' => $mergedResults,
+                'data' => $mergedResultsArray,
                 'code' => 200,
                 'message' => 'Farmer List Retrieved Successfully',
-                'result' => true
+                'result' => true,
             ]);
         } else {
             return response()->json([
                 'code' => 400,
                 'message' => 'Farmer List Not Found',
-                'result' => false
+                'result' => false,
             ]);
         }
+
     }
 
 
