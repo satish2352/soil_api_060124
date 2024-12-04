@@ -196,10 +196,6 @@ class FarmerController extends Controller
                 // ->join('users','users.id','=','usersinfo.user_id')
                 ->leftJoin('usersinfo AS sct_farmer','sct_farmer.user_id','=','usersinfo.user_id')
                 ->leftJoin('usersinfo AS sct_dist','sct_dist.user_id','=','usersinfo.added_by')
-                // ->leftJoin('sct_dist', function ($join) {
-                //     $join->on('usersinfo.added_by', '=', 'sct_dist.user_id')
-                //          ->orWhere('usersinfo.added_by', '=', 'superadmin');
-                // })
                 
                 ->leftJoin('tbl_area as stateNew', function($join) {
                     $join->on('usersinfo.state', '=', 'stateNew.location_id');
@@ -261,10 +257,7 @@ class FarmerController extends Controller
 
                 ->when($request->get('datefrom'), function($query) use ($request) {
                    $query->whereBetween('usersinfo.created_on', [$request->datefrom.' 00:00:00',$request->dateto.' 23:59:59']);
-                })
-                
-                ->where('sct_dist.user_id','=','usersinfo.added_by')
-                ->OrWhere('usersinfo.added_by','=', 'speradmin');
+                });
                 
                 
                 
