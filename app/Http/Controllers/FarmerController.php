@@ -432,6 +432,9 @@ class FarmerController extends Controller
             )->orderBy('usersinfo.id', 'DESC')
         ->get();
 
+
+        info('$result');
+        info($result);
         // Define the second query for $resultNew
         $resultNew = UsersInfo::where('usersinfo.user_type', '=', 'farmer')
             ->where('usersinfo.is_deleted', '=', 'no')
@@ -500,6 +503,9 @@ class FarmerController extends Controller
             )
             ->orderBy('usersinfo.id', 'DESC')
             ->get();
+
+            info('$resultNew');
+            info($resultNew);
 
         // Merge both results
         $mergedResults = $result->merge($resultNew);
