@@ -9509,6 +9509,7 @@ class WebAPIController extends Controller
                 'instagram_link' => $request->instagram_link,
                 'twitter_link' => $request->twitter_link,
                 'whatsapp_link' => $request->whatsapp_link,
+                'youtube_link' => $request->youtube_link,
             ];
         $address = Address::where('id',$request->id)->update($data);
       
