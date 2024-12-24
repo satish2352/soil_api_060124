@@ -2975,7 +2975,8 @@ class DistributorControllerNandu extends Controller
         $query = Downloads::where('status', 0);
 
         if ($title) {
-            $query->where('title', 'like', '%' . $title . '%');
+            // $query->where('title', 'like', '%' . $title . '%');
+            $query->whereRaw('LOWER(title) LIKE ?', ['%' . $title . '%']);
         }
 
         if ($lang) {
