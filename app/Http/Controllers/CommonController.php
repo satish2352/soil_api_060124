@@ -141,7 +141,19 @@ class CommonController extends Controller
     {
 
         // $result = Downloads::where('language', '=', $request->lang)->where('status', '=', 0)->where('content_type', '=', $request->content_type )->get();
-        $result = Downloads::where('language', 'like', '%' . $request->lang . '%')->where('status', '=', 0)->where('content_type', '=', $request->content_type )->get();
+        // $result = Downloads::where('language', 'like', '%' . $request->lang . '%')->where('status', '=', 0)->where('content_type', '=', $request->content_type )->get();
+
+        $query = Downloads::where('status', 0);
+
+        if ($request->has('lang') && $request->lang) {
+            $query->where('language', 'like', '%' . $request->lang . '%');
+        }
+
+        if ($request->has('content_type') && $request->content_type) {
+            $query->where('content_type', $request->content_type);
+        }
+
+        $result = $query->get();
 
         if ($result)
         {
