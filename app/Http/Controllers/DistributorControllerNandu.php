@@ -2966,7 +2966,28 @@ class DistributorControllerNandu extends Controller
     // Download Language Brochure Search
     public function language_brochure_search(Request $request)
     {
-        $result = Downloads::where('title', 'like', '%' . $request->title . '%')->where('language', '=',$request->lang)->where('status', '=', 0)->where('content_type', '=', $request->content_type )->get();
+        // $result = Downloads::where('title', 'like', '%' . $request->title . '%')->where('language', '=',$request->lang)->where('status', '=', 0)->where('content_type', '=', $request->content_type )->get();
+        $lang = strtolower($request->lang);
+        $contentType = strtolower($request->content_type);
+        $title = strtolower($request->title);
+
+        // Check if lang and content_type are provided
+        $query = Downloads::where('status', 0);
+
+        if ($title) {
+            $query->where('title', 'like', '%' . $title . '%');
+        }
+
+        if ($lang) {
+            $query->where('language', 'like', '%' . $lang . '%');
+        }
+
+
+        if ($contentType) {
+            $query->where('content_type', $contentType);
+        }
+
+        $result = $query->get();
 
         if (count($result) > 0)
         {
