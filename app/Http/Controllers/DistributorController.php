@@ -3422,7 +3422,7 @@ class DistributorController extends Controller
     
     public function distributortargetvideoadd_distributorweb(Request $request)
     {
-        $alldist=User::where('user_type',$request->to_whom_show)->where('is_deleted','no')->get();
+        $alldist=User::where('user_type',strtolower($request->to_whom_show))->where('is_deleted','no')->get();
         foreach($alldist as $key=>$alldistId)
         {
             $targetvideo = new TargetVideosToDistributor();
